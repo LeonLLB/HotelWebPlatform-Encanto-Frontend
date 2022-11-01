@@ -1,0 +1,23 @@
+<ng-container [formGroup]="formGroup">
+    <div class="flex flex-col items-center space-y-2">
+        <label [for]="inputName" class="ml-6 font-light"> {{label}} </label>
+        <div class="flex flex-row space-x-4">    
+            <div *ngFor="let input of radioInputs" class="flex flex-row space-x-2 items-center">
+                <input  type="radio"
+                        (change)="change(input.value)"
+                        [formControlName]="inputName"
+                        [value]="input.value"
+                        [name]="inputName"
+                        [id]="input.label"
+                        class="text-gray-700 active:ring-gray-700 checked:ring-gray-700"
+                        >
+                <label [for]="input.label" class="ml-6">{{input.label | titlecase}}</label>
+            </div>
+        </div>
+        <span
+            [InputError]="esValido(inputName)"
+            [mensaje]="getErrorMsg(inputName)"
+            class="text-red-600 font-light"
+        ></span>      
+    </div>
+</ng-container>

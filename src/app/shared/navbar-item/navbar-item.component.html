@@ -1,0 +1,9 @@
+<span 
+    (click)="onItemClick()"
+    class="transition-all navClickableItem  flex flex-row items-center space-x-1 text-gray-600 cursor-pointer rounded-lg "
+    [ngClass]="{'active-link' : active }"
+    >
+    <span class="navClickableItem material-icons-outlined !text-lg">{{icon}}</span>
+    <span class="navClickableItem">{{label}}</span>
+    <span class="navClickableItem material-icons-outlined !text-lg -rotate-90">chevron_left</span>
+</span>

@@ -1,0 +1,33 @@
+<div class="flex flex-row mx-4 mt-4 justify-center">
+    <div class="flex flex-col items-center space-y-4">
+        <div>
+            <!-- TODO: Filtrado de usuarios -->
+        </div>
+        <div>
+            <button routerLink="registrar" class="btn-action-primary">Registrar usuario</button>
+        </div>
+        <div class="flex flex-col items-center space-y-4">
+            <h1 class="text-3xl font-bold">Usuarios administradores del consejo</h1>
+            <div class="rounded-lg" [Block]="isLoading">
+                <app-table-crud
+                    [items]="usuarios"
+                    [labels]="labels"
+                    [row]="row"
+                    [updateRouterLink]="['actualizar']"
+                    (onDeleteClick)="deleteUser($event)"         
+                >
+                    <ng-template #labels>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Cedula</th>
+                    </ng-template>
+                    <ng-template #row let-usuario>
+                        <td>{{usuario.nombre}}</td>
+                        <td>{{usuario.apellido}}</td>
+                        <td>{{usuario.cedula}}</td>                                                  
+                    </ng-template>                    
+                </app-table-crud>
+            </div>            
+        </div>
+    </div>    
+</div>

@@ -1,0 +1,66 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+[type='password']:not(.forced),[type='date']:not(.forced),[type='number']:not(.forced){
+  -webkit-appearance: none;
+          appearance: none;
+  
+  border-width: inherit;
+  border-color: inherit;
+  padding-top: inherit;
+  padding-right: inherit;
+  padding-bottom: inherit;
+  padding-left: inherit;
+} 
+
+
+.active-link{
+  @apply text-[#F59701] bg-[#F59701] bg-opacity-25 px-2;
+}
+
+.paginationBtn{
+  @apply rounded-lg bg-[#EFC501] text-white text-2xl shadow-lg;
+  @apply transition-all duration-300 hover:scale-95 hover:bg-[#F59701]
+}
+
+.activePaginationBtn{
+  @apply rounded-lg bg-[#F59701] text-[#2A83A5] text-2xl shadow-lg;
+  @apply transition-all duration-300 hover:scale-95 hover:bg-[#EFC501]
+}
+
+body{
+    @apply bg-[#E0E0E0];
+}
+
+.form-container{
+  @apply h-fit space-y-3 flex flex-col items-center bg-slate-200 shadow-lg py-6 px-8 rounded-lg
+}
+
+td, th {
+    @apply p-2
+}
+
+td{
+    @apply font-light
+}
+
+th{
+    @apply font-normal
+}
+
+.btn-action-primary{
+    @apply py-2 px-4 bg-blue-500 text-white text-lg rounded-md shadow-md transition-all;
+    @apply hover:bg-blue-600 hover:scale-95;
+}
+
+.btn-action-primary-small{
+  @apply py-1 px-2 bg-blue-500 text-white rounded-md shadow-md transition-all;
+  @apply hover:bg-blue-600 hover:scale-95;
+}
+
+.btn-action-danger{
+  @apply py-2 px-4 bg-red-500 text-white text-lg rounded-md shadow-md transition-all;
+  @apply hover:bg-red-600 hover:scale-95;
+}

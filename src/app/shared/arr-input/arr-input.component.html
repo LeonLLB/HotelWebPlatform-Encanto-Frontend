@@ -1,0 +1,18 @@
+<ng-container [formGroup]="formGroup">
+    <div [formArrayName]="formArrayName" class="flex flex-col items-center space-y-2">
+        <div class="flex flex-col space-x-4 items-start">
+            <input
+                [type]="type"
+                [id]="inputName"
+                class="p-1 rounded-md outline-none border border-gray-300"
+                [class]="className"
+                [formControlName]="inputIndex"
+                [placeholder]="placeholder">
+        </div>
+        <span
+            [InputError]="esValido()"
+            [mensaje]="getErrorMsg()"
+            class="text-red-600 font-light"
+        ></span>     
+    </div>
+</ng-container>

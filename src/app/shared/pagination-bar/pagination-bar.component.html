@@ -1,0 +1,12 @@
+<div class="flex flex-row w-full justify-evenly items-center">
+    <button [disabled]="pagina === 1" class="paginationBtn" (click)="paginate('previous')">
+        <span class="material-icons-outlined !text-3xl px-1">chevron_left</span>
+    </button>
+    <button class="py-1 px-3" [class]="( pagina === paginationItem ) ? 'activePaginationBtn' : 'paginationBtn' "
+        (click)="paginate(paginationItem)" *ngFor="let paginationItem of paginationRange">
+        {{paginationItem}}
+    </button>
+    <button [disabled]="pagina === paginas" class="paginationBtn" (click)="paginate('next')">
+        <span class="material-icons-outlined !text-3xl px-1">chevron_right</span>
+    </button>
+</div>

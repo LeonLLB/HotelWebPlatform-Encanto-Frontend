@@ -1,0 +1,25 @@
+<app-center-box>
+    <form 
+        [formGroup]="userForm"
+        autocomplete="off"
+        (ngSubmit)="registerUserSubmit()"
+        class="h-fit space-y-3 flex flex-col items-center bg-slate-200 shadow-lg py-6 px-8 rounded-lg"
+    >
+        <h1 class="text-xl text-center -mt-4">{{ (isEditableForm) ? 'Modificar usuario' :  'Registrar a un usuario'}}</h1>
+        <div>
+            <app-input [formGroup]="userForm" inputName="nombre" label="Nombre"></app-input>
+        </div>
+        <div>
+            <app-input [formGroup]="userForm" inputName="apellido" label="Apellido"></app-input>
+        </div>
+        <div>
+            <app-input [formGroup]="userForm" inputName="cedula" label="Cedula"></app-input>
+        </div>
+        <div>
+            <button type="submit" class="btn-action-primary mt-2">{{(isEditableForm) ? 'Modificar usuario' :'Registrar usuario'}}</button>
+        </div>
+        <div *ngIf="isEditableForm">
+            <button type="button" (click)="cambiarClave()" class="btn-action-primary mt-2">Cambiar contraseña</button>
+        </div>
+    </form>
+</app-center-box>

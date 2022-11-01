@@ -1,0 +1,22 @@
+<app-center-box>
+    <div class="flex flex-row space-x-40 items-center">
+        <!-- //TODO: CAMBIAR LOGO -->
+        <img src="" alt="logo" class="h-96 w-96 blur-sm opacity-50">
+        <form [formGroup]="loginForm" autocomplete="off" (ngSubmit)="loginSubmit()"
+            class="h-fit space-y-3 flex flex-col items-center bg-slate-200 shadow-lg py-6 px-8 rounded-lg">
+
+            <h1 class="text-xl text-center -mt-4">Iniciar sesión</h1>
+
+            <div>
+                <app-input [formGroup]="loginForm" inputName="cedula" label="Cedula"></app-input>
+            </div>
+            <div>
+                <app-input [formGroup]="loginForm" inputName="password" label="Contraseña" type="password"></app-input>
+            </div>
+            <div>
+                <button type="submit" class="btn-action-primary mt-2">Iniciar sesión</button>
+            </div>
+
+        </form>
+    </div>
+</app-center-box>

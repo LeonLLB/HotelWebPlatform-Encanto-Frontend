@@ -1,0 +1,25 @@
+<ng-container [formGroup]="formGroup">
+    <div class="flex flex-col items-center space-y-2">
+        <div class="flex flex-col space-x-4 items-start">
+            <label [for]="inputName" class="ml-6 font-light">{{label}}</label>
+            <input
+                [type]="type"
+                [id]="inputName"
+                [attr.list]="inputName+'-list'"
+                (change)="onValueChange()"
+                [class]="(type!=='text')?'!p-2 !rounded-md !border !outline-none !border-gray-300 '+className:'p-1 rounded-md outline-none border border-gray-300 '+className"
+                [formControlName]="inputName"
+                [max]="(type === 'number' || type === 'date') ? max : null"
+                [min]="(type === 'number' || type === 'date') ? min : null"
+                [placeholder]="placeholder">
+        </div>
+        <span
+            [InputError]="esValido()"
+            [mensaje]="getErrorMsg()"
+            class="text-red-600 font-light"
+        ></span>     
+    </div>
+    <datalist [id]="inputName+'-list'" *ngIf="datalist.length > 0"> 
+        <option *ngFor="let value of datalist" [value]="value">
+    </datalist>
+</ng-container>
