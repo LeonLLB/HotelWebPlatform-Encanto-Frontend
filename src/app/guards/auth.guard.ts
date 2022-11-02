@@ -47,11 +47,13 @@ export class AuthGuard implements CanActivate, CanLoad {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return this.isAbleToNavigateTo()
+    return true
+      return this.isAbleToNavigateTo()
   }
   canLoad(
     route: Route,
     segments: UrlSegment[]): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return this.isAbleToNavigateTo()
+    return true
+      return this.isAbleToNavigateTo()
   }
 }
