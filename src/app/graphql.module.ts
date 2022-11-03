@@ -12,7 +12,7 @@ export function createApollo(httpLink: HttpLink): ApolloClientOptions<any> {
     defaultOptions:{
       watchQuery: {
         fetchPolicy: 'network-only',
-        errorPolicy: 'ignore',
+        errorPolicy: 'ignore'
       },
       query: {
         fetchPolicy: 'network-only',

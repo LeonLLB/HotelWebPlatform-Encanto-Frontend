@@ -2,7 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { gql } from 'apollo-angular';
 import { tap } from 'rxjs';
+import { AuthService } from 'src/app/services/auth.service';
 import { GraphqlService } from 'src/app/services/graphql.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { NotifyService } from 'src/app/services/notify.service';
@@ -19,7 +21,7 @@ export class LoginComponent {
   constructor(
     private fb: FormBuilder,
     private validatorService: ValidatorService,
-    // private http: HttpClient,
+    private auth: AuthService,
     private Graphql: GraphqlService,
     private notifyService: NotifyService,
     private routerService: Router,
@@ -44,10 +46,9 @@ export class LoginComponent {
       this.loginForm.markAllAsTouched()
       return;
     }
-
-    // this.loading.displayLoading('Iniciando sesión...')
-    this.Graphql.query(
-      `
+    this.loading.displayLoading('Iniciando sesión...')
+    this.Graphql.query<{login:User},typeof this.loginForm.value>(
+      gql`
         query LoginUser($loginInputData: LoginInput!){
           login(loginInput:$loginInputData){
             _id
@@ -66,20 +67,16 @@ export class LoginComponent {
       }
     ).subscribe((response) => {
       this.loading.hideLoading()
-      console.log(response)
-      // this.notifyService.success(`Sesión iniciada para: ${data.nombre} ${data.apellido}`)
-      // this.routerService.navigate(['main'])
-    })
-    // this.http.post<User>('$/users/login',{
-    //   cedula: parseInt(this.loginForm.controls['cedula'].value),
-    //   password: this.loginForm.controls['password'].value,
-    // })
-    // .subscribe(
-    //   {
-
-    //   }      
-    // )
-
+      // console.log(response)
+      if(response.data){
+        this.auth.rol = response.data.login.cargo
+        this.notifyService.success(`Sesión iniciada para: ${response.data.login.nombre} ${response.data.login.apellido}`)
+        this.routerService.navigate(['main'])
+        return
+      }
+      const error = (response.errors![0].extensions['response'] as any).message;
+      this.notifyService.failure(error)
+    }) 
 
   }
 

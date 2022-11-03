@@ -3,5 +3,6 @@ export interface User{
     nombre:string,
     apellido:string,
     cedula:number,
-    password?:string
+    password?:string,
+    cargo: 'A' | 'R' | ''
 }

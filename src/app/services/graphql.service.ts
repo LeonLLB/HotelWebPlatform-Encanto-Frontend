@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ApolloQueryResult } from '@apollo/client/core';
+import { ApolloQueryResult, TypedDocumentNode } from '@apollo/client/core';
 import { Apollo, gql, MutationResult } from 'apollo-angular';
 import { Observable } from 'rxjs';
 
@@ -22,16 +22,16 @@ export class GraphqlService {
     private apollo: Apollo
   ) { }
 
-  query<ResponseType, RequestBodyType>(GQLQuery: string,RequestBody:RequestBodyType | undefined = undefined): Observable<ApolloQueryResult<ResponseType>>{
+  query<ResponseType, RequestBodyType>(GQLQuery: TypedDocumentNode<unknown, unknown>,RequestBody:RequestBodyType | undefined = undefined): Observable<ApolloQueryResult<ResponseType>>{
     return this.apollo.query<ResponseType,RequestBodyType>({
-      query: gql`${GQLQuery}`,
+      query: GQLQuery,
       variables:RequestBody,      
     })
   }
 
-  mutate<ResponseType, RequestBodyType>(GQLMutation: string,RequestBody:RequestBodyType): Observable<MutationResult<ResponseType>>{
+  mutate<ResponseType, RequestBodyType>(GQLMutation: TypedDocumentNode<unknown, unknown>,RequestBody:RequestBodyType): Observable<MutationResult<ResponseType>>{
     return this.apollo.mutate<ResponseType,RequestBodyType>({
-      mutation: gql`${GQLMutation}`,
+      mutation: GQLMutation,
       variables:RequestBody
     })
   }
