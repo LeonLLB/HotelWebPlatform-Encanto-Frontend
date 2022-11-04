@@ -1,17 +1,18 @@
 import { Injectable } from '@angular/core';
+import { ValidRoles } from '../interfaces/user.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  private _rol: 'A' | '' | 'R' = '';
+  private _rol: ValidRoles = ValidRoles.null;
 
-  public get rol(): 'A' | '' | 'R' {
+  public get rol(): ValidRoles {
     return this._rol;
   }
-  public set rol(value: 'A' | '' | 'R') {
-    this._isAuthenticated = value !== ''   
+  public set rol(value: ValidRoles) {
+    this._isAuthenticated = value !== ValidRoles.null   
     this._rol = value;
   }
 

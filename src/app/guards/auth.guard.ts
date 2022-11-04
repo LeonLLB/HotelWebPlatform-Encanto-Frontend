@@ -5,6 +5,7 @@ import { gql } from 'apollo-angular';
 import { catchError, delay, map, Observable, of, switchMap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { VerifyUserQueryResultInterface, VERIFY_USER_QUERY } from '../graphql/queries';
+import { AuthService } from '../services/auth.service';
 import { GraphqlService } from '../services/graphql.service';
 import { ReportService } from '../services/report.service';
 
@@ -17,6 +18,7 @@ export class AuthGuard implements CanActivate, CanLoad {
   constructor(
     private router: Router,
     private graphql: GraphqlService,
+    private auth: AuthService,
     private report: ReportService
   ) { }
 
@@ -37,6 +39,7 @@ export class AuthGuard implements CanActivate, CanLoad {
             this.router.navigate(['auth', 'login'])
             return false;
           }
+          this.auth.rol = res.data.revalidate.rol
           this.timer = setTimeout(
             () => {
               this.report.info('Aviso', 'Su sesión ha sido cerrada', true, () => {

@@ -4,5 +4,11 @@ export interface User{
     apellido:string,
     cedula:number,
     password?:string,
-    cargo: 'A' | 'R' | ''
+    cargo: ValidRoles
+}
+
+export enum ValidRoles {
+    admin = 'A',
+    recepcionista = 'R',
+    null = ''
 }
