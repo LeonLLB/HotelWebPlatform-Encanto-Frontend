@@ -1,5 +1,5 @@
 export interface User{
-    id?:number,
+    _id?:string,
     nombre:string,
     apellido:string,
     cedula:number,
