@@ -38,7 +38,7 @@ export class UsuariosService {
   }
 
   createUser(userForm: FormGroup) {
-    const formData = formToJson<IUserInput>(userForm)
+    const formData = formToJson<IUserInput>(userForm,true)
     this.loading.displayLoading('Creando usuario...')
     this.graphql.mutate<{ createUser: User }, ICreateUserInput>(
       CREATE_USER_MUTATION,

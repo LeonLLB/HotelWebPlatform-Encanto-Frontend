@@ -18,7 +18,8 @@ import { UsuariosService } from '../../services/usuarios.service';
 export class RegistrarComponent implements OnInit {
 
   private unvalidInputs = [
-    'id',
+    '_id',
+    '__typename',
     'password'
   ]
 
@@ -39,9 +40,9 @@ export class RegistrarComponent implements OnInit {
     private validatorService: ValidatorService
   ) { }
 
-  cargosValidos: ValidRoles[] = [
-    ValidRoles.admin,
-    ValidRoles.recepcionista,
+  cargosValidos = [
+    {value: ValidRoles.admin, label: 'Administrador'},
+    {value: ValidRoles.recepcionista, label: 'Recepcionista'},
   ]
 
   ngOnInit(): void {

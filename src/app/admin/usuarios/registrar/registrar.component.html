@@ -16,6 +16,14 @@
             <app-input [formGroup]="userForm" inputName="cedula" label="Cedula"></app-input>
         </div>
         <div>
+            <app-radio-input
+                [formGroup]="userForm"
+                [radioInputs]="cargosValidos"
+                inputName="cargo"
+                label="Rol del usuario"
+            ></app-radio-input>
+        </div>
+        <div>
             <button type="submit" class="btn-action-primary mt-2">{{(isEditableForm) ? 'Modificar usuario' :'Registrar usuario'}}</button>
         </div>
         <div *ngIf="isEditableForm">
