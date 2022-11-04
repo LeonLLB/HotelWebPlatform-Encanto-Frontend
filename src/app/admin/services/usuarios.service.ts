@@ -57,14 +57,14 @@ export class UsuariosService {
 
   updateUser(userForm: FormGroup, userId: string) {
     this.loading.displayLoading('Actualizando...')
-    const formData = formToJson<IUserInput>(userForm)
+    const formData = formToJson<IUserInput>(userForm,true)
     this.graphql.mutate<{ updateUser: User }, IUpdateUserInput>(
       UPDATE_USER_MUTATION,
       { updateUserInput: formData, id: userId }
     )
       .subscribe(response => {
         this.loading.hideLoading()
-        if (response.data?.updateUser._id) {
+        if (response.data) {
           this.notifyService.success('Usuario actualizado con exito')
           this.router.navigate(['/main', 'admin', 'usuarios'])
           return

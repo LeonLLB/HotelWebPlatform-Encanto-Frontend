@@ -52,7 +52,7 @@ export class RegistrarComponent implements OnInit {
         this.isEditableForm = true
 
         this.userService.getUsuario(data['id'],(user)=>{
-          this.userId = user.id
+          this.userId = user._id
           let newForm: {[x:string]:any} = {}
 
           for(let userMap of Object.entries(user)){
