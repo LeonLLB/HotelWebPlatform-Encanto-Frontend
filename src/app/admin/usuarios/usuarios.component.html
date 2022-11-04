@@ -23,7 +23,14 @@
                         <td>{{usuario.nombre}}</td>
                         <td>{{usuario.apellido}}</td>
                         <td>{{usuario.cedula}}</td>                                                  
-                        <td>{{usuario.cargo}}</td>                                                  
+                        <td>
+                            <span
+                                class="rounded-lg bg-opacity-30 p-2"
+                                [class]="usuario.cargo === 'R' ? 'bg-gray-600' : 'bg-blue-600'"
+                            >
+                                {{usuario.cargo=== 'A' ? 'Administrador' : 'Recepcionista'}}
+                            </span>                    
+                        </td>                                                  
                     </ng-template>                    
                 </app-table-crud>
             </div>            
