@@ -1,12 +1,12 @@
 <div 
-    class="navClickableItem transition-all duration-500 z-50 animate-open_top rounded-lg shadow-md p-4 absolute bg-gray-200 space-y-2"
+    class="navClickableItem transition-all duration-500 z-50 animate-open_top rounded-lg shadow-sm p-4 absolute bg-gray-800  space-y-2"
     *ngIf="isShowing"    
     [ngClass]="{ '-translate-y-12 opacity-0' : status === 'closing'  }"
 >
     <span
         (click)="onItemClick(option.route)"
         *ngFor="let option of options"
-        class="navClickableItem flex flex-row items-center space-x-1 text-gray-500 cursor-pointer rounded-lg"
+        class="navClickableItem flex flex-row items-center space-x-1 text-gray-300 cursor-pointer rounded-lg"
         [ngClass]="{ 'cursor-default' : status === 'closing'  }"
     >
         <span class="navClickableItem material-icons-outlined !text-lg">{{option.icon}}</span>

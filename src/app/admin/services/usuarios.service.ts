@@ -2,122 +2,137 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MutationResult } from 'apollo-angular';
+// import { MutationResult } from '@apollo/client/core';
 import { formToJson } from 'src/app/helpers/formToJson.helper';
 import { User } from 'src/app/interfaces/user.interface';
 import { ConfirmService } from 'src/app/services/confirm.service';
+import { GraphqlService } from 'src/app/services/graphql.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { NotifyService } from 'src/app/services/notify.service';
+import { CREATE_USER_MUTATION, DELETE_USER_MUTATION, ICreateUserInput, IUpdateUserInput, IUserInput, UPDATE_USER_MUTATION, UPDATE_USER_PASSWORD_MUTATION } from '../graphql/mutations';
+import { GET_USERS_QUERY, GET_USER_QUERY } from '../graphql/queries';
 
 @Injectable()
 export class UsuariosService {
   //TODO: CAMBIAR A GRAPHQL
   constructor(
     private router: Router,
-    private http: HttpClient,
+    private graphql: GraphqlService,
     private confirmService: ConfirmService,
     private notifyService: NotifyService,
     private loading: LoadingService
   ) { }
 
-  private onPostPatchFailure(err: any){
-    if(err.error.message[0]?.includes('3')){
-      this.notifyService.failure('Tanto el nombre como el apellido deben tener más de 3 caracteres')
-      return;
-    }
-    if(typeof err.error.message === 'string' && err.error.statusCode < 500){
-      this.notifyService.failure(err.error.message)
-      return
-    }
+  private onPostPatchFailure({ errors }: MutationResult<any>) {
+    console.error(errors)
+    // if (.error.message[0]?.includes('3')) {
+    //   this.notifyService.failure('Tanto el nombre como el apellido deben tener más de 3 caracteres')
+    //   return;
+    // }
+    // if (typeof err.error.message === 'string' && err.error.statusCode < 500) {
+    //   this.notifyService.failure(err.error.message)
+    //   return
+    // }
     this.notifyService.failure('Ocurrio un error, por favor contacte al administrador de sistemas')
   }
 
-  createUser(userForm: FormGroup){
-    this.confirmService.warning({
-      title:'Registrar usuario',
-      message:'Estas seguro que desea registrar a este usuario? Todos los usuarios son administradores y por lo tanto tienen acceso a todo el sistema.',
-      okText:'Registrar',
-      onOk:()=>{ 
-        this.loading.displayLoading('Registrando...')
-        this.http.post<any>('$/users',{...formToJson(userForm)})
-        .subscribe(
-          {
-            next:(data)=>{
-              this.notifyService.success(`Usuario creado con exito, su contraseña es: ${data.password}`,{timeout:8000})
-              this.router.navigate(['/main','admin','usuarios'])
-              this.loading.hideLoading()
-            },
-            error:(err)=>{this.onPostPatchFailure(err);this.loading.hideLoading()}
-          }      
-        )        
-      }
-    })
+  createUser(userForm: FormGroup) {
+    const formData = formToJson<IUserInput>(userForm,true)
+    this.loading.displayLoading('Creando usuario...')
+    this.graphql.mutate<{ createUser: User }, ICreateUserInput>(
+      CREATE_USER_MUTATION,
+      { createUserInput: formData }
+    )
+      .subscribe(response => {
+        this.loading.hideLoading()
+        if (response.data?.createUser._id) {
+          this.notifyService.success(`Usuario creado con exito, su contraseña es: ${response.data.createUser.password}`, { timeout: 8000 })
+          this.router.navigate(['/main', 'admin', 'usuarios'])
+          return
+        }
+        this.onPostPatchFailure(response)
+      })
   }
 
-  updateUser(userForm: FormGroup, userId: number){
+  updateUser(userForm: FormGroup, userId: string) {
     this.loading.displayLoading('Actualizando...')
-    this.http.patch<any>('$/users/'+userId,{...formToJson(userForm)})
-    .subscribe(
-      {
-        next:(data)=>{
+    const formData = formToJson<IUserInput>(userForm,true)
+    this.graphql.mutate<{ updateUser: User }, IUpdateUserInput>(
+      UPDATE_USER_MUTATION,
+      { updateUserInput: formData, id: userId }
+    )
+      .subscribe(response => {
+        this.loading.hideLoading()
+        if (response.data) {
           this.notifyService.success('Usuario actualizado con exito')
-          this.router.navigate(['/main','admin','usuarios'])
-          this.loading.hideLoading()
-        },
-        error:(err)=>{this.onPostPatchFailure(err);this.loading.hideLoading()}
-      }      
-    )
+          this.router.navigate(['/main', 'admin', 'usuarios'])
+          return
+        }
+        this.onPostPatchFailure(response)
+      })
   }
 
-  updatePassword(userId: number){
+  updatePassword(userId: string) {
     this.loading.displayLoading('Cambiando contraseña...')
-    this.http.patch<any>('$/users/password/'+userId,{})
-    .subscribe(
-      {
-        next:(data)=>{
-          this.notifyService.success(`Contraseña actualizada para este usuario: ${data.newPassword}`,{timeout:8000})     
-          this.loading.hideLoading()     
-        },
-        error:(err)=>{this.onPostPatchFailure(err);this.loading.hideLoading()}
-      }      
+    this.graphql.mutate<{ updateUserPassword: { password: string } }, { id: string }>(
+      UPDATE_USER_PASSWORD_MUTATION,
+      { id: userId }
     )
-  }
-
-  getUsuario(userId: number,next: (user: any)=>void){
-    this.http.get<any>(`$/users/${userId}`)
-    .subscribe({
-      next,
-      error:(err)=>{
-        this.router.navigate(['/main','admin','usuarios'])
+      .subscribe(response => {
+        this.loading.hideLoading()
+        if (response.data) {
+          this.notifyService.success(`Contraseña actualizada para este usuario: ${response.data.updateUserPassword.password}`, { timeout: 8000 })
+          return
+        }
+        this.onPostPatchFailure(response)
       }
-    })
+      )
   }
 
-  getUsers(postAction = (data: any)=>{}){
-    this.http.get<User[]>('$/users').subscribe({
-      next:postAction
-    })
+  getUsuario(userId: string, next: (user: any) => void) {
+    this.graphql.query<{user:User},{id:string}>(
+      GET_USER_QUERY,
+      {id:userId}
+    ).subscribe(response=>{
+      if(response.data){
+        next(response.data.user)
+        return
+      }
+      this.router.navigate(['/main', 'admin', 'usuarios'])
+    })    
   }
 
-  deleteUser(user: User,postAction = ()=>{}){
+  getUsers(postAction = (data: any) => { }) {
+    this.graphql.query<{users:User[]},never>(
+      GET_USERS_QUERY
+    )
+    .subscribe(({data})=>{
+      postAction(data.users)
+    })    
+  }
+
+  deleteUser(user: User, postAction = () => { }) {
     this.confirmService.warning({
-      title:`Eliminar usuario: ${user.nombre} ${user.apellido}`,
-      message:'Estas seguro que desea eliminar a este usuario? Esta accion es irreversible. La sesión de este usuario tambien será cerrada',
-      okText:'Eliminar',
-      onOk:()=>{ 
+      title: `Eliminar usuario: ${user.nombre} ${user.apellido}`,
+      message: 'Estas seguro que desea eliminar a este usuario? Esta accion es irreversible. La sesión de este usuario tambien será cerrada',
+      okText: 'Eliminar',
+      onOk: () => {
         this.loading.displayLoading('Eliminando...')
-        this.http.delete<any>('$/users/'+user.id,{})
-        .subscribe(
-          {
-            next:(data)=>{
-              this.notifyService.success('Usuario eliminado con exito')
-              this.loading.hideLoading()
-              postAction()
-            },
-            error:(err)=>{this.onPostPatchFailure(err);this.loading.hideLoading()}
-          }      
-        )        
+        this.graphql.mutate<{removeUser:{_id:string}},{id:string}>(
+          DELETE_USER_MUTATION,
+          {id:user._id!}
+        ).subscribe(response=>{
+          this.loading.hideLoading()
+          if(response.data){
+            this.notifyService.success('Usuario eliminado con exito')
+            postAction()
+            return
+          }
+          this.onPostPatchFailure(response)
+        })        
       }
     })
-    
+
   }
 }

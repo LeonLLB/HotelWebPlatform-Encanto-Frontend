@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ValidRoles } from 'src/app/interfaces/user.interface';
 import { ConfirmService } from 'src/app/services/confirm.service';
 import { NotifyService } from 'src/app/services/notify.service';
 import { ValidatorService } from 'src/app/services/validator.service';
@@ -17,17 +18,19 @@ import { UsuariosService } from '../../services/usuarios.service';
 export class RegistrarComponent implements OnInit {
 
   private unvalidInputs = [
-    'id',
+    '_id',
+    '__typename',
     'password'
   ]
 
   isEditableForm = false
-  userId!: number
+  userId!: string
 
   userForm = this.fb.group({
     nombre:['',[Validators.required]],
     apellido:['',[Validators.required]],
-    cedula:[null,[Validators.required,Validators.min(1),this.validatorService.maxNumericLength(9,true),this.validatorService.numeric]]
+    cedula:[null,[Validators.required,Validators.min(1),this.validatorService.maxNumericLength(9,true),this.validatorService.numeric]],
+    cargo:['',[Validators.required]]
   })
 
   constructor(
@@ -37,6 +40,11 @@ export class RegistrarComponent implements OnInit {
     private validatorService: ValidatorService
   ) { }
 
+  cargosValidos = [
+    {value: ValidRoles.admin, label: 'Administrador'},
+    {value: ValidRoles.recepcionista, label: 'Recepcionista'},
+  ]
+
   ngOnInit(): void {
     this.route.params
     .subscribe(data=>{
@@ -44,7 +52,7 @@ export class RegistrarComponent implements OnInit {
         this.isEditableForm = true
 
         this.userService.getUsuario(data['id'],(user)=>{
-          this.userId = user.id
+          this.userId = user._id
           let newForm: {[x:string]:any} = {}
 
           for(let userMap of Object.entries(user)){
