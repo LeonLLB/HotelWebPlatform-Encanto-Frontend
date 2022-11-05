@@ -1,11 +1,11 @@
 <table class="rounded-b-lg border-collapse overflow-hidden text-center" [class]="roundedTop ? 'rounded-t-lg' : ''">
-    <thead class="bg-yellow-500">
+    <thead class="bg-gray-800 text-white">
         <ng-container *ngTemplateOutlet="labels">
         </ng-container>
-        <th></th>
+        <th>Opciones</th>
     </thead>
     <tbody>
-        <tr class="even:bg-white odd:bg-[#d5d5d5] border-t-2 border-yellow-500" *ngFor="let item of items">
+        <tr class="even:bg-white odd:bg-[#d5d5d5] border-t-2 border-gray-700" *ngFor="let item of items">
             <ng-container
                 *ngTemplateOutlet="row;context:{$implicit: item}"
             ></ng-container>
