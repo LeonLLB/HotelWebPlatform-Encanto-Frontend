@@ -3,21 +3,21 @@
         <img src="assets/img/Logo CONPPA SD.jpg" alt="logo" class="w-10 h-10 mr-5 rounded-full">
 
         <div>
-            <app-navbar-item icon="phishing" label="Pescadores"></app-navbar-item>
-            <app-navbar-subitem forLabel="Pescadores" [options]="pescadoresOptions"></app-navbar-subitem>
+            <app-navbar-item icon="hotel" label="Habitaciones"></app-navbar-item>
+            <app-navbar-subitem forLabel="Habitaciones" [options]="habitacionesOptions"></app-navbar-subitem>
         </div>
 
-        <div>
-            <app-navbar-item icon="sailing" label="Producción"></app-navbar-item>
-            <app-navbar-subitem forLabel="Producción" [options]="produccionOptions"></app-navbar-subitem>
+        <div *ngIf="isAdmin">
+            <app-navbar-item icon="inventory" label="Inventario"></app-navbar-item>
+            <app-navbar-subitem forLabel="Inventario" [options]="inventarioOptions"></app-navbar-subitem>
         </div>
 
-        <div>
-            <app-navbar-item icon="oil_barrel" label="Recursos"></app-navbar-item>
-            <app-navbar-subitem forLabel="Recursos" [options]="recursosOptions"></app-navbar-subitem>
+        <div *ngIf="isAdmin">
+            <app-navbar-item icon="person" label="Proveedores"></app-navbar-item>
+            <app-navbar-subitem forLabel="Proveedores" [options]="proveedoresOptions"></app-navbar-subitem>
         </div>
 
-        <div>
+        <div *ngIf="isAdmin">
             <app-navbar-item icon="admin_panel_settings" label="Administración"></app-navbar-item>
             <app-navbar-subitem forLabel="Administración" [options]="adminOptions"></app-navbar-subitem>
         </div>

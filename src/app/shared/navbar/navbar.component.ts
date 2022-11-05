@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { tap } from 'rxjs';
+import { ValidRoles } from 'src/app/interfaces/user.interface';
+import { AuthService } from 'src/app/services/auth.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { NotifyService } from 'src/app/services/notify.service';
 import { Options } from '../interfaces/nav-options.interface';
@@ -18,6 +20,7 @@ export class NavbarComponent implements OnInit {
     private http: HttpClient,
     private router: Router,
     private notifyService: NotifyService,
+    private auth: AuthService,
     private loading: LoadingService
   ) { }
 
@@ -49,31 +52,40 @@ export class NavbarComponent implements OnInit {
     this.router.navigate(['auth','login'])
   }
 
-  pescadoresOptions: Options[] = [
-    {label: 'Añadir', icon:'add',route:'main/pescadores/registrar'},
-    {label: 'Consulta', icon:'phishing',route:'main/pescadores'},
-    {label: 'Embarcaciones', icon:'sailing',route:'main/pescadores/embarcaciones'},
+  public get isAdmin() : boolean {
+    return this.auth.rol === ValidRoles.admin
+  }
+
+  public get habitacionesOptions(): Options[]{
+    const {rol} = this.auth
+    const coreResult = [
+      {label: 'Reservar habitación', icon:'bed',route:'main/habitacion/reservar'},
+      {label: 'Estado de alquileres', icon:'bed',route:'main/habitacion/alquileres'},
+    ]
+    if(rol === ValidRoles.admin){
+      coreResult.push(
+        {label: 'Registrar habitaciones', icon:'hotel',route:'main/habitacion/vencidas'},
+        {label: 'Consultar habitaciones', icon:'hotel',route:'main/habitacion'},
+      )
+    }
+    return coreResult
+  }
+
+  inventarioOptions: Options[] = [
+    {label: 'Añadir producto', icon:'add',route:'main/inventario/registrar'},
+    {label: 'Consultar productos', icon:'search',route:'main/inventario'},
+    {label: 'Consultar stock de inventario', icon:'inventory_2',route:'main/inventario/stock'},
+    {label: 'Registrar compra', icon:'add_shopping_cart',route:'main/inventario/compras/registrar'},
+    {label: 'Consultar compras', icon:'shopping_cart',route:'main/inventario/compras'},
   ]
 
-  produccionOptions: Options[] = [
-    {label: 'Añadir', icon:'add',route:'main/produccion/registrar'},
-    {label: 'Consulta', icon:'phishing',route:'main/produccion'},
-    {label: 'Faenas', icon:'sailing',route:'main/produccion/faenas'},
-    {label: 'Especies', icon:'set_meal',route:'main/produccion/especies'},
-    {label: 'Estadisticas', icon:'bar_chart',route:'main/produccion/estadisticas'},
-  ]
-
-  recursosOptions: Options[] = [
-    {label: 'Asignar distribución', icon:'add',route:'main/recursos/distribuir'},
-    {label: 'Asignar litraje', icon:'add',route:'main/recursos/litraje'},
-    {label: 'Consulta', icon:'oil_barrel',route:'main/recursos'},
+  proveedoresOptions: Options[] = [
+    {label: 'Añadir proveedor', icon:'person_add_alt_1',route:'main/proveedores/registrar'},
+    {label: 'Consultar proveedores', icon:'person',route:'main/proveedores'},
   ]
 
   adminOptions: Options[] = [
     {label: 'Usuarios', icon:'person', route:'main/admin/usuarios'},
-    {label: 'Configuración', icon:'settings',route:'main/admin/configuracion'},
-    {label: 'Estado', icon:'settings',route:'main/admin/estado'},
-    {label: 'Respaldo', icon:'backup',route:'main/admin/respaldo'},
   ]
 
   
