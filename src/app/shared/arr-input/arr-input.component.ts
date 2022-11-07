@@ -27,7 +27,7 @@ export class ArrInputComponent implements OnInit {
   constructor(private validatorService: ValidatorService) { }
 
   ngOnInit() {
-    this.inputName = this.label + this.inputIndex
+    this.inputName = this.label + this.inputIndex.toString()
 
     this.control = <FormControl>this.formGroup.get([this.formArrayName,this.inputIndex])
   }

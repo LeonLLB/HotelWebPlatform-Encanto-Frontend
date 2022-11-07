@@ -59,13 +59,13 @@ export class NavbarComponent implements OnInit {
   public get habitacionesOptions(): Options[]{
     const {rol} = this.auth
     const coreResult = [
-      {label: 'Reservar habitación', icon:'bed',route:'main/habitacion/reservar'},
-      {label: 'Estado de alquileres', icon:'bed',route:'main/habitacion/alquileres'},
+      {label: 'Reservar habitación', icon:'bed',route:'main/habitaciones/reservar'},
+      {label: 'Estado de alquileres', icon:'bed',route:'main/habitaciones/alquileres'},
     ]
     if(rol === ValidRoles.admin){
       coreResult.push(
-        {label: 'Registrar habitaciones', icon:'hotel',route:'main/habitacion/vencidas'},
-        {label: 'Consultar habitaciones', icon:'hotel',route:'main/habitacion'},
+        {label: 'Registrar habitaciones', icon:'hotel',route:'main/habitaciones/registrar'},
+        {label: 'Consultar habitaciones', icon:'hotel',route:'main/habitaciones'},
       )
     }
     return coreResult

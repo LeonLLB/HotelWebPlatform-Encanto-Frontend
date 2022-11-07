@@ -18,6 +18,7 @@ import { ArrInputComponent } from './arr-input/arr-input.component';
 import { DateRangeInputComponent } from './date-range-input/date-range-input.component';
 import { NumRangeInputComponent } from './num-range-input/num-range-input.component';
 import { ArrNumRangeInputComponent } from './arr-num-range-input/arr-num-range-input.component';
+import { IconRadioInputComponent } from './icon-radio-input/icon-radio-input.component';
 
 
 
@@ -38,7 +39,8 @@ import { ArrNumRangeInputComponent } from './arr-num-range-input/arr-num-range-i
     ArrInputComponent,
     DateRangeInputComponent,
     NumRangeInputComponent,
-    ArrNumRangeInputComponent
+    ArrNumRangeInputComponent,
+    IconRadioInputComponent
   ],
   imports: [
     ReactiveFormsModule,
@@ -58,6 +60,7 @@ import { ArrNumRangeInputComponent } from './arr-num-range-input/arr-num-range-i
     DateRangeInputComponent,
     NumRangeInputComponent,
     ArrNumRangeInputComponent,
+    IconRadioInputComponent,
     
     BlockableDirective,
     InputErrorDirective,
