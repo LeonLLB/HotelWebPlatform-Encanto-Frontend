@@ -11,33 +11,44 @@
                 </div>
                 <div class="flex flex-row justify-between items-center">
                     
-                    <!-- <div>
-                        <app-input (onDebounce)="getPescadores()"[formGroup]="filterForm" inputName="cedula" label="Cedula"></app-input>
+                    <div>
+                        <app-input (onDebounce)="fetchHabitaciones()" [formGroup]="filterForm" inputName="numero" label="N° Habitación"></app-input>
                     </div>
                     <div>
-                        <app-input (onDebounce)="getPescadores()"[formGroup]="filterForm" inputName="nombre" label="Nombre"></app-input>
+                        <app-input (onDebounce)="fetchHabitaciones()" [formGroup]="filterForm" inputName="piso" label="Piso"></app-input>
                     </div>
-                    <div>
-                        <app-input (onDebounce)="getPescadores()"[formGroup]="filterForm" inputName="apellido" label="Apellido"></app-input>
+                    <div class="ml-4">
+                        <app-simple-select
+                            [Block]="isFetching.caracteristicas"
+                            [formGroup]="filterForm"
+                            inputName="caracteristica"
+                            label="Caracteristica en la habitación"
+                            [inputOptions]="selectValues['caracteristicas']"
+                            (onChangeFunc)="fetchHabitaciones()"
+                        ></app-simple-select>
                     </div>
-                    <div>
-                        <app-zona-input (onDebounce)="getPescadores()" [formGroup]="filterForm"></app-zona-input>
+                    <div class="ml-4">
+                        <app-simple-select
+                            [formGroup]="filterForm"
+                            inputName="tipo"
+                            label="Tipo de habitación"
+                            [inputOptions]="selectValues['tipo']"
+                            (onChangeFunc)="fetchHabitaciones()"
+                        ></app-simple-select>
                     </div>
-                    
-                    <div class="ml-4 flex flex-col">
-                        <label for="tipo" class="font-light">Tipo de pescador</label>
-                    <ng-container [formGroup]="filterForm">
-                        <select class=" border-gray-300 rounded-lg" (change)="getPescadores()" formControlName="tipo" name="tipo" id="tipo">
-                            <option value=""></option>
-                            <option value="F">Fluvial</option>
-                            <option value="M">Marítimo</option>
-                        </select>
-                    </ng-container>                    
-                    </div> -->
+                    <div class="ml-4">
+                        <app-simple-select
+                            [formGroup]="filterForm"
+                            inputName="estado"
+                            label="Estado de la habitación"
+                            [inputOptions]="selectValues['estado']"
+                            (onChangeFunc)="fetchHabitaciones()"
+                        ></app-simple-select>
+                    </div>                    
 
                 </div>                
                 
-                <div class="rounded-lg" [Block]="isFetching">
+                <div class="rounded-lg" [Block]="isFetching.habitaciones">
                     <app-table-crud 
                         (onDeleteClick)="eliminarHabitacion($event)"
                         [updateRouterLink]="['actualizar']"

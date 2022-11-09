@@ -10,7 +10,8 @@ import { LoadingService } from 'src/app/services/loading.service';
 import { NotifyService } from 'src/app/services/notify.service';
 import {Response} from 'src/app/interfaces/response.interface'
 import { CREATE_HABITACION_MUTATION, DELETE_HABITACION_MUTATION, HabitacionInput, IHabitacionInput, UPDATE_HABITACION_MUTATION } from '../graphql/mutations';
-import { PaginateInput, QUERY_HABITACION, QUERY_HABITACIONES } from '../graphql/queries';
+import { FilterHabitacionInput, GET_CARACTERISTICAS_QUERY, PaginateInput, QUERY_HABITACION, QUERY_HABITACIONES } from '../graphql/queries';
+
 
 @Injectable()
 export class HabitacionService {
@@ -124,12 +125,28 @@ export class HabitacionService {
       )
   }
 
-  getAll({paginationData}:{paginationData:PaginateInput}): Observable<SingleExecutionResult<{habitaciones:Response<Habitacion[]>}>>{
+  getAll({paginationData,filterForm}:{paginationData:PaginateInput,filterForm:FormGroup}): Observable<SingleExecutionResult<{habitaciones:Response<Habitacion[]>}>>{
     //TODO FILTRADO
-    return this.graphql.query<{habitaciones:Response<Habitacion[]>},{paginacion: PaginateInput}>(
+    const data = filterForm.value
+    const filterData: FilterHabitacionInput = {}
+
+    if(data.numero && data.numero>0) filterData.numero = parseInt(data.numero)
+    if(data.piso && data.piso>0) filterData.piso = parseInt(data.piso)
+    if(data.caracteristica !== '') filterData.caracteristica = data.caracteristica
+    if(data.tipo !== '') filterData.tipo = data.tipo
+    if(data.estado !== '') filterData.estado = data.estado
+
+    return this.graphql.query<{habitaciones:Response<Habitacion[]>},{filterHabitacionesInput:FilterHabitacionInput,paginacion: PaginateInput}>(
       QUERY_HABITACIONES,
-      {paginacion:paginationData}
+      {filterHabitacionesInput:filterData,paginacion:paginationData}
     )
+  }
+
+  getCaracteristicas(): Observable<string[]>{
+    return this.graphql.query<{caracteristicas:{caracteristicas:string[]}},never>(
+      GET_CARACTERISTICAS_QUERY
+    )
+    .pipe(map(res=>res.data.caracteristicas.caracteristicas))
   }
 
   getOne(id:string):Observable<ApolloQueryResult<{habitacion:Habitacion}>>{

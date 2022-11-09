@@ -13,11 +13,12 @@ interface InputOption {
         <label for="tipo" class="font-light">{{label}}</label>
         <ng-container [formGroup]="formGroup">
             <select 
-            class=" border-gray-300 rounded-lg"
+            class="form-select border-gray-300 rounded-lg"
             (change)="onChange()"
             [formControlName]="inputName"
             [name]="inputName"
             [id]="inputName">
+                <option value="" *ngIf="hasEmptyOption"></option>
                 <option *ngFor="let option of inputOptions" [value]="option.value">{{option.label}}</option>
             </select>
         </ng-container> 
@@ -31,6 +32,7 @@ export class SimpleSelectComponent implements OnInit {
   @Input() formGroup!: FormGroup;
   @Input() inputName!: string;
   @Input() label!: string;
+  @Input() hasEmptyOption = true;
   @Input() inputOptions!: InputOption[];
   @Output() onChangeFunc: EventEmitter<string> = new EventEmitter();
 

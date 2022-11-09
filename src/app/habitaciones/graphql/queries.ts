@@ -25,9 +25,9 @@ export const QUERY_HABITACIONES = gql`
 export interface FilterHabitacionInput{
     numero?:number
     piso?:number
-    tipo?:TipoHabitacion
+    tipo?:TipoHabitacion | ''
     caracteristica?:string
-    estado?: EstadoHabitacion
+    estado?: EstadoHabitacion | ''
 }
 
 export interface PaginateInput{
@@ -43,6 +43,16 @@ export const QUERY_HABITACION = gql`
             numero
             piso
             tipo            
+            caracteristicas
+        }
+    }
+
+`
+
+export const GET_CARACTERISTICAS_QUERY = gql`
+
+    query GetCaracteristicas{
+        caracteristicas{
             caracteristicas
         }
     }
