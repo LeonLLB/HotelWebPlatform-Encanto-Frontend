@@ -15,7 +15,6 @@ import { GET_USERS_QUERY, GET_USER_QUERY } from '../graphql/queries';
 
 @Injectable()
 export class UsuariosService {
-  //TODO: CAMBIAR A GRAPHQL
   constructor(
     private router: Router,
     private graphql: GraphqlService,

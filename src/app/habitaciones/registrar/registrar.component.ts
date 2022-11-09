@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { NotifyService } from 'src/app/services/notify.service';
 import { HabitacionService } from '../services/habitacion.service';
 
 @Component({
@@ -14,7 +16,7 @@ export class RegistrarComponent implements OnInit {
 
   habitacionForm = this.fb.group({
     numero: [null as unknown as number, [Validators.required, Validators.min(1)]],
-    piso: [null as unknown as number, [Validators.required, Validators.min(0)]],
+    piso: [null as unknown as number, [Validators.required, Validators.min(1)]],
     tipo: ['', [Validators.required]],
     caracteristicas: this.fb.array<string>([])
   })
@@ -30,7 +32,9 @@ export class RegistrarComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private habitacionService: HabitacionService
+    private habitacionService: HabitacionService,
+    private notify: NotifyService,
+    private router: Router
   ) { }
 
   get additionalCaracteristicas() {
@@ -56,6 +60,24 @@ export class RegistrarComponent implements OnInit {
     if(this.additionalCaracteristicas.length === 0) this.hasAddedCaracteristica = false 
   }
 
-  registerHabitacionSubmit() { }
+  registerHabitacionSubmit() {
+    if(this.habitacionForm.invalid){
+      this.habitacionForm.markAllAsTouched()
+      return;
+    }
+
+    // if(this.isEditableForm){
+    //   this.userService.updateUser(this.habitacionForm, this.userId)
+    //   return
+    // }
+
+    this.habitacionService.create(this.habitacionForm)
+    .subscribe(response=>{
+      if(response.data?.createHabitacion._id){
+        this.notify.success('Habitación creada con exito!')
+        this.router.navigate(['/main','habitaciones'])
+      }
+    })
+  }
 
 }

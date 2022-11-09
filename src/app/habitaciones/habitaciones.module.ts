@@ -6,6 +6,7 @@ import { RegistrarComponent } from './registrar/registrar.component';
 import { ConsultarComponent } from './consultar/consultar.component';
 import { SharedModule } from '../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HabitacionService } from './services/habitacion.service';
 
 
 @NgModule({
@@ -18,6 +19,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     SharedModule,
     ReactiveFormsModule,
     HabitacionesRoutingModule
+  ],
+  providers:[
+    HabitacionService
   ]
 })
 export class HabitacionesModule { }

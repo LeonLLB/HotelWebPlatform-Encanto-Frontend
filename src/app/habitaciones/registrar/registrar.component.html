@@ -7,10 +7,10 @@
     >
         <h1 class="text-xl text-center col-span-2 -mt-4">{{ (isEditableForm) ? 'Modificar habitación' :  'Registrar una habitación'}}</h1>
         <div>
-            <app-input [formGroup]="habitacionForm" type="number" inputName="numero" label="N° de Habitación"></app-input>
+            <app-input [formGroup]="habitacionForm" min="1" type="number" inputName="numero" label="N° de Habitación"></app-input>
         </div>
         <div>
-            <app-input [formGroup]="habitacionForm" type="number" inputName="piso" label="Piso de la Habitación"></app-input>
+            <app-input [formGroup]="habitacionForm" min="1" type="number" inputName="piso" label="Piso de la Habitación"></app-input>
         </div>
         <div class="col-span-2">
             <hwp-icon-radio-input
