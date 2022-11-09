@@ -33,6 +33,10 @@ export class ConsultarComponent implements OnInit {
     this.fetchHabitaciones()
   }
 
+  th(habitacion:any){
+    return habitacion as Habitacion
+  }
+
   paginate(page: number | string) {
 
     const {newPaginationRange,newPage} = this.paginationService.paginate({

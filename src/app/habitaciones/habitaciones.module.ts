@@ -7,12 +7,14 @@ import { ConsultarComponent } from './consultar/consultar.component';
 import { SharedModule } from '../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HabitacionService } from './services/habitacion.service';
+import { EstadoHabitacionDirective } from './directives/estado.directive';
 
 
 @NgModule({
   declarations: [
     RegistrarComponent,
-    ConsultarComponent
+    ConsultarComponent,
+    EstadoHabitacionDirective
   ],
   imports: [
     CommonModule,

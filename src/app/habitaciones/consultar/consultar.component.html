@@ -37,32 +37,34 @@
 
                 </div>                
                 
-                <!-- <div class="rounded-lg" [Block]="isLoading">
+                <div class="rounded-lg" [Block]="isFetching">
+                    <!-- (onDeleteClick)="eliminarPescador($event)" -->
+                    <!-- [updateRouterLink]="['actualizar']" -->
                     <app-table-crud 
-                        (onDeleteClick)="eliminarPescador($event)"
-                        [updateRouterLink]="['actualizar']"
                         [row]="row"
                         [labels]="labels"
-                        [items]="pescadores"
+                        [items]="habitaciones"
                         >
                         <ng-template #labels>
-                            <th>Cedula</th>
-                            <th>Nombre y Apellido</th>
+                            <th>N° Habitación</th>
+                            <th>Piso de la habitación</th>
                             <th>Tipo</th>
-                            <th>Zona de Pesca</th>
-                            <th>Embarcaciones</th>
+                            <th>Estado</th>
+                            <th>Caracteristicas</th>
                         </ng-template>
-                        <ng-template #row let-pescador>                            
-                            <td> {{pescador.cedula}} </td>
-                            <td [routerLink]="[pescador.id]" class="cursor-pointer">
-                                <span class="border-b w-full border-black"> {{pescador.nombre}} {{pescador.apellido}} </span>
+                        <ng-template #row let-habitacion>                            
+                            <td class="text-3xl"> {{th(habitacion).numero}} </td>
+                            <td class="text-3xl"> {{th(habitacion).piso}} </td>
+                            <td> {{th(habitacion).tipo}} </td>
+                            <td> <span class="rounded-lg bg-opacity-30 p-2" estadoHabitacion [estado]="th(habitacion).estado!"></span> </td>
+                            <td>
+                                <ul class="ml-4 list-disc">
+                                    <li *ngFor="let caracteristica of th(habitacion).caracteristicas">{{caracteristica}}</li>
+                                </ul>
                             </td>
-                            <td> {{pescador.tipo | tipoPescador}} </td>
-                            <td> {{pescador.zonaDePesca}} </td>
-                            <td> {{pescador.embarcaciones}} </td>
                         </ng-template>                                              
                     </app-table-crud>
-                </div>                 -->
+                </div>                
                 <div class="w-full">
                     <app-pagination-bar
                         [pagina]="pagina"

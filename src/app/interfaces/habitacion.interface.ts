@@ -1,3 +1,4 @@
+import { EstadoHabitacion } from "../habitaciones/graphql/queries"
 
 export type TipoHabitacion = 'Singular' | 'Matrimonial' | 'Doble Singular' | 'Singular - Matrimonial'
 
@@ -7,4 +8,5 @@ export interface Habitacion {
     piso: number
     tipo: TipoHabitacion
     caracteristicas?: string[]
+    estado?:EstadoHabitacion
 }
