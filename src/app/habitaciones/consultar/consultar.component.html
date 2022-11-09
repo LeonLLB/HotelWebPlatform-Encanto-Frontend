@@ -1,1 +1,86 @@
-<p>consultar works!</p>
+<div class="flex flex-row mx-4 my-4 justify-center">
+    <div class="flex flex-col items-center space-y-4">
+        <div>
+            <button routerLink="registrar" class="btn-action-primary">Añadir habitacion</button>
+        </div>
+        <div>
+            <div class="flex flex-col items-center space-y-4">
+                <div class="flex flex-col items-center">
+                    <h1 class="text-3xl font-light">Habitaciones del hotel</h1>
+                    <h2 class="text-2xl font-light">Opciones de filtrado</h2>
+                </div>
+                <div class="flex flex-row justify-between items-center">
+                    
+                    <!-- <div>
+                        <app-input (onDebounce)="getPescadores()"[formGroup]="filterForm" inputName="cedula" label="Cedula"></app-input>
+                    </div>
+                    <div>
+                        <app-input (onDebounce)="getPescadores()"[formGroup]="filterForm" inputName="nombre" label="Nombre"></app-input>
+                    </div>
+                    <div>
+                        <app-input (onDebounce)="getPescadores()"[formGroup]="filterForm" inputName="apellido" label="Apellido"></app-input>
+                    </div>
+                    <div>
+                        <app-zona-input (onDebounce)="getPescadores()" [formGroup]="filterForm"></app-zona-input>
+                    </div>
+                    
+                    <div class="ml-4 flex flex-col">
+                        <label for="tipo" class="font-light">Tipo de pescador</label>
+                    <ng-container [formGroup]="filterForm">
+                        <select class=" border-gray-300 rounded-lg" (change)="getPescadores()" formControlName="tipo" name="tipo" id="tipo">
+                            <option value=""></option>
+                            <option value="F">Fluvial</option>
+                            <option value="M">Marítimo</option>
+                        </select>
+                    </ng-container>                    
+                    </div> -->
+
+                </div>                
+                
+                <!-- <div class="rounded-lg" [Block]="isLoading">
+                    <app-table-crud 
+                        (onDeleteClick)="eliminarPescador($event)"
+                        [updateRouterLink]="['actualizar']"
+                        [row]="row"
+                        [labels]="labels"
+                        [items]="pescadores"
+                        >
+                        <ng-template #labels>
+                            <th>Cedula</th>
+                            <th>Nombre y Apellido</th>
+                            <th>Tipo</th>
+                            <th>Zona de Pesca</th>
+                            <th>Embarcaciones</th>
+                        </ng-template>
+                        <ng-template #row let-pescador>                            
+                            <td> {{pescador.cedula}} </td>
+                            <td [routerLink]="[pescador.id]" class="cursor-pointer">
+                                <span class="border-b w-full border-black"> {{pescador.nombre}} {{pescador.apellido}} </span>
+                            </td>
+                            <td> {{pescador.tipo | tipoPescador}} </td>
+                            <td> {{pescador.zonaDePesca}} </td>
+                            <td> {{pescador.embarcaciones}} </td>
+                        </ng-template>                                              
+                    </app-table-crud>
+                </div>                 -->
+                <div class="w-full">
+                    <app-pagination-bar
+                        [pagina]="pagina"
+                        [paginas]="paginas"
+                        [paginationRange]="paginationRange"
+                        (onPaginate)="paginate($event)"
+                    ></app-pagination-bar>
+                </div>
+                <div class="w-full">
+                    <app-pagination-info
+                        message="habitaciones"
+                        [limit]="limit"
+                        [pagina]="pagina"
+                        [items]="total"
+                        (onLimitChange)="onLimitChange($event)"
+                    ></app-pagination-info>                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
