@@ -739,20 +739,8 @@ select {
   margin-top: 0.5rem;
 }
 
-.ml-6 {
-  margin-left: 1.5rem;
-}
-
-.mr-5 {
-  margin-right: 1.25rem;
-}
-
-.ml-4 {
-  margin-left: 1rem;
-}
-
-.ml-5 {
-  margin-left: 1.25rem;
+.mb-2 {
+  margin-bottom: 0.5rem;
 }
 
 .ml-7 {
@@ -763,12 +751,16 @@ select {
   margin-left: 0.75rem;
 }
 
-.mb-2 {
-  margin-bottom: 0.5rem;
-}
-
 .mt-1 {
   margin-top: 0.25rem;
+}
+
+.ml-6 {
+  margin-left: 1.5rem;
+}
+
+.mr-5 {
+  margin-right: 1.25rem;
 }
 
 .block {
@@ -800,6 +792,10 @@ select {
   height: fit-content;
 }
 
+.h-4 {
+  height: 1rem;
+}
+
 .h-screen {
   height: 100vh;
 }
@@ -810,14 +806,6 @@ select {
 
 .h-10 {
   height: 2.5rem;
-}
-
-.h-2 {
-  height: 0.5rem;
-}
-
-.h-4 {
-  height: 1rem;
 }
 
 .w-96 {
@@ -832,20 +820,16 @@ select {
   width: 9rem;
 }
 
+.w-2\/3 {
+  width: 66.666667%;
+}
+
 .w-screen {
   width: 100vw;
 }
 
 .w-10 {
   width: 2.5rem;
-}
-
-.w-1\/2 {
-  width: 50%;
-}
-
-.w-2\/3 {
-  width: 66.666667%;
 }
 
 .border-collapse {
@@ -905,10 +889,6 @@ select {
 
 .flex-col {
   flex-direction: column;
-}
-
-.place-content-center {
-  place-content: center;
 }
 
 .place-items-center {
@@ -1087,10 +1067,6 @@ select {
   padding: 1rem;
 }
 
-.\!p-0 {
-  padding: 0px !important;
-}
-
 .py-6 {
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
@@ -1099,6 +1075,11 @@ select {
 .px-8 {
   padding-left: 2rem;
   padding-right: 2rem;
+}
+
+.\!py-0 {
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
 }
 
 .px-4 {
@@ -1126,11 +1107,6 @@ select {
   padding-right: 0.75rem;
 }
 
-.\!py-0 {
-  padding-top: 0px !important;
-  padding-bottom: 0px !important;
-}
-
 .text-center {
   text-align: center;
 }
@@ -1145,6 +1121,11 @@ select {
   line-height: 1.75rem;
 }
 
+.text-xs {
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+
 .\!text-lg {
   font-size: 1.125rem !important;
   line-height: 1.75rem !important;
@@ -1153,11 +1134,6 @@ select {
 .\!text-3xl {
   font-size: 1.875rem !important;
   line-height: 2.25rem !important;
-}
-
-.text-xs {
-  font-size: 0.75rem;
-  line-height: 1rem;
 }
 
 .font-bold {
@@ -1248,7 +1224,7 @@ select {
   transition-duration: 500ms;
 }
 
-[type='password']:not(.forced),[type='date']:not(.forced),[type='number']:not(.forced),[type='text']:not(.forced){
+[type='password']:not(.forced),[type='date']:not(.forced),[type='number']:not(.forced),input[type='text'].arr-forced{
   -webkit-appearance: none;
   appearance: none;
   border-width: inherit;

@@ -3,7 +3,7 @@
 @tailwind components;
 @tailwind utilities;
 
-[type='password']:not(.forced),[type='date']:not(.forced),[type='number']:not(.forced),[type='text']:not(.forced){
+[type='password']:not(.forced),[type='date']:not(.forced),[type='number']:not(.forced),input[type='text'].arr-forced{
   -webkit-appearance: none;
           appearance: none;
   
