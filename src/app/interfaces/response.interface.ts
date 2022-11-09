@@ -1,7 +1,7 @@
 
 
 export interface Response<T> {
-    data: T
-    totalItems: number
-    totalPages: number
+    result: T
+    pages: number
+    total: number
 }

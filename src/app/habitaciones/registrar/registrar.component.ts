@@ -19,7 +19,7 @@ export class RegistrarComponent implements OnInit {
     piso: [null as unknown as number, [Validators.required, Validators.min(1)]],
     tipo: ['', [Validators.required]],
     caracteristicas: this.fb.array<string>([])
-  })
+  })  
 
   extraCaracteristica = this.fb.control('')
   tiposValidos = [

@@ -8,7 +8,9 @@ import { Habitacion } from 'src/app/interfaces/habitacion.interface';
 import { GraphqlService } from 'src/app/services/graphql.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { NotifyService } from 'src/app/services/notify.service';
+import {Response} from 'src/app/interfaces/response.interface'
 import { CREATE_HABITACION_MUTATION, HabitacionInput, ICreateHabitacionInput } from '../graphql/mutations';
+import { PaginateInput, QUERY_HABITACIONES } from '../graphql/queries';
 
 @Injectable()
 export class HabitacionService {
@@ -74,5 +76,13 @@ export class HabitacionService {
           return response
         })
       )
+  }
+
+  getAll({paginationData}:{paginationData:PaginateInput}): Observable<SingleExecutionResult<{habitaciones:Response<Habitacion[]>}>>{
+    //TODO FILTRADO
+    return this.graphql.query<{habitaciones:Response<Habitacion[]>},{paginacion: PaginateInput}>(
+      QUERY_HABITACIONES,
+      {paginacion:paginationData}
+    )
   }
 }
