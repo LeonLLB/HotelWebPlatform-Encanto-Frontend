@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Habitacion } from 'src/app/interfaces/habitacion.interface';
+import { ConfirmService } from 'src/app/services/confirm.service';
+import { NotifyService } from 'src/app/services/notify.service';
 import { PaginationService } from 'src/app/services/pagination.service';
 import { HabitacionService } from '../services/habitacion.service';
 
@@ -26,7 +28,9 @@ export class ConsultarComponent implements OnInit {
   constructor(
     private habitacionesService: HabitacionService,
     private paginationService: PaginationService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private confirm: ConfirmService,
+    private notify: NotifyService
   ) { }
 
   ngOnInit(): void {
@@ -87,6 +91,28 @@ export class ConsultarComponent implements OnInit {
         return
       }
       console.log(response)
+    })
+  }
+
+  eliminarHabitacion({_id,numero}: Habitacion){
+    this.confirm.danger({
+      title:'Eliminar habitación N° ' + numero,
+      message:'Esta seguro de querer eliminar esta habitación? Tenga en cuenta que eliminar está habitación tambien eliminará los alquileres y reportes financieros de la misma',
+      okText:'Eliminar',
+      onOk:()=>{
+        this.habitacionesService.delete(_id)
+        .subscribe((response)=>{
+          if (response.data?.removeHabitacion._id) {
+            this.notify.success('Habitación eliminada con exito!')
+            if(this.habitaciones.length === 1 && this.pagina > 1){
+              this.paginas -= 1
+              this.pagina -= 1
+              this.paginationRange.pop()
+            }
+            this.paginate(this.pagina)
+          }
+        })
+      }
     })
   }
 

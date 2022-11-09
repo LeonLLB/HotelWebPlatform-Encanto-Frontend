@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { SingleExecutionResult } from '@apollo/client/core';
+import { ApolloQueryResult, SingleExecutionResult } from '@apollo/client/core';
 import { MutationResult } from 'apollo-angular';
 import { catchError, map, Observable, of } from 'rxjs';
 import { formToJson } from 'src/app/helpers/formToJson.helper';
@@ -9,8 +9,8 @@ import { GraphqlService } from 'src/app/services/graphql.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { NotifyService } from 'src/app/services/notify.service';
 import {Response} from 'src/app/interfaces/response.interface'
-import { CREATE_HABITACION_MUTATION, HabitacionInput, ICreateHabitacionInput } from '../graphql/mutations';
-import { PaginateInput, QUERY_HABITACIONES } from '../graphql/queries';
+import { CREATE_HABITACION_MUTATION, DELETE_HABITACION_MUTATION, HabitacionInput, IHabitacionInput, UPDATE_HABITACION_MUTATION } from '../graphql/mutations';
+import { PaginateInput, QUERY_HABITACION, QUERY_HABITACIONES } from '../graphql/queries';
 
 @Injectable()
 export class HabitacionService {
@@ -36,18 +36,19 @@ export class HabitacionService {
   }
 
   private onCatchError(data: any) {
-    console.log({ ...data })
     if (data.networkError !== null && data.networkError !== undefined) {
       if ((data.networkError.error?.errors as { message: string }[])[0].message.includes('got invalid value')) {
-        console.log(data.networkError)
         this.notify.failure('Parece que ciertos valores no puedieron ser enviados correctamente, consulte con el administrador')
       }
       return
     }
     if(data.graphQLErrors.length > 0){
-      if ((data.graphQLErrors[0].extensions?.response?.message as string[])[0].includes('must')) {
-        console.log(data.graphQLErrors)
+      const errorMsg = data.graphQLErrors[0].extensions?.response?.message
+      if ( errorMsg.constructor.toString().includes('Array') && (errorMsg as string[])[0].includes('must')) {
         this.notify.failure('Parece que ciertos valores pudieron no haber sido validos, consulte con el administrador')
+      }
+      else if(errorMsg.constructor.toString().includes('String')){
+        this.notify.failure(errorMsg)
       }
       return
     }
@@ -58,9 +59,54 @@ export class HabitacionService {
   create(formData: FormGroup): Observable<MutationResult<{ createHabitacion: Habitacion }>> {
     const data = formToJson<HabitacionInput>(formData, true)
     this.loading.displayLoading('Creando habitación')
-    return this.graphql.mutate<{ createHabitacion: Habitacion }, ICreateHabitacionInput>(
+    return this.graphql.mutate<{ createHabitacion: Habitacion }, IHabitacionInput>(
       CREATE_HABITACION_MUTATION,
       { habitacionInput: data }
+    )
+      .pipe(
+        catchError(data => {
+          this.loading.hideLoading()
+          this.onCatchError(data)
+          return of({} as any)
+        }),
+        map(response => {
+          this.loading.hideLoading()
+          if (response.errors) {
+            this.onPostPatchFailure(response)
+          }
+          return response
+        })
+      )
+  }
+
+  delete(id:string): Observable<MutationResult<{removeHabitacion:Habitacion}>> {
+    this.loading.displayLoading('Eliminando habitación...')
+    return this.graphql.mutate<{removeHabitacion:Habitacion},{id:string}>(
+      DELETE_HABITACION_MUTATION,
+      {id}
+    )
+    .pipe(
+      catchError(data => {
+        this.loading.hideLoading()
+        this.onCatchError(data)
+        return of({} as any)
+      }),
+      map(response => {
+        this.loading.hideLoading()
+        if (response.errors) {
+          this.onPostPatchFailure(response)
+        }
+        return response
+      })
+    )
+  }
+
+  update(formData: FormGroup,id:string): Observable<MutationResult<{ updateHabitacion: Habitacion }>> {
+    const data = formToJson<HabitacionInput>(formData, true)
+    this.loading.displayLoading('Actualizando habitación...')
+    return this.graphql.mutate<{ updateHabitacion: Habitacion }, (IHabitacionInput & {id:string})>(
+      UPDATE_HABITACION_MUTATION,
+      { habitacionInput: data ,id}
     )
       .pipe(
         catchError(data => {
@@ -83,6 +129,13 @@ export class HabitacionService {
     return this.graphql.query<{habitaciones:Response<Habitacion[]>},{paginacion: PaginateInput}>(
       QUERY_HABITACIONES,
       {paginacion:paginationData}
+    )
+  }
+
+  getOne(id:string):Observable<ApolloQueryResult<{habitacion:Habitacion}>>{
+    return this.graphql.query<{habitacion:Habitacion},{id:string}>(
+      QUERY_HABITACION,
+      {id}
     )
   }
 }

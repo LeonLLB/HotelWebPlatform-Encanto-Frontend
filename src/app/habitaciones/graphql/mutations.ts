@@ -19,6 +19,26 @@ export interface HabitacionInput {
     caracteristicas?: string[]
 }
 
-export interface ICreateHabitacionInput{
+export interface IHabitacionInput{
     habitacionInput: HabitacionInput
 }
+
+export const UPDATE_HABITACION_MUTATION = gql`
+
+    mutation UpdateHabitacion($habitacionInput: UpdateHabitacionInput!,$id:String!){
+        updateHabitacion(updateHabitacionInput: $habitacionInput,id:$id) {
+            _id
+        }
+    }
+
+`
+
+export const DELETE_HABITACION_MUTATION = gql`
+
+    mutation DeleteHabitacion($id:String!){
+        removeHabitacion(id: $id) {
+            _id
+        }
+    }
+
+`

@@ -34,3 +34,17 @@ export interface PaginateInput{
     limit?: number
     offset?: number
 }
+
+export const QUERY_HABITACION = gql`
+
+    query Habitacion($id: String!){
+        habitacion(id: $id) {
+            _id
+            numero
+            piso
+            tipo            
+            caracteristicas
+        }
+    }
+
+`

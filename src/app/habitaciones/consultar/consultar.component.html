@@ -38,9 +38,9 @@
                 </div>                
                 
                 <div class="rounded-lg" [Block]="isFetching">
-                    <!-- (onDeleteClick)="eliminarPescador($event)" -->
-                    <!-- [updateRouterLink]="['actualizar']" -->
                     <app-table-crud 
+                        (onDeleteClick)="eliminarHabitacion($event)"
+                        [updateRouterLink]="['actualizar']"
                         [row]="row"
                         [labels]="labels"
                         [items]="habitaciones"
