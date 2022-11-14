@@ -4,6 +4,7 @@
             <label [for]="inputName" class="ml-6 font-light">{{label}}</label>
             <input
                 [type]="type"
+                class="form-input"
                 [id]="inputName"
                 [attr.list]="inputName+'-list'"
                 (change)="onValueChange()"
