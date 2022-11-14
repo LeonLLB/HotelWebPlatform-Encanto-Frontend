@@ -12,6 +12,7 @@ import { HabitacionCardComponent } from './habitacion-card/habitacion-card.compo
 import { HabitacionesGridCardsComponent } from './habitaciones-grid-cards/habitaciones-grid-cards.component';
 import { ReservarComponent } from './reservar/reservar.component';
 import { AlquileresComponent } from './alquileres/alquileres.component';
+import { AlquilarComponent } from './alquilar/alquilar.component';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { AlquileresComponent } from './alquileres/alquileres.component';
     HabitacionCardComponent,
     HabitacionesGridCardsComponent,
     ReservarComponent,
-    AlquileresComponent
+    AlquileresComponent,
+    AlquilarComponent
   ],
   imports: [
     CommonModule,

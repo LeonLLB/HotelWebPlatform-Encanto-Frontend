@@ -10,7 +10,7 @@ import { HabitacionService } from '../services/habitacion.service';
         <hwp-habitacion-card
           *ngFor="let habitacion of habitaciones"
           [habitacion]="habitacion"
-  
+          [loadDefaultCrudActions]="false"
           ></hwp-habitacion-card>
       </div>
     </div>
@@ -22,6 +22,8 @@ export class HabitacionesGridCardsComponent implements OnInit {
 
   @Input() habitaciones:Habitacion[] = []
   isFetching = true
+  
+
   constructor(
     private habitacionService: HabitacionService
   ) { }

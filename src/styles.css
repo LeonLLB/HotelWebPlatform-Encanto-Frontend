@@ -818,6 +818,22 @@ video {
   animation: open_top 0.35s ease-in-out;
 }
 
+@keyframes display_left {
+  0% {
+    transform: translateX(-3rem);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translatex(0);
+    opacity: 1;
+  }
+}
+
+.animate-display_left {
+  animation: display_left 0.35s ease-in-out;
+}
+
 .cursor-pointer {
   cursor: pointer;
 }
@@ -837,6 +853,10 @@ video {
 
 .grid-cols-\[3rem_minmax\(0\2c 1fr\)_3rem\] {
   grid-template-columns: 3rem minmax(0,1fr) 3rem;
+}
+
+.grid-cols-\[3rem_minmax\(0\2c 1fr\)\] {
+  grid-template-columns: 3rem minmax(0,1fr);
 }
 
 .grid-cols-5 {

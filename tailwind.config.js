@@ -114,6 +114,7 @@ module.exports = {
         pulse: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
         bounce: 'bounce 1s infinite',
         open_top: 'open_top 0.35s ease-in-out',
+        display_left: 'display_left 0.35s ease-in-out',
       },
       aspectRatio: {
         auto: 'auto',
@@ -561,6 +562,10 @@ module.exports = {
         open_top:{
           '0%':{transform:'translateY(-3rem)',opacity:'0'},
           '100%':{transform:'translateY(0)',opacity:'1'}
+        },
+        display_left:{
+          '0%':{transform:'translateX(-3rem)',opacity:'0'},
+          '100%':{transform:'translatex(0)',opacity:'1'}
         },
         ping: {
           '75%, 100%': {
