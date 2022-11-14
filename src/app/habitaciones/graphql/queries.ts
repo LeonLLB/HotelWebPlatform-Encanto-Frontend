@@ -49,6 +49,17 @@ export const QUERY_HABITACION = gql`
 
 `
 
+export const QUERY_CORE_HABITACION = gql`
+
+    query HabitacionsSimple($id: String!){
+        habitacion(id: $id) {
+            _id
+            numero
+        }
+    }
+
+`
+
 export const GET_CARACTERISTICAS_QUERY = gql`
 
     query GetCaracteristicas{

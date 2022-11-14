@@ -1,1 +1,34 @@
-<p>alquilar works!</p>
+<app-center-box>
+    <div>
+        <!-- TODO: FORMULARIO DE CLIENTES -->
+        <form 
+            [formGroup]="alquilerForm"
+            autocomplete="off"
+            (ngSubmit)="alquilerSubmit()"
+            class="h-fit space-y-3 grid grid-cols-2 items-center bg-slate-200 shadow-lg py-6 px-8 rounded-lg"
+            [Block]="isLoading"
+        >
+            <h1 class="text-xl text-center col-span-2 -mt-4" *ngIf="!isLoading">{{ (isEditableForm) ? 'Modificar alquiler' :  'Alquilar habitación N° '+habitacionData.numero}}</h1>
+            <div>
+                <app-input classInput="form-input" [formGroup]="alquilerForm" type="number" inputName="costoDolar" placeholder="20$" label="Costo por día de alquiler"></app-input>
+            </div>
+            <div>
+                <app-input classInput="form-input" [formGroup]="alquilerForm" inputName="procedencia" label="Procedencia del cliente"></app-input>
+            </div>
+            <div class="col-span-2">
+                <app-date-range-input
+                    [inputNames]="['fechaInicio','fechaFin']"
+                    [formGroup]="alquilerForm"
+                    label="Fecha de inicio y fin de alquiler"
+                ></app-date-range-input>
+            </div>
+            <!-- <div>
+                <app-input [formGroup]="alquilerForm" min="1" type="number" inputName="piso" label="Piso de la Habitación"></app-input>
+            </div>             -->
+            <div class="col-span-2 w-full flex flex-row justify-center">
+                <button type="submit" class="btn-action-primary mt-2">{{(isEditableForm) ? 'Modificar alquiler' :'Alquilar'}}</button>
+            </div>
+        </form>
+    </div>
+</app-center-box>
+

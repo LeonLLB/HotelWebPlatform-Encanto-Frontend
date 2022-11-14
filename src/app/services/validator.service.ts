@@ -45,6 +45,9 @@ export class ValidatorService {
       if(errors['dateGreaterThan']){
         return `* Se esperaba una fecha mayor a ${(errors['dateGreaterThan']['min'] as Date).toLocaleDateString()}`
       }
+      if(errors['invalidDate']){
+        return `* La fecha insertada no es valida`
+      }
     }
     return null
   }
@@ -113,6 +116,17 @@ export class ValidatorService {
             actual: date,
             max:maxDate
           }
+        }
+      }
+      return null
+    }
+  }
+
+  validDate():(control: FormControl<string>)=>ValidationErrors|null{
+    return (control)=>{
+      if(new Date(control.value).toString() === 'Invalid Date'){
+        return {
+          invalidDate:true
         }
       }
       return null

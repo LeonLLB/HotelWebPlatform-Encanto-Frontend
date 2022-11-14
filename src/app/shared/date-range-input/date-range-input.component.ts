@@ -6,11 +6,12 @@ import { FormGroup } from '@angular/forms';
   template: `
     <ng-container>
       <div class="flex flex-col justify-center">
-          <span class="text-center">{{label}}</span>
+          <span class="text-center font-light mb-1">{{label}}</span>
           <div class="flex flex-row items-center">
               <div>
                   <app-input
                       type="date"
+                      classInput="form-input"
                       [inputName]="inputNames[0]"
                       [min]="minDates[0]"
                       [max]="maxDates[0]"
@@ -22,6 +23,7 @@ import { FormGroup } from '@angular/forms';
               <div>
                   <app-input
                       type="date"
+                      classInput="form-input"
                       [inputName]="inputNames[1]"
                       [min]="minDates[1]"
                       [max]="maxDates[1]"
@@ -39,8 +41,8 @@ import { FormGroup } from '@angular/forms';
 export class DateRangeInputComponent implements OnInit {
 
   @Input() inputNames!: string[] 
-  @Input() minDates!: string[] 
-  @Input() maxDates!: string[] 
+  @Input() minDates: (string | undefined)[] = [undefined,undefined]
+  @Input() maxDates: (string | undefined)[] = [undefined,undefined]
   @Input() formGroup!: FormGroup
   @Input() label!: string
   @Output() onChange = new EventEmitter()
