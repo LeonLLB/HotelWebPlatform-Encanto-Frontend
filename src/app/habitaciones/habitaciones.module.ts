@@ -8,13 +8,21 @@ import { SharedModule } from '../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HabitacionService } from './services/habitacion.service';
 import { EstadoHabitacionDirective } from './directives/estado.directive';
+import { HabitacionCardComponent } from './habitacion-card/habitacion-card.component';
+import { HabitacionesGridCardsComponent } from './habitaciones-grid-cards/habitaciones-grid-cards.component';
+import { ReservarComponent } from './reservar/reservar.component';
+import { AlquileresComponent } from './alquileres/alquileres.component';
 
 
 @NgModule({
   declarations: [
     RegistrarComponent,
     ConsultarComponent,
-    EstadoHabitacionDirective
+    EstadoHabitacionDirective,
+    HabitacionCardComponent,
+    HabitacionesGridCardsComponent,
+    ReservarComponent,
+    AlquileresComponent
   ],
   imports: [
     CommonModule,

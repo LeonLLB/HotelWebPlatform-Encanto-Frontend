@@ -126,7 +126,6 @@ export class HabitacionService {
   }
 
   getAll({paginationData,filterForm}:{paginationData:PaginateInput,filterForm:FormGroup}): Observable<SingleExecutionResult<{habitaciones:Response<Habitacion[]>}>>{
-    //TODO FILTRADO
     const data = filterForm.value
     const filterData: FilterHabitacionInput = {}
 
