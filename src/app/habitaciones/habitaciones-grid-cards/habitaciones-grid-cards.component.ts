@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Habitacion } from 'src/app/interfaces/habitacion.interface';
 import { HabitacionService } from '../services/habitacion.service';
 
@@ -11,6 +11,8 @@ import { HabitacionService } from '../services/habitacion.service';
           *ngFor="let habitacion of habitaciones"
           [habitacion]="habitacion"
           [loadDefaultCrudActions]="false"
+          (onCardClick)="onClick($event)"
+          [hoverable]="hoverable"
           ></hwp-habitacion-card>
       </div>
     </div>
@@ -21,8 +23,10 @@ import { HabitacionService } from '../services/habitacion.service';
 export class HabitacionesGridCardsComponent implements OnInit {
 
   @Input() habitaciones:Habitacion[] = []
-  isFetching = true
-  
+  @Input() hoverable = false
+  @Output() onHabitacionClick = new EventEmitter<Habitacion>()
+
+  isFetching = true  
 
   constructor(
     private habitacionService: HabitacionService
@@ -36,6 +40,10 @@ export class HabitacionesGridCardsComponent implements OnInit {
       this.habitaciones = data.data ? data.data.habitaciones.result : []
       this.isFetching = false
     })
+  }
+
+  onClick(habitacion: Habitacion){
+    this.onHabitacionClick.emit(habitacion)
   }
 
 }

@@ -10,6 +10,7 @@ interface CardOption {
   selector: 'hwp-habitacion-card',
   template: `
     <div 
+      (click)="onCardClickDispatch()"
       class="transition-all animate-display_left w-80 gap-2 border-2 p-2 rounded-lg grid grid-cols-[3rem_minmax(0,1fr)_3rem] shadow-lg"
       [ngClass]="{
         'bg-green-400 border-green-600':habitacion.estado === 'D',
@@ -17,7 +18,8 @@ interface CardOption {
         'bg-blue-400 border-blue-600':habitacion.estado === 'M',
         '':habitacion.estado === undefined,
         'grid-cols-[3rem_minmax(0,1fr)_3rem]':options.length > 0,
-        'grid-cols-[3rem_minmax(0,1fr)]': options.length === 0
+        'grid-cols-[3rem_minmax(0,1fr)]': options.length === 0,
+        'cursor-pointer':hoverable
       }"
       >
       <div class=" col-span-1 flex flex-col justify-center items-center">
@@ -49,6 +51,7 @@ interface CardOption {
 export class HabitacionCardComponent implements OnInit {
 
   @Input() habitacion!: Habitacion
+  @Input() hoverable = false
   @Input() options: CardOption[] = []
   @Input() loadDefaultCrudActions = true
   @Output() onDefaultUpdate = new EventEmitter<Habitacion>()

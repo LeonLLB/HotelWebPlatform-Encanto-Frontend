@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Habitacion } from 'src/app/interfaces/habitacion.interface';
 
 @Component({
   selector: 'hwp-reservar',
@@ -8,9 +10,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ReservarComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
+  }
+
+  onHabitacionClick(habitacion: Habitacion){
+    this.router.navigate(['/main','habitaciones','alquilar',habitacion._id])
   }
 
 }
