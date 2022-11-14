@@ -5,8 +5,8 @@ export type EstadoHabitacion = 'D' | 'O' | 'M'
 
 export const QUERY_HABITACIONES = gql`
 
-    query Habitaciones($filterHabitacionesInput: FilterHabitacionInput,$paginacion: PaginateInput!){
-        habitaciones(filterHabitacionInput: $filterHabitacionesInput,pagination:$paginacion) {
+    query Habitaciones($filterHabitacionesInput: FilterHabitacionInput,$paginacion: PaginateInput,$doPaginate: Boolean){
+        habitaciones(filterHabitacionInput: $filterHabitacionesInput,pagination:$paginacion,doPaginate:$doPaginate) {
             result {
                 _id
                 numero

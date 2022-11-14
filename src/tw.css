@@ -38,6 +38,10 @@ th{
     @apply font-normal
 }
 
+.btn-transition {
+  @apply transition-all hover:scale-95
+}
+
 .btn-action-primary{
     @apply py-2 px-4 bg-blue-500 text-white text-lg rounded-md shadow-md transition-all;
     @apply hover:bg-blue-600 hover:scale-95;

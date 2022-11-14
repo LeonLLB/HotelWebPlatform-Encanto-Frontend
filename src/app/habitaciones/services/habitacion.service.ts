@@ -125,19 +125,19 @@ export class HabitacionService {
       )
   }
 
-  getAll({paginationData,filterForm}:{paginationData:PaginateInput,filterForm:FormGroup}): Observable<SingleExecutionResult<{habitaciones:Response<Habitacion[]>}>>{
-    const data = filterForm.value
+  getAll({paginationData,filterForm,doPaginate = true}:{paginationData?:PaginateInput,filterForm?:FormGroup,doPaginate?:boolean}): Observable<SingleExecutionResult<{habitaciones:Response<Habitacion[]>}>>{
+    const data = filterForm?.value
     const filterData: FilterHabitacionInput = {}
 
-    if(data.numero && data.numero>0) filterData.numero = parseInt(data.numero)
-    if(data.piso && data.piso>0) filterData.piso = parseInt(data.piso)
-    if(data.caracteristica !== '') filterData.caracteristica = data.caracteristica
-    if(data.tipo !== '') filterData.tipo = data.tipo
-    if(data.estado !== '') filterData.estado = data.estado
+    if(data && data.numero && data.numero>0) filterData.numero = parseInt(data.numero)
+    if(data && data.piso && data.piso>0) filterData.piso = parseInt(data.piso)
+    if(data && data.caracteristica !== '') filterData.caracteristica = data.caracteristica
+    if(data && data.tipo !== '') filterData.tipo = data.tipo
+    if(data && data.estado !== '') filterData.estado = data.estado
 
-    return this.graphql.query<{habitaciones:Response<Habitacion[]>},{filterHabitacionesInput:FilterHabitacionInput,paginacion: PaginateInput}>(
+    return this.graphql.query<{habitaciones:Response<Habitacion[]>},{filterHabitacionesInput?:FilterHabitacionInput,paginacion?: PaginateInput,doPaginate?:boolean}>(
       QUERY_HABITACIONES,
-      {filterHabitacionesInput:filterData,paginacion:paginationData}
+      {filterHabitacionesInput:filterData,paginacion:paginationData,doPaginate}
     )
   }
 
