@@ -1,4 +1,5 @@
 import { gql } from "apollo-angular";
+import { Cliente } from "src/app/interfaces/alquiler.interface";
 import { TipoHabitacion } from "src/app/interfaces/habitacion.interface";
 
 
@@ -42,3 +43,27 @@ export const DELETE_HABITACION_MUTATION = gql`
     }
 
 `
+
+export const ALQUILAR_HABITACION_MUTATION = gql`
+
+    mutation AlquilarHabitacion($data:CreateAlquilerInput!){
+        alquilar(alquilerInput: $data) {
+            _id
+        }
+    }
+
+`
+
+export interface AlquilerInput {
+    habitacion: string
+    costoDolar: number
+    fechaInicio: string
+    fechaFin: string
+    procedencia: string
+    clientePrincipal: Cliente
+    clientesSecundarios?: Cliente[]
+}
+
+export interface IAlquilerInput{
+    data: AlquilerInput
+}

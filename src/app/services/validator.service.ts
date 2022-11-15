@@ -48,6 +48,9 @@ export class ValidatorService {
       if(errors['invalidDate']){
         return `* La fecha insertada no es valida`
       }
+      if(errors['venezuelanNumber']){
+        return `* El número telefonico no es valido`
+      }
     }
     return null
   }
@@ -134,7 +137,8 @@ export class ValidatorService {
   }
 
   venezuelanNumber():(control: FormControl<string>)=>ValidationErrors|null{
-    return ({value})=>{
+    return (control)=>{
+      const value = control.value
       if(!value.startsWith('04') && !value.startsWith('+584')){
         return {
           venezuelanNumber: true
