@@ -3,7 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { debounceTime, Subject } from 'rxjs';
 import { ValidatorService } from 'src/app/services/validator.service';
 
-type InputElementType = 'text' | 'number' | 'password' | 'radio' | 'date'
+type InputElementType = 'text' | 'number' | 'password' | 'radio' | 'date' | 'tel'
 
 @Component({
   selector: 'app-input',

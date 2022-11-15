@@ -13,6 +13,7 @@ import { HabitacionesGridCardsComponent } from './habitaciones-grid-cards/habita
 import { ReservarComponent } from './reservar/reservar.component';
 import { AlquileresComponent } from './alquileres/alquileres.component';
 import { AlquilarComponent } from './alquilar/alquilar.component';
+import { AlquilerService } from './services/alquiler.service';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { AlquilarComponent } from './alquilar/alquilar.component';
     HabitacionesRoutingModule
   ],
   providers:[
-    HabitacionService
+    HabitacionService,
+    AlquilerService
   ]
 })
 export class HabitacionesModule { }

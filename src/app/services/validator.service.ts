@@ -133,6 +133,22 @@ export class ValidatorService {
     }
   }
 
+  venezuelanNumber():(control: FormControl<string>)=>ValidationErrors|null{
+    return ({value})=>{
+      if(!value.startsWith('04') && !value.startsWith('+584')){
+        return {
+          venezuelanNumber: true
+        }
+      }
+      if(value.length !== 11 && value.length !== 13 ){
+        return {
+          venezuelanNumber: true
+        }
+      }
+      return null
+    }
+  }
+
   maxNumericLength(length: number,isRequired:boolean = false): (control:FormControl<number>)=>ValidationErrors| null{
     return (control) => {
       if(!isRequired && (control.value === null ) ) return null
