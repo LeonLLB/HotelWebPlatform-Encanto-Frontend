@@ -10,9 +10,9 @@
                 </div>                               
                 
                 <div class="rounded-lg" [Block]="isFetching">
-                    <!-- [updateRouterLink]="['actualizar']" -->
                     <!-- (onDeleteClick)="eliminarHabitacion($event)" -->
                     <app-table-crud 
+                        [updateRouterLink]="['/main','habitaciones','actualizar-alquiler']"
                         [row]="row"
                         [labels]="labels"
                         [items]="alquileres"

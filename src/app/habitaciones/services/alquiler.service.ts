@@ -8,7 +8,7 @@ import { GraphqlService } from 'src/app/services/graphql.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { NotifyService } from 'src/app/services/notify.service';
 import { ALQUILAR_HABITACION_MUTATION, IAlquilerInput } from '../graphql/mutations';
-import { PaginateInput, QUERY_ALQUILERES } from '../graphql/queries';
+import { PaginateInput, QUERY_ALQUILER, QUERY_ALQUILERES } from '../graphql/queries';
 
 @Injectable()
 export class AlquilerService {
@@ -103,5 +103,11 @@ export class AlquilerService {
       {paginacion:paginationData}
     )
   }
-
+  
+  fetchAlquiler(id:string):Observable<SingleExecutionResult<{alquiler:Alquiler}>>{
+    return this.graphql.query<{alquiler:Alquiler},{id:string}>(
+      QUERY_ALQUILER,
+      {id}
+    )
+  }
 }

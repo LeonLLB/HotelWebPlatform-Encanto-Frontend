@@ -22,15 +22,15 @@ export const QUERY_HABITACIONES = gql`
 
 `
 
-export interface FilterHabitacionInput{
-    numero?:number
-    piso?:number
-    tipo?:TipoHabitacion | ''
-    caracteristica?:string
+export interface FilterHabitacionInput {
+    numero?: number
+    piso?: number
+    tipo?: TipoHabitacion | ''
+    caracteristica?: string
     estado?: EstadoHabitacion | ''
 }
 
-export interface PaginateInput{
+export interface PaginateInput {
     limit?: number
     offset?: number
 }
@@ -96,6 +96,35 @@ export const QUERY_ALQUILERES = gql`
             }
             pages
             total
+        }
+    }
+
+`
+
+export const QUERY_ALQUILER = gql`
+
+    query FetchAlquiler($id: String!){
+        alquiler(id: $id) {
+            habitacion {
+                _id
+                numero
+            }
+            costoDolar
+            fechaInicio
+            fechaFin
+            procedencia
+            clientePrincipal {
+                nombre
+                apellido
+                cedula
+                telefono
+            }
+            clientesSecundarios {
+                nombre
+                apellido
+                cedula
+                telefono
+            }
         }
     }
 
