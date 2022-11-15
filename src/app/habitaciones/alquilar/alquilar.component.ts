@@ -49,10 +49,6 @@ export class AlquilarComponent implements OnInit {
     telefono: this.fb.array<string>([]),
   })
 
-  extraNombre = this.fb.control('')
-  extraApellido = this.fb.control('')
-  extraCedula = this.fb.control(Number(undefined))
-  extraTelefono = this.fb.control('')
   hasAddedInvitado = false
 
   
@@ -79,18 +75,13 @@ export class AlquilarComponent implements OnInit {
 
   addInvitadoToForm() {
 
-    if ( this.extraNombre.invalid || this.extraApellido.invalid || this.extraCedula.invalid || this.extraTelefono.invalid) return;
     this.hasAddedInvitado = true
 
-    this.additionalNombres.push(this.fb.control(this.extraNombre.value, [Validators.required]))
-    this.additionalApellidos.push(this.fb.control(this.extraApellido.value, [Validators.required]))
-    this.additionalCedulas.push(this.fb.control(this.extraCedula.value, [Validators.required]))
-    this.additionalTelefonos.push(this.fb.control(this.extraTelefono.value, [Validators.required, this.validatorsService.venezuelanNumber]))
+    this.additionalNombres.push(this.fb.control('', [Validators.required]))
+    this.additionalApellidos.push(this.fb.control('', [Validators.required]))
+    this.additionalCedulas.push(this.fb.control('' as unknown as Number, [Validators.required]))
+    this.additionalTelefonos.push(this.fb.control('', [Validators.required, this.validatorsService.venezuelanNumber]))
 
-    this.additionalNombres.reset()
-    this.additionalApellidos.reset()
-    this.additionalCedulas.reset()
-    this.additionalTelefonos.reset()
   }
 
   deleteInputFromArr(i: number) {
