@@ -1,1 +1,66 @@
-<p>alquileres works!</p>
+<div class="flex flex-row mx-4 my-4 justify-center">
+    <div class="flex flex-col items-center space-y-4">
+        <div>
+            <button [routerLink]="['/main','habitaciones','reservar']" class="btn-action-primary">Reservar una habitación</button>
+        </div>
+        <div>
+            <div class="flex flex-col items-center space-y-4">
+                <div class="flex flex-col items-center">
+                    <h1 class="text-3xl font-light">Alquileres actuales</h1>
+                </div>                               
+                
+                <div class="rounded-lg" [Block]="isFetching">
+                    <!-- [updateRouterLink]="['actualizar']" -->
+                    <!-- (onDeleteClick)="eliminarHabitacion($event)" -->
+                    <app-table-crud 
+                        [row]="row"
+                        [labels]="labels"
+                        [items]="alquileres"
+                        >
+                        <ng-template #labels>
+                            <th>N° Habitación</th>
+                            <th>Fecha de Inicio</th>
+                            <th>Fecha de Fin</th>
+                            <th>Procedencia</th>
+                            <th>Costo ($)</th>
+                            <th>Inquilos</th>
+                        </ng-template>
+                        <ng-template #row let-alquiler>          
+                            <!-- TODO: INTERNACIONALIZACION -->
+                            <td class="text-3xl"> {{ta(alquiler).habitacion.numero}} </td>
+                            <td> {{ getDateFromData(ta(alquiler).fechaInicio) | date}} </td>
+                            <td> {{ getDateFromData(ta(alquiler).fechaFin) | date}} </td>
+                            <td>{{ta(alquiler).procedencia}}</td>
+                            <td>{{ta(alquiler).costoDolar | currency:'USD'}}</td>
+                            <td>
+                                <ul class="ml-4 list-disc">
+                                    <li>{{ta(alquiler).clientePrincipal.nombre}} {{ta(alquiler).clientePrincipal.apellido}}</li>
+                                    <li *ngFor="let inquilo of ta(alquiler).clientesSecundarios">
+                                        {{inquilo.nombre}} {{inquilo.apellido}}
+                                    </li>
+                                </ul>
+                            </td>
+                        </ng-template>                                              
+                    </app-table-crud>
+                </div>                
+                <div class="w-full">
+                    <app-pagination-bar
+                        [pagina]="pagina"
+                        [paginas]="paginas"
+                        [paginationRange]="paginationRange"
+                        (onPaginate)="paginate($event)"
+                    ></app-pagination-bar>
+                </div>
+                <div class="w-full">
+                    <app-pagination-info
+                        message="alquileres"
+                        [limit]="limit"
+                        [pagina]="pagina"
+                        [items]="total"
+                        (onLimitChange)="onLimitChange($event)"
+                    ></app-pagination-info>                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

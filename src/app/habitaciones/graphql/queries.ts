@@ -69,3 +69,34 @@ export const GET_CARACTERISTICAS_QUERY = gql`
     }
 
 `
+
+export const QUERY_ALQUILERES = gql`
+
+    query FetchAlquileres($paginacion: PaginateInput!){
+        alquileres(paginateInput:$paginacion) {
+            result {
+                _id
+                habitacion {
+                    numero
+                }
+                costoDolar
+                fechaInicio
+                fechaFin
+                procedencia
+                clientePrincipal {
+                    nombre
+                    apellido
+                }
+                clientesSecundarios {
+                    nombre
+                    apellido
+                }
+                createdAt
+                updatedAt
+            }
+            pages
+            total
+        }
+    }
+
+`

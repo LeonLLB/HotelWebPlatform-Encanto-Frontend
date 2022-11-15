@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
+import { SingleExecutionResult } from '@apollo/client/core';
 import { MutationResult } from 'apollo-angular';
 import { Observable, catchError, of, map } from 'rxjs';
-import { AlquilerFormData, AlquilerInputData, ClienteFormData, InvitadosFormData } from 'src/app/interfaces/alquiler.interface';
+import { Alquiler, AlquilerFormData, AlquilerInputData, ClienteFormData, InvitadosFormData } from 'src/app/interfaces/alquiler.interface';
+import { Response } from 'src/app/interfaces/response.interface';
 import { GraphqlService } from 'src/app/services/graphql.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { NotifyService } from 'src/app/services/notify.service';
 import { ALQUILAR_HABITACION_MUTATION, IAlquilerInput } from '../graphql/mutations';
+import { PaginateInput, QUERY_ALQUILERES } from '../graphql/queries';
 
 @Injectable()
 export class AlquilerService {
@@ -72,7 +75,7 @@ export class AlquilerService {
     this.notify.failure('Hubo un error, consulte al administrador de sistemas')
   }
 
-  alquilar(data:AlquilerInputData): Observable<MutationResult<{ alquilar: any }>> {
+  alquilar(data:AlquilerInputData): Observable<MutationResult<{ alquilar: Alquiler }>> {
     this.loading.displayLoading('Alquilando Habitación')
     return this.graphql.mutate<{ alquilar: any }, IAlquilerInput>(
       ALQUILAR_HABITACION_MUTATION,
@@ -92,6 +95,13 @@ export class AlquilerService {
           return response
         })
       )
+  }
+
+  fetchPaginated(paginationData:PaginateInput): Observable<SingleExecutionResult<{alquileres:Response<Alquiler[]>}>>{
+    return this.graphql.query<{alquileres:Response<Alquiler[]>},{paginacion?: PaginateInput}>(
+      QUERY_ALQUILERES,
+      {paginacion:paginationData}
+    )
   }
 
 }

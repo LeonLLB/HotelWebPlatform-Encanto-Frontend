@@ -13,6 +13,7 @@ const routes: Routes = [
   {path:'registrar',canActivate:[AuthGuard,AdminGuard],component:RegistrarComponent},
   {path:'reservar',canActivate:[AuthGuard],component:ReservarComponent},
   {path:'alquilar/:habitacionId',canActivate:[AuthGuard],component:AlquilarComponent},
+  {path:'actualizar-alquiler/:Id',canActivate:[AuthGuard],component:AlquilarComponent},
   {path:'alquileres',canActivate:[AuthGuard],component:AlquileresComponent},
   {path:'actualizar/:id',canActivate:[AuthGuard,AdminGuard],component:RegistrarComponent},
 ];
