@@ -16,6 +16,7 @@ import { HabitacionService } from '../services/habitacion.service';
 })
 export class AlquilarComponent implements OnInit {
 
+  habitacionesData: Habitacion[] = [];
   constructor(
     private route: ActivatedRoute,
     private fb: FormBuilder,
@@ -49,9 +50,17 @@ export class AlquilarComponent implements OnInit {
     cedula: this.fb.array<number>([]),
     telefono: this.fb.array<string>([]),
   })
+  conditionForm = this.fb.group({
+    condition:['Datos',Validators.required]
+  })
 
   hasAddedInvitado = false
 
+  conditionInputs = [
+    {value:'Error',label:'Por error'},
+    {value:'Datos',label:'Datos equivocados'},
+    {value:'Traslado',label:'Por traslado'},
+  ]
 
   get additionalNombres() {
     return this.getAdditionalArrayInput('nombre')
@@ -67,6 +76,13 @@ export class AlquilarComponent implements OnInit {
 
   get additionalTelefonos() {
     return this.getAdditionalArrayInput('telefono')
+  }
+
+  get HabitacionesIntoSelectData(){
+    return this.habitacionesData.map(habitacion=>({
+      value:habitacion._id,
+      label:`Habitación N° ${habitacion.numero}`
+    }))
   }
 
 
@@ -110,11 +126,13 @@ export class AlquilarComponent implements OnInit {
       if (params['id']) {
         this.isLoading = true
         this.alquilerService.fetchAlquiler(params['id'])
-          .subscribe(response => {
-            if (response.data && response.data.alquiler) {
+        .subscribe(response => {
+          if (response.data && response.data.alquiler) {
+              this.alquilerId = params['id']
               this.isLoading = false
               this.isEditableForm = true
               this.preloadForm(response.data.alquiler)
+              this.getHabitacionesData()
               return
             }
             this.router.navigate(['/main', 'habitaciones', 'alquileres'])
@@ -161,6 +179,18 @@ export class AlquilarComponent implements OnInit {
       this.isLoading = false
     })
   }
+
+  getHabitacionesData() {
+    this.isLoading = true
+    this.habitacionService.getSimpleOnes().subscribe(response => {
+      this.habitacionesData = response.data.habitaciones.result
+      this.isLoading = false
+    })
+  }
+
+  get isMotiveDatos():boolean{
+    return this.conditionForm.value.condition === 'Datos'
+  }
   
   private formatDateFromDate(date:Date):string{
     return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
@@ -188,23 +218,28 @@ export class AlquilarComponent implements OnInit {
       this.invitadosForm.markAllAsTouched()
       return;
     }
-    //TODO ACTUALIZACION
-    // if(this.isEditableForm){
-    //   this.habitacionService.update(this.habitacionForm, this.habitacionId)
-    //   .subscribe(response => {
-    //     if (response.data?.updateHabitacion._id) {
-    //       this.notify.success('Habitación modificada y actualizada con exito!')
-    //       this.router.navigate(['/main', 'habitaciones'])
-    //     }
-    //   })
-    //   return
-    // }
 
     const data = this.alquilerService.generateAlquilerDataFromFormGroups(
       this.alquilerForm.value as AlquilerFormData,
       this.clientePrincipalForm.value as unknown as ClienteFormData,
       this.invitadosForm.value as InvitadosFormData,
     )
+
+    if(this.isEditableForm){
+
+      if(this.conditionForm.value.condition === 'Datos'){
+        this.alquilerForm.controls.habitacion.setValue(this.habitacionData._id)
+      }
+
+      this.alquilerService.update(data, this.conditionForm.value.condition as any,this.alquilerId )
+      .subscribe(response => {
+        if (response.data?.updateAlquiler._id) {
+          this.notify.success('Alquiler modificado y actualizado con exito!')
+          this.router.navigate(['/main', 'habitaciones','alquileres'])
+        }
+      })
+      return
+    }   
 
     this.alquilerService.alquilar(data)
       .subscribe(response => {

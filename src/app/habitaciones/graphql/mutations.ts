@@ -67,3 +67,19 @@ export interface AlquilerInput {
 export interface IAlquilerInput{
     data: AlquilerInput
 }
+
+export interface IAlquilerUpdateInput{
+    data: AlquilerInput,
+    id: string,
+    motivo: string,
+}
+
+export const ACTUALIZAR_ALQUILER_MUTATION = gql`
+
+    mutation ActualizarAlquiler($id: String!,$data:UpdateAlquilerInput!,$motivo:String!){
+        updateAlquiler(id: $id, alquilerInput: $data, motivoActualizacion: $motivo) {
+            _id
+        }
+    }
+
+`

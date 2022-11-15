@@ -60,6 +60,19 @@ export const QUERY_CORE_HABITACION = gql`
 
 `
 
+export const QUERY_CORE_HABITACIONES = gql`
+
+    query HabiatcionesSimples($filterHabitacionesInput: FilterHabitacionInput,$paginacion: PaginateInput,$doPaginate: Boolean){
+        habitaciones(filterHabitacionInput: $filterHabitacionesInput,pagination:$paginacion,doPaginate:$doPaginate) {
+            result {
+                _id
+                numero
+            }
+        }
+    }
+
+`
+
 export const GET_CARACTERISTICAS_QUERY = gql`
 
     query GetCaracteristicas{
