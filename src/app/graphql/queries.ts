@@ -11,3 +11,13 @@ export const VERIFY_USER_QUERY = gql`
 export interface VerifyUserQueryResultInterface {
     rol: string
 }
+
+export const LOGOUT_QUERY = gql`
+
+    query LogOut{
+        logout {
+            success
+        }
+    }
+
+`

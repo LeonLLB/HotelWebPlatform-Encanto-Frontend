@@ -1,10 +1,11 @@
 <ng-container [formGroup]="formGroup">
     <div [formArrayName]="formArrayName" class="flex flex-col items-center space-y-2">
         <div class="flex flex-col space-x-4 items-start">
+            <label [for]="inputName" class="ml-6 font-light">{{labelText}}</label>
             <input
                 [type]="type"
                 [id]="inputName"
-                class="p-1 rounded-md outline-none border border-gray-300"
+                class="p-1 rounded-md outline-none border border-gray-300 form-input"
                 [class]="className"
                 [formControlName]="inputIndex"
                 [placeholder]="placeholder">

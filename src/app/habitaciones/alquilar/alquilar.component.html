@@ -1,0 +1,113 @@
+<app-center-box>
+    <div class="grid grid-cols-2 gap-4">
+        <form 
+            [formGroup]="alquilerForm"
+            autocomplete="off"
+            (ngSubmit)="alquilerSubmit()"
+            class="h-fit space-y-3 grid grid-cols-2 items-center bg-slate-200 shadow-lg py-6 px-8 rounded-lg"
+            [Block]="isLoading"
+        >
+            <h1 class="text-xl text-center col-span-2 -mt-4" *ngIf="!isLoading">{{ (isEditableForm) ? 'Modificar alquiler de habitación N° '+habitacionData.numero :  'Alquilar habitación N° '+habitacionData.numero}}</h1>
+            <div>
+                <app-input [formGroup]="alquilerForm" type="number" inputName="costoDolar" placeholder="20$" label="Costo por día de alquiler"></app-input>
+            </div>
+            <div>
+                <app-input [formGroup]="alquilerForm" inputName="procedencia" label="Procedencia del cliente"></app-input>
+            </div>
+            <div class="col-span-2">
+                <app-date-range-input
+                    [inputNames]="['fechaInicio','fechaFin']"
+                    [formGroup]="alquilerForm"
+                    label="Fecha de inicio y fin de alquiler"
+                ></app-date-range-input>
+            </div>            
+            <div class="col-span-2 w-full flex flex-row justify-center">
+                <button type="submit" class="btn-action-primary mt-2">{{(isEditableForm) ? 'Modificar alquiler' :'Alquilar'}}</button>
+            </div>
+            <div *ngIf="isEditableForm" class="col-span-2">
+                <app-radio-input
+                    [formGroup]="conditionForm"
+                    [radioInputs]="conditionInputs"
+                    inputName="condition"
+                    label="Motivo de la modificación"
+                ></app-radio-input>
+            </div>
+            <div *ngIf="!isLoading && !isMotiveDatos">
+                <app-simple-select
+                    [formGroup]="alquilerForm"
+                    inputName="habitacion"
+                    label="Habitación"
+                    [inputOptions]="HabitacionesIntoSelectData"
+                
+                ></app-simple-select>
+            </div>
+        </form>
+        <form
+            [formGroup]="clientePrincipalForm"
+            autocomplete="off"
+            (ngSubmit)="alquilerSubmit()"
+            class="h-fit space-y-3 grid grid-cols-2 items-center bg-slate-200 shadow-lg py-6 px-8 rounded-lg"
+        >
+            <h1 class="text-xl text-center col-span-2 -mt-4">Datos de los inquilinos</h1>
+            <div>
+                <app-input [formGroup]="clientePrincipalForm" inputName="nombre" label="Nombre"></app-input>
+            </div>
+            <div>
+                <app-input [formGroup]="clientePrincipalForm" inputName="apellido" label="Apellido"></app-input>
+            </div>
+            <div>
+                <app-input [formGroup]="clientePrincipalForm" inputName="cedula" type="number" label="Cedula"></app-input>
+            </div>
+            <div>
+                <app-input [formGroup]="clientePrincipalForm" type="tel" inputName="telefono" label="Telefono"></app-input>
+            </div>
+            <div class="col-span-2 flex flex-row justify-center">
+                <button (click)="addInvitadoToForm()" type="button" class="btn-action-primary mt-2">Añadir inquilo adicional</button>
+            </div>
+            <div *ngIf="hasAddedInvitado" class="h-96 overflow-y-auto overflow-x-hidden -ml-6 col-span-2 w-full">
+                <div class="mb-2" *ngFor="let _ of additionalNombres.controls; let i = index">
+                    <div class="grid-cols-2 grid w-full ml-7">
+                        <app-arr-input
+                            formArrayName="nombre"
+                            [formGroup]="invitadosForm"
+                            class="w-36"
+                            label="Nombre"
+                            type="text"                        
+                            [inputIndex]="i"
+                        ></app-arr-input>
+                        <app-arr-input
+                            formArrayName="apellido"
+                            [formGroup]="invitadosForm"
+                            class="w-36"
+                            label="Apellido"
+                            type="text"                        
+                            [inputIndex]="i"
+                        ></app-arr-input>
+                        <app-arr-input
+                            formArrayName="cedula"
+                            [formGroup]="invitadosForm"
+                            class="w-36"
+                            label="Cedula"
+                            type="text"                        
+                            [inputIndex]="i"
+                        ></app-arr-input>
+                        <app-arr-input
+                            formArrayName="telefono"
+                            [formGroup]="invitadosForm"
+                            class="w-36"
+                            label="Telefono"
+                            type="text"                        
+                            [inputIndex]="i"
+                        ></app-arr-input>
+                    </div>            
+                    <div class="grid-cols-1 w-2/3 ml-3 place-items-center grid mt-1">
+                        <button type="button" (click)="deleteInputFromArr(i)" class="text-xs h-4 w-full !py-0 btn-action-primary-small">
+                            Borrar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</app-center-box>
+

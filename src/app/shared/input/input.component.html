@@ -4,10 +4,11 @@
             <label [for]="inputName" class="ml-6 font-light">{{label}}</label>
             <input
                 [type]="type"
-                [id]="inputName"
+                class="form-input p-1 rounded-md outline-none border border-gray-300 "
+                [id]="inputName "
                 [attr.list]="inputName+'-list'"
                 (change)="onValueChange()"
-                [class]="(type!=='text')?'!p-2 !rounded-md !border !outline-none !border-gray-300 '+className:'p-1 rounded-md outline-none border border-gray-300 '+className"
+                [class]="className"
                 [formControlName]="inputName"
                 [max]="(type === 'number' || type === 'date') ? max : null"
                 [min]="(type === 'number' || type === 'date') ? min : null"

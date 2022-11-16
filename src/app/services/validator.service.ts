@@ -45,6 +45,12 @@ export class ValidatorService {
       if(errors['dateGreaterThan']){
         return `* Se esperaba una fecha mayor a ${(errors['dateGreaterThan']['min'] as Date).toLocaleDateString()}`
       }
+      if(errors['invalidDate']){
+        return `* La fecha insertada no es valida`
+      }
+      if(errors['venezuelanNumber']){
+        return `* El número telefonico no es valido`
+      }
     }
     return null
   }
@@ -113,6 +119,34 @@ export class ValidatorService {
             actual: date,
             max:maxDate
           }
+        }
+      }
+      return null
+    }
+  }
+
+  validDate():(control: FormControl<string>)=>ValidationErrors|null{
+    return (control)=>{
+      if(new Date(control.value).toString() === 'Invalid Date'){
+        return {
+          invalidDate:true
+        }
+      }
+      return null
+    }
+  }
+
+  venezuelanNumber():(control: FormControl<string>)=>ValidationErrors|null{
+    return (control)=>{
+      const value = control.value
+      if(!value.startsWith('04') && !value.startsWith('+584')){
+        return {
+          venezuelanNumber: true
+        }
+      }
+      if(value.length !== 11 && value.length !== 13 ){
+        return {
+          venezuelanNumber: true
         }
       }
       return null

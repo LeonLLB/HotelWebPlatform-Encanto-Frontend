@@ -1,8 +1,8 @@
 <ng-container [formGroup]="formGroup">
     <div class="flex flex-col items-center space-y-2">
         <label [for]="inputName" class="ml-6 font-light"> {{label}} </label>
-        <div class="flex flex-row space-x-4">    
-            <div *ngFor="let input of radioInputs" class="flex flex-row space-x-2 items-center">
+        <div class="grid grid-cols-2">    
+            <div *ngFor="let input of radioInputs" class="flex flex-row items-center">
                 <input  type="radio"
                         (change)="change(input.value)"
                         [formControlName]="inputName"
@@ -11,7 +11,11 @@
                         [id]="input.label"
                         class="form-radio text-gray-700 active:ring-gray-700 checked:ring-gray-700"
                         >
-                <label [for]="input.label" class="ml-6">{{input.label | titlecase}}</label>
+                <label [for]="input.label" class="ml-6">
+                    <span *ngIf="input.icon" class="material-icons">{{input.icon}}</span>
+                    <span *ngIf="input.icons" class="material-icons">{{input.icons.join(' ')}}</span>
+                    {{input.label | titlecase}}
+                </label>
             </div>
         </div>
         <span
