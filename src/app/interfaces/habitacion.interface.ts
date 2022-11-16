@@ -9,4 +9,5 @@ export interface Habitacion {
     tipo: TipoHabitacion
     caracteristicas?: string[]
     estado?:EstadoHabitacion
+    imgUrl?: string
 }

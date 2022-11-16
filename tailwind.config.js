@@ -115,6 +115,7 @@ module.exports = {
         bounce: 'bounce 1s infinite',
         open_top: 'open_top 0.35s ease-in-out',
         display_left: 'display_left 0.35s ease-in-out',
+        display_right: 'display_right 0.35s ease-in-out',
       },
       aspectRatio: {
         auto: 'auto',
@@ -565,6 +566,10 @@ module.exports = {
         },
         display_left:{
           '0%':{transform:'translateX(-3rem)',opacity:'0'},
+          '100%':{transform:'translatex(0)',opacity:'1'}
+        },
+        display_right:{
+          '0%':{transform:'translateX(3rem)',opacity:'0'},
           '100%':{transform:'translatex(0)',opacity:'1'}
         },
         ping: {

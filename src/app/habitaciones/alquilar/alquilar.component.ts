@@ -159,7 +159,7 @@ export class AlquilarComponent implements OnInit {
       nombre:data.clientePrincipal.nombre,
       apellido:data.clientePrincipal.apellido,
       cedula:data.clientePrincipal.cedula,
-      telefono:data.clientePrincipal.telefono,
+      telefono:data.clientePrincipal.telefono as any,
     })
 
     //RELLENAR INVITADOS

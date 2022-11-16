@@ -64,7 +64,11 @@
                             <th>Caracteristicas</th>
                         </ng-template>
                         <ng-template #row let-habitacion>                            
-                            <td class="text-3xl"> {{th(habitacion).numero}} </td>
+                            <td class="text-3xl cursor-pointer" [routerLink]="[habitacion._id]"> 
+                                <span class="border-b w-full border-black">
+                                    {{th(habitacion).numero}} 
+                                </span>
+                            </td>
                             <td class="text-3xl"> {{th(habitacion).piso}} </td>
                             <td> {{th(habitacion).tipo}} </td>
                             <td> <span class="rounded-lg bg-opacity-30 p-2" estadoHabitacion [estado]="th(habitacion).estado!"></span> </td>

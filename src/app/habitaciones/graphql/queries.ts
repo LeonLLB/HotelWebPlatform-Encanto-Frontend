@@ -142,3 +142,37 @@ export const QUERY_ALQUILER = gql`
     }
 
 `
+
+export const QUERY_FULL_ALQUILER = gql`
+
+    query FetchFullAlquiler($id: String!){
+        alquiler(id: $id,queryBy:"habitacion") {            
+            costoDolar
+            fechaInicio
+            fechaFin
+            procedencia
+            clientePrincipal {
+                nombre
+                apellido
+                cedula
+                telefono
+            }
+            clientesSecundarios {
+                nombre
+                apellido
+                cedula
+                telefono
+            }
+        }
+        habitacion(id: $id) {
+            _id
+            numero
+            piso
+            tipo
+            caracteristicas
+            estado
+            imgUrl
+        }
+    }
+
+`
