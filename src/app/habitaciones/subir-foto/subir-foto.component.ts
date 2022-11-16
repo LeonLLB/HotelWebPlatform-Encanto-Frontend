@@ -39,19 +39,17 @@ export class SubirFotoComponent implements OnInit {
     reader.onload = () => this.imgTemp = reader.result
   }
 
-  onFileSubmit(){
-    throw new Error("UNIMPLEMENTED");
-    
-    // this.fileService.subirArchivo(`$/pescadores/imagen/${this.pescadorId}`,this.file)
-    // .subscribe({
-    //   next:()=>{
-    //     this.notifyService.success('Foto del pescador subida con exito')
-    //     this.router.navigate(['main','pescadores',this.pescadorId])
-    //   },
-    //   error:(err)=>{
-    //     this.notifyService.failure(err.error.message) 
-    //   },
-    // })
+  onFileSubmit(){    
+    this.fileService.subirArchivo(`/files/habitacion/subir-foto/${this.habitacionId}`,this.file)
+    .subscribe({
+      next:()=>{
+        this.notifyService.success('Foto de la habitación subida con exito')
+        this.router.navigate(['main','habitaciones',this.habitacionId])
+      },
+      error:(err)=>{
+        this.notifyService.failure(err.error.message) 
+      },
+    })
   }
 
 }

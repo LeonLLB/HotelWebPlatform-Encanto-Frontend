@@ -171,6 +171,7 @@ export const QUERY_FULL_ALQUILER = gql`
             tipo
             caracteristicas
             estado
+            imgUrl
         }
     }
 

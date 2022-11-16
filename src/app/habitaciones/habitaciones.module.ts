@@ -17,6 +17,8 @@ import { AlquilerService } from './services/alquiler.service';
 import { HabitacionComponent } from './habitacion/habitacion.component';
 import { TipoToIconPipe } from './pipes/tipo-to-icon.pipe';
 import { SubirFotoComponent } from './subir-foto/subir-foto.component';
+import { ImagenHabitacionPipe } from './pipes/imagen-habitacion.pipe';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -31,12 +33,14 @@ import { SubirFotoComponent } from './subir-foto/subir-foto.component';
     AlquilarComponent,
     HabitacionComponent,
     SubirFotoComponent,
-    TipoToIconPipe
+    TipoToIconPipe,
+    ImagenHabitacionPipe
   ],
   imports: [
     CommonModule,
     SharedModule,
     ReactiveFormsModule,
+    HttpClientModule,
     HabitacionesRoutingModule
   ],
   providers:[
