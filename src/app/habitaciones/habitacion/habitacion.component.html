@@ -9,7 +9,7 @@
         </div>
         <span *ngIf="isAdmin" class="animate-display_left flex flex-row space-x-2">
             <button [routerLink]="['/main','habitaciones','actualizar',habitacion._id]" class="btn-action-primary">Modificar habitación</button>
-            <button class="btn-action-danger">Eliminar habitación</button>
+            <button (click)="eliminarHabitacion()" class="btn-action-danger">Eliminar habitación</button>
         </span>
     </div>
     <!-- TODO IMAGEN DE HABITACIÓN -->
