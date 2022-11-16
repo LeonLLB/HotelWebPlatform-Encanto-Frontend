@@ -1,5 +1,5 @@
-<div [Block]="isFetching" class="grid grid-cols-2 justify-items-center space-y-20 gap-4 py-5 px-10">
-    <div  *ngIf="!isFetching" class="flex flex-col justify-between space-y-2">
+<div [Block]="isFetching" class="grid grid-cols-2 justify-items-center gap-4 py-5 px-10">
+    <div  *ngIf="!isFetching" class="flex flex-col justify-center space-y-2">
         <h1 class="animate-display_left font-light text-3xl">Habitación N° {{habitacion.numero}}</h1>
         <span class="animate-display_left font-light text-3xl">Piso {{habitacion.piso}}</span>
         <div class="animate-display_left flex flex-row items-center space-x-2">
@@ -13,7 +13,21 @@
         </span>
     </div>
     <!-- TODO IMAGEN DE HABITACIÓN -->
-    <div *ngIf="!isFetching" class="animate-display_right">IMG</div>
+    <div *ngIf="!isFetching" class="animate-display_right">
+        <div [routerLink]="['/main','habitaciones','subir-imagen',habitacion._id]" class="relative">
+            <div class="top-0 rounded-xl bg-transparent flex flex-col items-center bg-opacity-0 left-0 transition-colors duration-300 absolute w-full h-full hover:bg-gray-700 hover:bg-opacity-50">
+                <span class="cursor-pointer opacity-0 hover:opacity-100 transition-opacity duration-300 z-50 w-full h-full text-3xl font-light text-center flex flex-col text-white justify-center items-center">
+                    <span>
+                        Subir foto
+                    </span>
+                </span>
+            </div>
+            <img                
+                src="assets/img/no-image.jpeg"
+                [alt]="'habitacion-'+habitacion.numero"
+                class="w-[30rem] h-[20rem] rounded-xl border border-green-500">
+        </div>
+    </div>
     <div *ngIf="!isFetching"  class="col-span-2 gap-y-4 w-full place-items-center grid grid-cols-4 animate-display_right">
         <h2 class="col-span-4 text-center w-full font-light text-3xl">Detalles y caracteristicas de la habitación</h2>
         <span *ngIf="!habitacion.caracteristicas || habitacion.caracteristicas?.length === 0" class="col-span-4 font-light text-xl text-center w-full">Esta habitación no tiene detalles adicionales</span>

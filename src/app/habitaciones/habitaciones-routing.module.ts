@@ -8,10 +8,12 @@ import { ConsultarComponent } from './consultar/consultar.component';
 import { HabitacionComponent } from './habitacion/habitacion.component';
 import { RegistrarComponent } from './registrar/registrar.component';
 import { ReservarComponent } from './reservar/reservar.component';
+import { SubirFotoComponent } from './subir-foto/subir-foto.component';
 
 const routes: Routes = [
   {path:'',canActivate:[AuthGuard,AdminGuard],component:ConsultarComponent},
   {path:'registrar',canActivate:[AuthGuard,AdminGuard],component:RegistrarComponent},
+  {path:'subir-imagen/:id',canActivate:[AuthGuard,AdminGuard],component:SubirFotoComponent},
   {path:'reservar',canActivate:[AuthGuard],component:ReservarComponent},
   {path:'alquilar/:habitacionId',canActivate:[AuthGuard],component:AlquilarComponent},
   {path:'actualizar-alquiler/:id',canActivate:[AuthGuard],component:AlquilarComponent},

@@ -1,0 +1,10 @@
+
+<app-center-box>
+    <div class="form-container">
+        <h1 class="text-xl text-center -mt-4">Subir foto de la habitación</h1>
+        <label for="file" class="btn-action-primary cursor-pointer">{{ file ? file.name : 'Seleccionar imagen:'}} </label>
+        <input class="hidden" type="file" (change)="onFileChange($event.target)" name="file" id="file">
+        <img class="w-[30rem] h-[20rem] rounded-xl border border-green-500" *ngIf="imgTemp" [src]="imgTemp" alt="file to upload">
+        <button (click)="onFileSubmit()" *ngIf="file" class="btn-action-primary">Subir imagen</button>
+    </div>
+</app-center-box>
