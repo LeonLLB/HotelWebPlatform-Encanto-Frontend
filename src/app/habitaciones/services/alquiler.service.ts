@@ -7,7 +7,7 @@ import { Response } from 'src/app/interfaces/response.interface';
 import { GraphqlService } from 'src/app/services/graphql.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { NotifyService } from 'src/app/services/notify.service';
-import { ACTUALIZAR_ALQUILER_MUTATION, ALQUILAR_HABITACION_MUTATION, IAlquilerInput, IAlquilerUpdateInput } from '../graphql/mutations';
+import { ACTUALIZAR_ALQUILER_MUTATION, ALQUILAR_HABITACION_MUTATION, ELIMINAR_ALQUILER_MUTATION, IAlquilerInput, IAlquilerUpdateInput } from '../graphql/mutations';
 import { PaginateInput, QUERY_ALQUILER, QUERY_ALQUILERES } from '../graphql/queries';
 
 @Injectable()
@@ -131,5 +131,27 @@ export class AlquilerService {
           return response
         })
       )
+  }
+
+  delete(id:string): Observable<MutationResult<{eliminarAlquiler:Alquiler}>> {
+    this.loading.displayLoading('Eliminando Alquiler...')
+    return this.graphql.mutate<{eliminarAlquiler:Alquiler},{id:string}>(
+      ELIMINAR_ALQUILER_MUTATION,
+      {id}
+    )
+    .pipe(
+      catchError(data => {
+        this.loading.hideLoading()
+        this.onCatchError(data)
+        return of({} as any)
+      }),
+      map(response => {
+        this.loading.hideLoading()
+        if (response.errors) {
+          this.onPostPatchFailure(response)
+        }
+        return response
+      })
+    )
   }
 }

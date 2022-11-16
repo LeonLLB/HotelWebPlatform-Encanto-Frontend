@@ -83,3 +83,13 @@ export const ACTUALIZAR_ALQUILER_MUTATION = gql`
     }
 
 `
+
+export const ELIMINAR_ALQUILER_MUTATION = gql`
+
+    mutation EliminarAlquiler($id:String!){
+        eliminarAlquiler(id: $id) {
+            _id
+        }
+    }
+
+`

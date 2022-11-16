@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Alquiler } from 'src/app/interfaces/alquiler.interface';
+import { ConfirmService } from 'src/app/services/confirm.service';
 import { NotifyService } from 'src/app/services/notify.service';
 import { PaginationService } from 'src/app/services/pagination.service';
 import { AlquilerService } from '../services/alquiler.service';
@@ -26,7 +27,8 @@ export class AlquileresComponent implements OnInit {
   constructor(
     private alquilerService: AlquilerService,
     private paginationService: PaginationService,
-    private notify: NotifyService
+    private notify: NotifyService,
+    private confirm:ConfirmService
   ) { }
 
   
@@ -89,6 +91,28 @@ export class AlquileresComponent implements OnInit {
         return
       }
       console.log(response)
+    })
+  }
+
+  eliminarAlquiler({_id}: Alquiler){
+    this.confirm.danger({
+      title:'Eliminar Alquiler',
+      message:'Esta seguro de querer eliminar este alquiler? Tenga en cuenta que al eliminar este alquiler la habitación volvera a estar disponible, como si no hubiera sido usada, en caso de culminación de alquiler, dirigirse a "Culminar" ',
+      okText:'Eliminar',
+      onOk:()=>{
+        this.alquilerService.delete(_id)
+        .subscribe((response)=>{
+          if (response.data?.eliminarAlquiler._id) {
+            this.notify.success('Alquiler eliminado con exito!')
+            if(this.alquileres.length === 1 && this.pagina > 1){
+              this.paginas -= 1
+              this.pagina -= 1
+              this.paginationRange.pop()
+            }
+            this.paginate(this.pagina)
+          }
+        })
+      }
     })
   }
 
