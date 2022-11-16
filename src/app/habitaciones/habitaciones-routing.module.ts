@@ -5,6 +5,7 @@ import { AuthGuard } from '../guards/auth.guard';
 import { AlquilarComponent } from './alquilar/alquilar.component';
 import { AlquileresComponent } from './alquileres/alquileres.component';
 import { ConsultarComponent } from './consultar/consultar.component';
+import { HabitacionComponent } from './habitacion/habitacion.component';
 import { RegistrarComponent } from './registrar/registrar.component';
 import { ReservarComponent } from './reservar/reservar.component';
 
@@ -16,6 +17,7 @@ const routes: Routes = [
   {path:'actualizar-alquiler/:id',canActivate:[AuthGuard],component:AlquilarComponent},
   {path:'alquileres',canActivate:[AuthGuard],component:AlquileresComponent},
   {path:'actualizar/:id',canActivate:[AuthGuard,AdminGuard],component:RegistrarComponent},
+  {path:':id',canActivate:[AuthGuard],component:HabitacionComponent}
 ];
 
 @NgModule({

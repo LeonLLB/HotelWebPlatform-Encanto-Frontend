@@ -39,5 +39,9 @@ export class TableCrudComponent implements OnInit {
     return [...this.updateRouterLink,itemId]
   }
 
+  get shouldRenderOptions():boolean{
+    console.log(!this.showDefaultOptions.edit && !this.showDefaultOptions.del)
+    return!(!this.showDefaultOptions.edit && !this.showDefaultOptions.del)
+  }
 
 }

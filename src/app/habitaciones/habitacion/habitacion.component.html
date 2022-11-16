@@ -1,0 +1,70 @@
+<div [Block]="isFetching" class="grid grid-cols-2 justify-items-center space-y-20 gap-4 py-5 px-10">
+    <div  *ngIf="!isFetching" class="flex flex-col justify-between space-y-2">
+        <h1 class="animate-display_left font-light text-3xl">Habitación N° {{habitacion.numero}}</h1>
+        <span class="animate-display_left font-light text-3xl">Piso {{habitacion.piso}}</span>
+        <div class="animate-display_left flex flex-row items-center space-x-2">
+            <span class="font-light text-2xl">Tipo:</span>
+            <span class="material-icons !text-5xl"> {{habitacion.tipo | tipoToIcon}} </span>
+            <span class="font-light text-2xl italic">{{habitacion.tipo}}</span>
+        </div>
+        <span *ngIf="isAdmin" class="animate-display_left flex flex-row space-x-2">
+            <button class="btn-action-primary">Modificar habitación</button>
+            <button class="btn-action-danger">Eliminar habitación</button>
+        </span>
+    </div>
+    <!-- TODO IMAGEN DE HABITACIÓN -->
+    <div *ngIf="!isFetching" class="animate-display_right">IMG</div>
+    <div *ngIf="!isFetching"  class="col-span-2 w-full place-items-center grid grid-cols-4 animate-display_right">
+        <h2 class="col-span-4 text-center w-full font-light text-3xl">Detalles y caracteristicas de la habitación</h2>
+        <span *ngIf="!habitacion.caracteristicas || habitacion.caracteristicas?.length === 0" class="col-span-4 font-light text-xl text-center w-full">Esta habitación no tiene detalles adicionales</span>
+        <span [ngClass]="{'animate-display_left':i%2===0,'animate-display_right':i%2!==0}" class=" flex flex-row items-center" *ngFor="let caracteristica of habitacion.caracteristicas; let i = index">
+            <span class="material-icons !text-5xl !text-green-600">check_circle_outlined</span>
+            <span class="font-light text-xl">{{caracteristica}}</span>
+        </span>
+    </div>
+    <div *ngIf="!isFetching"  class="space-y-2 col-span-2 animate-display_left">
+        <h2 class="col-span-4 text-center w-full font-light text-3xl">Detalles de los inquilos</h2>
+        <div class="flex flex-col w-full space-y-4 justify-center" *ngIf="!alquiler; else conAlquiler">
+            <span class="text-2xl font-light">Esta habitación no esta alquilada de momento</span>
+            <button class="btn-action-primary">Alquilar</button>
+        </div>
+        <ng-template #conAlquiler>
+            <div>
+                <!-- (onDeleteClick)="eliminarAlquiler($event)"
+                [updateRouterLink]="['/main','habitaciones','actualizar-alquiler']" -->
+                <app-table-crud 
+                        [row]="row"
+                        [labels]="labels"
+                        [items]="alquilerAsArrayData"
+                        [showDefaultOptions]="{
+                            edit:false,
+                            del:false
+                        }"
+                        >
+                        <ng-template #labels>
+                            <th>Fecha de Inicio del alquiler</th>
+                            <th>Fecha de Fin del alquiler</th>
+                            <th>Procedencia</th>
+                            <th>Costo ($)</th>
+                            <th>Inquilos</th>
+                        </ng-template>
+                        <ng-template #row let-alquiler>          
+                            <!-- TODO: INTERNACIONALIZACION -->
+                            <td> {{ getDateFromData((alquiler).fechaInicio) | date}} </td>
+                            <td> {{ getDateFromData((alquiler).fechaFin) | date}} </td>
+                            <td>{{(alquiler).procedencia}}</td>
+                            <td>{{(alquiler).costoDolar | currency:'USD'}}</td>
+                            <td>
+                                <ul class="ml-4 list-disc">
+                                    <li>{{(alquiler).clientePrincipal.nombre}} {{(alquiler).clientePrincipal.apellido}}</li>
+                                    <li *ngFor="let inquilo of (alquiler).clientesSecundarios">
+                                        {{inquilo.nombre}} {{inquilo.apellido}}
+                                    </li>
+                                </ul>
+                            </td>
+                        </ng-template>                                              
+                    </app-table-crud>
+            </div>
+        </ng-template>        
+    </div>
+</div>

@@ -2,7 +2,7 @@
     <thead class="bg-gray-800 text-white">
         <ng-container *ngTemplateOutlet="labels">
         </ng-container>
-        <th>Opciones</th>
+        <th *ngIf="shouldRenderOptions">Opciones</th>
     </thead>
     <tbody>
         <tr class="even:bg-white odd:bg-[#d5d5d5] border-t-2 border-gray-700" *ngFor="let item of items">
@@ -10,7 +10,7 @@
                 *ngTemplateOutlet="row;context:{$implicit: item}"
             ></ng-container>
             
-            <td>
+            <td *ngIf="shouldRenderOptions">
                 <ng-container
                     *ngTemplateOutlet="extraOptions;context:{$implicit: item}"
                 ></ng-container>

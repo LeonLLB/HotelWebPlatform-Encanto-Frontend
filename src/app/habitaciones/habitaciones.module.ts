@@ -14,6 +14,8 @@ import { ReservarComponent } from './reservar/reservar.component';
 import { AlquileresComponent } from './alquileres/alquileres.component';
 import { AlquilarComponent } from './alquilar/alquilar.component';
 import { AlquilerService } from './services/alquiler.service';
+import { HabitacionComponent } from './habitacion/habitacion.component';
+import { TipoToIconPipe } from './pipes/tipo-to-icon.pipe';
 
 
 @NgModule({
@@ -25,7 +27,9 @@ import { AlquilerService } from './services/alquiler.service';
     HabitacionesGridCardsComponent,
     ReservarComponent,
     AlquileresComponent,
-    AlquilarComponent
+    AlquilarComponent,
+    HabitacionComponent,
+    TipoToIconPipe
   ],
   imports: [
     CommonModule,
