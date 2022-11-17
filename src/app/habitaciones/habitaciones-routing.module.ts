@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AdminGuard } from '../guards/admin.guard';
 import { AuthGuard } from '../guards/auth.guard';
 import { AlquilarComponent } from './alquilar/alquilar.component';
+import { AlquileresVencidosComponent } from './alquileres-vencidos/alquileres-vencidos.component';
 import { AlquileresComponent } from './alquileres/alquileres.component';
 import { ConsultarComponent } from './consultar/consultar.component';
 import { HabitacionComponent } from './habitacion/habitacion.component';
@@ -18,6 +19,7 @@ const routes: Routes = [
   {path:'alquilar/:habitacionId',canActivate:[AuthGuard],component:AlquilarComponent},
   {path:'actualizar-alquiler/:id',canActivate:[AuthGuard],component:AlquilarComponent},
   {path:'alquileres',canActivate:[AuthGuard],component:AlquileresComponent},
+  {path:'alquileres-vencidos',canActivate:[AuthGuard],component:AlquileresVencidosComponent},
   {path:'actualizar/:id',canActivate:[AuthGuard,AdminGuard],component:RegistrarComponent},
   {path:':id',canActivate:[AuthGuard],component:HabitacionComponent}
 ];

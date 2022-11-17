@@ -19,6 +19,7 @@ import { TipoToIconPipe } from './pipes/tipo-to-icon.pipe';
 import { SubirFotoComponent } from './subir-foto/subir-foto.component';
 import { ImagenHabitacionPipe } from './pipes/imagen-habitacion.pipe';
 import { HttpClientModule } from '@angular/common/http';
+import { AlquileresVencidosComponent } from './alquileres-vencidos/alquileres-vencidos.component';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { HttpClientModule } from '@angular/common/http';
     HabitacionComponent,
     SubirFotoComponent,
     TipoToIconPipe,
-    ImagenHabitacionPipe
+    ImagenHabitacionPipe,
+    AlquileresVencidosComponent
   ],
   imports: [
     CommonModule,

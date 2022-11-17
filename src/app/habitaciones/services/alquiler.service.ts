@@ -9,7 +9,7 @@ import { GraphqlService } from 'src/app/services/graphql.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { NotifyService } from 'src/app/services/notify.service';
 import { ACTUALIZAR_ALQUILER_MUTATION, ALQUILAR_HABITACION_MUTATION, ELIMINAR_ALQUILER_MUTATION, IAlquilerInput, IAlquilerUpdateInput } from '../graphql/mutations';
-import { PaginateInput, QUERY_ALQUILER, QUERY_ALQUILERES, QUERY_FULL_ALQUILER } from '../graphql/queries';
+import { PaginateInput, QUERY_ALQUILER, QUERY_ALQUILERES, QUERY_ALQUILERES_VENCIDOS, QUERY_FULL_ALQUILER } from '../graphql/queries';
 
 @Injectable()
 export class AlquilerService {
@@ -160,6 +160,16 @@ export class AlquilerService {
     return this.graphql.query<{alquiler:Alquiler,habitacion:Habitacion},{id:string}>(
       QUERY_FULL_ALQUILER,
       {id:habitacionId}
+    )
+  }
+
+  getAlquileresVencidos(paginateInput:PaginateInput):Observable<SingleExecutionResult<{}>>{
+    return this.graphql.query<{
+      alquileresVencidosHoy:Response<Alquiler[]>,
+      alquileresVencidosAnteriores:Response<Alquiler[]>
+    },{paginateInput:PaginateInput}>(
+      QUERY_ALQUILERES_VENCIDOS,
+      {paginateInput}
     )
   }
 }
