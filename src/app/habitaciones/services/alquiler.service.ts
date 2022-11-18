@@ -8,7 +8,7 @@ import { Response } from 'src/app/interfaces/response.interface';
 import { GraphqlService } from 'src/app/services/graphql.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { NotifyService } from 'src/app/services/notify.service';
-import { ACTUALIZAR_ALQUILER_MUTATION, ALQUILAR_HABITACION_MUTATION, ELIMINAR_ALQUILER_MUTATION, IAlquilerInput, IAlquilerUpdateInput } from '../graphql/mutations';
+import { ACTUALIZAR_ALQUILER_MUTATION, ALQUILAR_HABITACION_MUTATION, ELIMINAR_ALQUILER_MUTATION, EXTENDER_O_CULMINAR_ALQUILER_MUTATION, IAlquilerInput, IAlquilerUpdateInput } from '../graphql/mutations';
 import { PaginateInput, QUERY_ALQUILER, QUERY_ALQUILERES, QUERY_ALQUILERES_VENCIDOS_ANTERIORES, QUERY_ALQUILERES_VENCIDOS_HOY, QUERY_FULL_ALQUILER } from '../graphql/queries';
 
 @Injectable()
@@ -178,6 +178,13 @@ export class AlquilerService {
     },{paginateInput:PaginateInput}>(
       QUERY_ALQUILERES_VENCIDOS_ANTERIORES,
       {paginateInput}
+    )
+  }
+
+  actualizarEstadoAlquiler(id:string,caso:'Extension'|'Culminacion'):Observable<MutationResult<{actualizarEstadoAlquiler:Alquiler}>>{
+    return this.graphql.mutate<{actualizarEstadoAlquiler:Alquiler},{id:string,caso:'Extension' | 'Culminacion'}>(
+      EXTENDER_O_CULMINAR_ALQUILER_MUTATION,
+      {id,caso}
     )
   }
 }

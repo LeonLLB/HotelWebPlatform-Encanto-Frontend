@@ -14,6 +14,7 @@
                         <app-table-crud 
                             [row]="row"
                             [labels]="labels"
+                            [extraOptions]="extraOptions"
                             [items]="vencidosHoy"
                             [showDefaultOptions]="{edit:false,del:false}"
                             >
@@ -37,7 +38,20 @@
                                         </li>
                                     </ul>
                                 </td>
-                            </ng-template>                                              
+                            </ng-template> 
+                            <ng-template #extraOptions let-alquiler>
+                                <!-- [routerLink]="getRouterLink(item._id)" -->
+                                <!-- (click)="onUpdateButton(item)" -->
+                                <span
+                                (click)="extendAlquiler(alquiler._id)"
+                                class="material-icons text-gray-500 cursor-pointer"
+                                >more_time</span>
+                                <span
+                                (click)="ceaseAlquiler(alquiler._id)"
+                                class="material-icons text-gray-500 cursor-pointer"
+                                >timer_off</span>
+                            </ng-template>
+                                                                         
                         </app-table-crud>
                     </div>                
                     <div class="w-full">
@@ -71,11 +85,10 @@
                     </div>                                  
                     
                     <div class="rounded-lg" [Block]="isFetching.anteriores">
-                        <!-- (onDeleteClick)="eliminarHabitacion($event)"
-                        [updateRouterLink]="['actualizar']" -->
                         <app-table-crud 
                             [row]="row"
-                            [labels]="labels"
+                            [labels]="labels"                            
+                            [extraOptions]="extraOptionsVencidos"
                             [items]="vencidosAnteriores"
                             [showDefaultOptions]="{edit:false,del:false}"
                             >
@@ -99,7 +112,13 @@
                                         </li>
                                     </ul>
                                 </td>
-                            </ng-template>                                              
+                            </ng-template> 
+                            <ng-template #extraOptionsVencidos let-alquiler>
+                                <span
+                                (click)="ceaseAlquiler(alquiler._id)"
+                                class="material-icons text-gray-500 cursor-pointer"
+                                >timer_off</span>
+                            </ng-template>                                             
                         </app-table-crud>
                     </div>                
                     <div class="w-full">

@@ -159,4 +159,55 @@ export class AlquileresVencidosComponent implements OnInit {
     })
   }
 
+  extendAlquiler(id:string){
+    this.confirm.warning({
+      title:'Extender alquiler',
+      message:'Al extender el alquiler, su fecha de culminación se adelantará un día más, tenga en cuenta que esto aumenta el costo al finalizar el alquiler',
+      okText:'Extender',
+      onOk:()=>{
+        this.actualizarAlquiler(id,'Extension')
+      }
+    })
+  }
+
+  ceaseAlquiler(id:string){
+    this.confirm.warning({
+      title:'Culminar alquiler',
+      message:'Al culminar el alquiler, se procesará el coste final acorde a los días del alquiler, es necesario culminar el alquiler para poder incluir el mismo en los reportes',
+      okText:'Culminar',
+      onOk:()=>{
+        this.actualizarAlquiler(id,'Culminacion')
+      }
+    })
+  }
+
+  actualizarAlquiler(id:string,caso:'Extension' | 'Culminacion'){
+    this.alquilerService.actualizarEstadoAlquiler(id,caso)
+    .subscribe(response=>{
+      if (response.data?.actualizarEstadoAlquiler._id) {
+        this.notify.success('El alquiler fue actualizado con exito!, sea para culminación o extensión')
+        const isInVencidosAnteriores = this.vencidosAnteriores.filter(alquiler=>alquiler._id === id)
+        if(isInVencidosAnteriores.length>0){
+          if(this.vencidosAnteriores.length === 1 && this.pagina.anteriores > 1){
+            this.paginas.anteriores -= 1
+            this.pagina.anteriores -= 1
+            this.paginationRange.anteriores.pop()
+          } else if(this.vencidosAnteriores.length === 0 && this.pagina.anteriores === 1){
+            this.vencidosAnteriores = []
+          }
+          this.paginate(this.pagina.anteriores,'anteriores')
+          return
+        }
+        if(this.vencidosHoy.length === 1 && this.pagina.hoy > 1){
+          this.paginas.hoy -= 1
+          this.pagina.hoy -= 1
+          this.paginationRange.hoy.pop()
+        }else if(this.vencidosHoy.length === 0 && this.pagina.hoy === 1){
+          this.vencidosHoy = []
+        }
+        this.paginate(this.pagina.hoy,'hoy')
+      }
+    })
+  }
+
 }
