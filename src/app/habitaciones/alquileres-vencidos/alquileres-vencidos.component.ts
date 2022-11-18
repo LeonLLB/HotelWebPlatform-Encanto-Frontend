@@ -95,7 +95,7 @@ export class AlquileresVencidosComponent implements OnInit {
 
   onLimitChange(newLimit: EventTarget) {
 
-    this.limit = ((newLimit as any).value)
+    this.limit = parseInt(((newLimit as any).value))
     this.pagina['hoy'] = 1
     this.pagina['anteriores'] = 1
 
