@@ -15,8 +15,8 @@ type ResponseAlquileresVencidosIndex = 'hoy' | 'anteriores'
 })
 export class AlquileresVencidosComponent implements OnInit {
 
-  vencidosHoy!: Alquiler[]
-  vencidosAnteriores!: Alquiler[]
+  vencidosHoy: Alquiler[] = []
+  vencidosAnteriores: Alquiler[] = []
 
   paginas = {
     hoy:0,
@@ -192,7 +192,7 @@ export class AlquileresVencidosComponent implements OnInit {
             this.paginas.anteriores -= 1
             this.pagina.anteriores -= 1
             this.paginationRange.anteriores.pop()
-          } else if(this.vencidosAnteriores.length === 0 && this.pagina.anteriores === 1){
+          } if(this.vencidosAnteriores.length === 1 && this.pagina.anteriores === 1){
             this.vencidosAnteriores = []
           }
           this.paginate(this.pagina.anteriores,'anteriores')
@@ -202,7 +202,7 @@ export class AlquileresVencidosComponent implements OnInit {
           this.paginas.hoy -= 1
           this.pagina.hoy -= 1
           this.paginationRange.hoy.pop()
-        }else if(this.vencidosHoy.length === 0 && this.pagina.hoy === 1){
+        }if(this.vencidosHoy.length === 1 && this.pagina.hoy === 1){
           this.vencidosHoy = []
         }
         this.paginate(this.pagina.hoy,'hoy')
