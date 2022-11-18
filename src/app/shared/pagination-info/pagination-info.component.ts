@@ -13,6 +13,7 @@ export class PaginationInfoComponent implements OnInit {
   @Input() items!: number
   @Input() validLimits = [5, 10, 15]
   @Input() message!: string
+  @Input() renderLimitSelect = true
   @Output() onLimitChange: EventEmitter<any> = new EventEmitter()
 
 

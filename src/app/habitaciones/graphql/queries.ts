@@ -177,9 +177,9 @@ export const QUERY_FULL_ALQUILER = gql`
 
 `
 
-export const QUERY_ALQUILERES_VENCIDOS = gql`
+export const QUERY_ALQUILERES_VENCIDOS_HOY = gql`
 
-    query FetchAlquileresVencidos($paginateInput:PaginateInput!){
+    query FetchAlquileresVencidosHoy($paginateInput:PaginateInput!){
         alquileresVencidosHoy(paginateInput:$paginateInput) {
             result {
                 _id
@@ -204,7 +204,14 @@ export const QUERY_ALQUILERES_VENCIDOS = gql`
             }
             pages
             total
-        }
+        }        
+    }
+
+`
+
+export const QUERY_ALQUILERES_VENCIDOS_ANTERIORES = gql`
+
+    query FetchAlquileresVencidosAnteriores($paginateInput:PaginateInput!){
         alquileresVencidosAnteriores(paginateInput:$paginateInput) {
             result {
                 _id
