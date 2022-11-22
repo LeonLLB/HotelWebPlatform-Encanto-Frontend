@@ -8,8 +8,8 @@ import { Response } from 'src/app/interfaces/response.interface';
 import { GraphqlService } from 'src/app/services/graphql.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { NotifyService } from 'src/app/services/notify.service';
-import { ACTUALIZAR_ALQUILER_MUTATION, ALQUILAR_HABITACION_MUTATION, ELIMINAR_ALQUILER_MUTATION, IAlquilerInput, IAlquilerUpdateInput } from '../graphql/mutations';
-import { PaginateInput, QUERY_ALQUILER, QUERY_ALQUILERES, QUERY_FULL_ALQUILER } from '../graphql/queries';
+import { ACTUALIZAR_ALQUILER_MUTATION, ALQUILAR_HABITACION_MUTATION, ELIMINAR_ALQUILER_MUTATION, EXTENDER_O_CULMINAR_ALQUILER_MUTATION, IAlquilerInput, IAlquilerUpdateInput } from '../graphql/mutations';
+import { PaginateInput, QUERY_ALQUILER, QUERY_ALQUILERES, QUERY_ALQUILERES_VENCIDOS_ANTERIORES, QUERY_ALQUILERES_VENCIDOS_HOY, QUERY_FULL_ALQUILER } from '../graphql/queries';
 
 @Injectable()
 export class AlquilerService {
@@ -160,6 +160,31 @@ export class AlquilerService {
     return this.graphql.query<{alquiler:Alquiler,habitacion:Habitacion},{id:string}>(
       QUERY_FULL_ALQUILER,
       {id:habitacionId}
+    )
+  }
+
+  getAlquileresVencidosHoy(paginateInput:PaginateInput):Observable<SingleExecutionResult<{alquileresVencidosHoy:Response<Alquiler[]>}>>{
+    return this.graphql.query<{
+      alquileresVencidosHoy:Response<Alquiler[]>,
+    },{paginateInput:PaginateInput}>(
+      QUERY_ALQUILERES_VENCIDOS_HOY,
+      {paginateInput}
+    )
+  }
+
+  getAlquileresVencidosAnteriores(paginateInput:PaginateInput):Observable<SingleExecutionResult<{alquileresVencidosAnteriores:Response<Alquiler[]>}>>{
+    return this.graphql.query<{
+      alquileresVencidosAnteriores:Response<Alquiler[]>,
+    },{paginateInput:PaginateInput}>(
+      QUERY_ALQUILERES_VENCIDOS_ANTERIORES,
+      {paginateInput}
+    )
+  }
+
+  actualizarEstadoAlquiler(id:string,caso:'Extension'|'Culminacion'):Observable<MutationResult<{actualizarEstadoAlquiler:Alquiler}>>{
+    return this.graphql.mutate<{actualizarEstadoAlquiler:Alquiler},{id:string,caso:'Extension' | 'Culminacion'}>(
+      EXTENDER_O_CULMINAR_ALQUILER_MUTATION,
+      {id,caso}
     )
   }
 }

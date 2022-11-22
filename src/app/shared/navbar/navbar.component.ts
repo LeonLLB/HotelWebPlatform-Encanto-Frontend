@@ -63,7 +63,8 @@ export class NavbarComponent implements OnInit {
     const { rol } = this.auth
     const coreResult = [
       { label: 'Reservar habitación', icon: 'bed', route: 'main/habitaciones/reservar' },
-      { label: 'Estado de alquileres', icon: 'bed', route: 'main/habitaciones/alquileres' },
+      { label: 'Alquileres', icon: 'bed', route: 'main/habitaciones/alquileres' },
+      { label: 'Alquileres vencidos', icon: 'bed', route: 'main/habitaciones/alquileres-vencidos' },
     ]
     if (rol === ValidRoles.admin) {
       coreResult.push(

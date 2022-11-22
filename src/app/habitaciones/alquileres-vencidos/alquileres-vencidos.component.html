@@ -1,0 +1,145 @@
+<div>
+    <div class="flex flex-row mx-4 my-4 justify-center">
+        <div class="flex flex-col items-center space-y-4">
+            <div>
+                <div class="flex flex-col items-center space-y-4">
+                    <div class="flex flex-col items-center">
+                        <h1 class="text-3xl font-light">Alquileres vencidos</h1>
+                        <h2 class="text-2xl font-light">Vencidos hoy</h2>
+                    </div>                                  
+                    
+                    <div class="rounded-lg" [Block]="isFetching.hoy">
+                        <!-- (onDeleteClick)="eliminarHabitacion($event)"
+                        [updateRouterLink]="['actualizar']" -->
+                        <app-table-crud 
+                            [row]="row"
+                            [labels]="labels"
+                            [extraOptions]="extraOptions"
+                            [items]="vencidosHoy"
+                            [showDefaultOptions]="{edit:false,del:false}"
+                            >
+                            <ng-template #labels>
+                                <th>N° Habitación</th>
+                                <th>Fecha de Inicio</th>
+                                <th>Fecha de Fin</th>
+                                <th>Costo ($)</th>
+                                <th>Inquilos</th>
+                            </ng-template>
+                            <ng-template #row let-alquiler>                            
+                                <td class="text-3xl"> {{ta(alquiler).habitacion.numero}} </td>
+                                <td> {{ getDateFromData(ta(alquiler).fechaInicio) | date}} </td>
+                                <td> {{ getDateFromData(ta(alquiler).fechaFin) | date}} </td>
+                                <td>{{ta(alquiler).costoDolar | currency:'USD'}}</td>
+                                <td>
+                                    <ul class="ml-4 list-disc">
+                                        <li>{{ta(alquiler).clientePrincipal.nombre}} {{ta(alquiler).clientePrincipal.apellido}}</li>
+                                        <li *ngFor="let inquilo of ta(alquiler).clientesSecundarios">
+                                            {{inquilo.nombre}} {{inquilo.apellido}}
+                                        </li>
+                                    </ul>
+                                </td>
+                            </ng-template> 
+                            <ng-template #extraOptions let-alquiler>
+                                <!-- [routerLink]="getRouterLink(item._id)" -->
+                                <!-- (click)="onUpdateButton(item)" -->
+                                <span
+                                (click)="extendAlquiler(alquiler._id)"
+                                class="material-icons text-gray-500 cursor-pointer"
+                                >more_time</span>
+                                <span
+                                (click)="ceaseAlquiler(alquiler._id)"
+                                class="material-icons text-gray-500 cursor-pointer"
+                                >timer_off</span>
+                            </ng-template>
+                                                                         
+                        </app-table-crud>
+                    </div>                
+                    <div class="w-full">
+                        <app-pagination-bar
+                            [pagina]="pagina['hoy']"
+                            [paginas]="paginas['hoy']"
+                            [paginationRange]="paginationRange['hoy']"
+                            (onPaginate)="paginate($event,'hoy')"
+                        ></app-pagination-bar>
+                    </div>
+                    <div class="w-full">
+                        <app-pagination-info
+                            message="alquileres vencidos hoy"
+                            [limit]="limit"
+                            [pagina]="pagina['hoy']"
+                            [items]="total['hoy']"
+                            [renderLimitSelect]="false"
+                            (onLimitChange)="onLimitChange($event)"
+                        ></app-pagination-info>                    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="flex flex-row mx-4 my-4 justify-center">
+        <div class="flex flex-col items-center space-y-4">
+            <div>
+                <div class="flex flex-col items-center space-y-4">
+                    <div class="flex flex-col items-center">
+                        <h2 class="text-2xl font-light">Vencidos anteriores</h2>
+                    </div>                                  
+                    
+                    <div class="rounded-lg" [Block]="isFetching.anteriores">
+                        <app-table-crud 
+                            [row]="row"
+                            [labels]="labels"                            
+                            [extraOptions]="extraOptionsVencidos"
+                            [items]="vencidosAnteriores"
+                            [showDefaultOptions]="{edit:false,del:false}"
+                            >
+                            <ng-template #labels>
+                                <th>N° Habitación</th>
+                                <th>Fecha de Inicio</th>
+                                <th>Fecha de Fin</th>
+                                <th>Costo ($)</th>
+                                <th>Inquilos</th>
+                            </ng-template>
+                            <ng-template #row let-alquiler>                            
+                                <td class="text-3xl"> {{ta(alquiler).habitacion.numero}} </td>
+                                <td> {{ getDateFromData(ta(alquiler).fechaInicio) | date}} </td>
+                                <td> {{ getDateFromData(ta(alquiler).fechaFin) | date}} </td>
+                                <td>{{ta(alquiler).costoDolar | currency:'USD'}}</td>
+                                <td>
+                                    <ul class="ml-4 list-disc">
+                                        <li>{{ta(alquiler).clientePrincipal.nombre}} {{ta(alquiler).clientePrincipal.apellido}}</li>
+                                        <li *ngFor="let inquilo of ta(alquiler).clientesSecundarios">
+                                            {{inquilo.nombre}} {{inquilo.apellido}}
+                                        </li>
+                                    </ul>
+                                </td>
+                            </ng-template> 
+                            <ng-template #extraOptionsVencidos let-alquiler>
+                                <span
+                                (click)="ceaseAlquiler(alquiler._id)"
+                                class="material-icons text-gray-500 cursor-pointer"
+                                >timer_off</span>
+                            </ng-template>                                             
+                        </app-table-crud>
+                    </div>                
+                    <div class="w-full">
+                        <app-pagination-bar
+                            [pagina]="pagina['anteriores']"
+                            [paginas]="paginas['anteriores']"
+                            [paginationRange]="paginationRange['anteriores']"
+                            (onPaginate)="paginate($event,'anteriores')"
+                        ></app-pagination-bar>
+                    </div>
+                    <div class="w-full">
+                        <app-pagination-info
+                            message="alquileres vencidos"
+                            [limit]="limit"
+                            [pagina]="pagina['anteriores']"
+                            [items]="total['anteriores']"
+                            (onLimitChange)="onLimitChange($event)"
+                        ></app-pagination-info>                    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

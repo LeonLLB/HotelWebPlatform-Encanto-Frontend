@@ -40,7 +40,10 @@ export class TableCrudComponent implements OnInit {
   }
 
   get shouldRenderOptions():boolean{
-    return!(!this.showDefaultOptions.edit && !this.showDefaultOptions.del)
+    return (
+      (this.showDefaultOptions.edit && this.showDefaultOptions.del ) ||
+      !!this.extraOptions
+    )
   }
 
 }

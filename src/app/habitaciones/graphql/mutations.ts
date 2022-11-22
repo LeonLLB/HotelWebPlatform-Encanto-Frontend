@@ -93,3 +93,13 @@ export const ELIMINAR_ALQUILER_MUTATION = gql`
     }
 
 `
+
+export const EXTENDER_O_CULMINAR_ALQUILER_MUTATION = gql`
+
+    mutation ExtenderCulminarAlquiler($id:String!,$caso:String!){
+        actualizarEstadoAlquiler(id: $id, caso: $caso) {
+            _id
+        }
+    }
+
+`

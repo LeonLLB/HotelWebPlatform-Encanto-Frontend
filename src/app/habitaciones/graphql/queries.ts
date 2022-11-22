@@ -176,3 +176,67 @@ export const QUERY_FULL_ALQUILER = gql`
     }
 
 `
+
+export const QUERY_ALQUILERES_VENCIDOS_HOY = gql`
+
+    query FetchAlquileresVencidosHoy($paginateInput:PaginateInput!){
+        alquileresVencidosHoy(paginateInput:$paginateInput) {
+            result {
+                _id
+                fechaInicio
+                fechaFin
+                costoDolar
+                clientePrincipal {
+                    nombre
+                    apellido
+                    telefono  
+                    cedula 
+                }
+                clientesSecundarios {
+                    nombre
+                    apellido
+                    telefono
+                    cedula
+                }
+                habitacion {
+                    numero
+                }
+            }
+            pages
+            total
+        }        
+    }
+
+`
+
+export const QUERY_ALQUILERES_VENCIDOS_ANTERIORES = gql`
+
+    query FetchAlquileresVencidosAnteriores($paginateInput:PaginateInput!){
+        alquileresVencidosAnteriores(paginateInput:$paginateInput) {
+            result {
+                _id
+                fechaInicio
+                fechaFin
+                costoDolar
+                clientePrincipal {
+                    nombre
+                    apellido
+                    telefono   
+                    cedula
+                }
+                clientesSecundarios {
+                    nombre
+                    apellido
+                    telefono
+                    cedula
+                }
+                habitacion {
+                    numero
+                }
+            }
+            pages
+            total
+        }
+    }
+
+`

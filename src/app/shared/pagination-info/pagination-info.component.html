@@ -4,7 +4,7 @@
         <span>
             Mostrando {{ (limit*pagina < items) ? limit*pagina : items}} de {{items}} {{message | lowercase}}
         </span>
-        <div class="flex flex-row items-center space-x-4">
+        <div *ngIf="renderLimitSelect" class="flex flex-row items-center space-x-4">
             <label for="limit">{{message | titlecase}} por pagína:</label>
             <select [value]="limit" (change)="onChange($event.target!)" class="form-select rounded-lg" name="limit" id="limit" >
                 <option [value]="limit" *ngFor="let limit of validLimits">{{limit}}</option>
