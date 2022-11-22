@@ -4,10 +4,20 @@ interface ClienteCore {
     nombre:string
     apellido:string
     telefono:string
+    nacionalidad:string
+    tipoIdentidad: 'V' | 'P'
+}
+
+interface InvitadoCore {
+    nombre:string
+    apellido:string
 }
 
 export interface Cliente extends ClienteCore {
     cedula:number
+}
+export interface Invitado extends InvitadoCore {
+    cedula?:number
 }
 
 interface AlquilerWithHabitacionId{
@@ -22,8 +32,8 @@ interface AlquilerCore{
 
 export interface AlquilerInputData extends AlquilerCore, AlquilerWithHabitacionId{
     costoDolar: number,
-    clientePrincipal: Cliente
-    clientesSecundarios?: Cliente[]
+    cliente: Cliente
+    invitados?: Invitado[]
 }
 
 
@@ -38,7 +48,6 @@ export interface ClienteFormData extends ClienteCore{
 export interface InvitadosFormData{
     nombre:string[]
     apellido:string[]
-    telefono:string[]
     cedula:string[] | number[]
 }
 
@@ -46,8 +55,8 @@ export interface Alquiler extends AlquilerCore{
     _id: string
     costoDolar: number
     habitacion:Habitacion
-    clientePrincipal: Cliente
-    clientesSecundarios?:Cliente[]
+    cliente: Cliente
+    invitados?:Invitado[]
     createdAt: string
     updatedAt: string
 }

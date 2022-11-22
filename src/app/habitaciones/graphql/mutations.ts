@@ -1,5 +1,5 @@
 import { gql } from "apollo-angular";
-import { Cliente } from "src/app/interfaces/alquiler.interface";
+import { Cliente, Invitado } from "src/app/interfaces/alquiler.interface";
 import { TipoHabitacion } from "src/app/interfaces/habitacion.interface";
 
 
@@ -60,8 +60,8 @@ export interface AlquilerInput {
     fechaInicio: string
     fechaFin: string
     procedencia: string
-    clientePrincipal: Cliente
-    clientesSecundarios?: Cliente[]
+    cliente: Cliente
+    invitados?: Invitado[]
 }
 
 export interface IAlquilerInput{

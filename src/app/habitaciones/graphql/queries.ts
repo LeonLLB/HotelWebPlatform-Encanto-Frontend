@@ -96,11 +96,15 @@ export const QUERY_ALQUILERES = gql`
                 fechaInicio
                 fechaFin
                 procedencia
-                clientePrincipal {
+                cliente {
                     nombre
                     apellido
+                    cedula
+                    nacionalidad
+                    tipoIdentidad
+                    telefono
                 }
-                clientesSecundarios {
+                invitados {
                     nombre
                     apellido
                 }
@@ -126,17 +130,18 @@ export const QUERY_ALQUILER = gql`
             fechaInicio
             fechaFin
             procedencia
-            clientePrincipal {
+            cliente {
                 nombre
                 apellido
                 cedula
                 telefono
+                tipoIdentidad
+                nacionalidad
             }
-            clientesSecundarios {
+            invitados {
                 nombre
                 apellido
                 cedula
-                telefono
             }
         }
     }
@@ -151,17 +156,18 @@ export const QUERY_FULL_ALQUILER = gql`
             fechaInicio
             fechaFin
             procedencia
-            clientePrincipal {
+            cliente {
                 nombre
                 apellido
                 cedula
+                tipoIdentidad
+                nacionalidad
                 telefono
             }
-            clientesSecundarios {
+            invitados {
                 nombre
                 apellido
                 cedula
-                telefono
             }
         }
         habitacion(id: $id) {
@@ -186,16 +192,18 @@ export const QUERY_ALQUILERES_VENCIDOS_HOY = gql`
                 fechaInicio
                 fechaFin
                 costoDolar
-                clientePrincipal {
+                procedencia
+                cliente {
                     nombre
                     apellido
                     telefono  
+                    tipoIdentidad
+                    nacionalidad
                     cedula 
                 }
-                clientesSecundarios {
+                invitados {
                     nombre
                     apellido
-                    telefono
                     cedula
                 }
                 habitacion {
@@ -218,16 +226,17 @@ export const QUERY_ALQUILERES_VENCIDOS_ANTERIORES = gql`
                 fechaInicio
                 fechaFin
                 costoDolar
-                clientePrincipal {
+                cliente {
                     nombre
                     apellido
                     telefono   
                     cedula
+                    tipoIdentidad
+                    nacionalidad
                 }
-                clientesSecundarios {
+                invitados {
                     nombre
                     apellido
-                    telefono
                     cedula
                 }
                 habitacion {

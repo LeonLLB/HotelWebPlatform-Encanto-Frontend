@@ -5,7 +5,7 @@ import { HabitacionesRoutingModule } from './habitaciones-routing.module';
 import { RegistrarComponent } from './registrar/registrar.component';
 import { ConsultarComponent } from './consultar/consultar.component';
 import { SharedModule } from '../shared/shared.module';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HabitacionService } from './services/habitacion.service';
 import { EstadoHabitacionDirective } from './directives/estado.directive';
 import { HabitacionCardComponent } from './habitacion-card/habitacion-card.component';
@@ -20,6 +20,7 @@ import { SubirFotoComponent } from './subir-foto/subir-foto.component';
 import { ImagenHabitacionPipe } from './pipes/imagen-habitacion.pipe';
 import { HttpClientModule } from '@angular/common/http';
 import { AlquileresVencidosComponent } from './alquileres-vencidos/alquileres-vencidos.component';
+import { ReporteEntradaSalidaComponent } from './reporte-entrada-salida/reporte-entrada-salida.component';
 
 
 @NgModule({
@@ -36,14 +37,16 @@ import { AlquileresVencidosComponent } from './alquileres-vencidos/alquileres-ve
     SubirFotoComponent,
     TipoToIconPipe,
     ImagenHabitacionPipe,
-    AlquileresVencidosComponent
+    AlquileresVencidosComponent,
+    ReporteEntradaSalidaComponent
   ],
   imports: [
     CommonModule,
     SharedModule,
     ReactiveFormsModule,
     HttpClientModule,
-    HabitacionesRoutingModule
+    HabitacionesRoutingModule,
+    FormsModule
   ],
   providers:[
     HabitacionService,

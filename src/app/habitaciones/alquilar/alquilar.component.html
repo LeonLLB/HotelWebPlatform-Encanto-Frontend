@@ -56,7 +56,18 @@
                 <app-input [formGroup]="clientePrincipalForm" inputName="apellido" label="Apellido"></app-input>
             </div>
             <div>
-                <app-input [formGroup]="clientePrincipalForm" inputName="cedula" type="number" label="Cedula"></app-input>
+                <app-simple-select
+                    [formGroup]="clientePrincipalForm"
+                    inputName="tipoIdentidad"
+                    label="Tipo de documento de identidad"
+                    [inputOptions]="[{value:'V',label:'Residente'},{value:'P',label:'Pasaporte'}]"
+                ></app-simple-select>
+            </div>
+            <div>
+                <app-input [formGroup]="clientePrincipalForm" inputName="cedula" type="number" label="N° de Identidad"></app-input>
+            </div>
+            <div>
+                <app-input [formGroup]="clientePrincipalForm" inputName="nacionalidad" label="Nacionalidad"></app-input>
             </div>
             <div>
                 <app-input [formGroup]="clientePrincipalForm" type="tel" inputName="telefono" label="Telefono"></app-input>
@@ -88,14 +99,6 @@
                             [formGroup]="invitadosForm"
                             class="w-36"
                             label="Cedula"
-                            type="text"                        
-                            [inputIndex]="i"
-                        ></app-arr-input>
-                        <app-arr-input
-                            formArrayName="telefono"
-                            [formGroup]="invitadosForm"
-                            class="w-36"
-                            label="Telefono"
                             type="text"                        
                             [inputIndex]="i"
                         ></app-arr-input>

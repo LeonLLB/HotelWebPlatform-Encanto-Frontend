@@ -1,7 +1,8 @@
 <div class="flex flex-row mx-4 my-4 justify-center">
     <div class="flex flex-col items-center space-y-4">
-        <div>
+        <div class="space-x-4">
             <button [routerLink]="['/main','habitaciones','reservar']" class="btn-action-primary">Reservar una habitación</button>
+            <button [routerLink]="['/main','habitaciones','reporte-entrada-salida']" class="btn-action-primary">Generar reporte de entrada y salida</button>
         </div>
         <div>
             <div class="flex flex-col items-center space-y-4">
@@ -19,27 +20,32 @@
                         >
                         <ng-template #labels>
                             <th>N° Habitación</th>
-                            <th>Fecha de Inicio</th>
-                            <th>Fecha de Fin</th>
                             <th>Procedencia</th>
-                            <th>Costo ($)</th>
-                            <th>Inquilos</th>
+                            <th>Nombre y apellido</th>
+                            <th>Documento de identidad</th>
+                            <th>Nacionalidad</th>
+                            <th>Entrada</th>
+                            <th>Salida</th>
+                            <th>Acompañantes</th>
+                            <th>Tarifa</th>
                         </ng-template>
                         <ng-template #row let-alquiler>          
                             <!-- TODO: INTERNACIONALIZACION -->
                             <td class="text-3xl"> {{ta(alquiler).habitacion.numero}} </td>
+                            <td>{{ta(alquiler).procedencia}}</td>
+                            <td>{{ta(alquiler).cliente.nombre}} {{ta(alquiler).cliente.apellido}}</td>
+                            <td>{{ta(alquiler).cliente.tipoIdentidad}}-{{ta(alquiler).cliente.cedula}}</td>
+                            <td>{{ta(alquiler).cliente.nacionalidad}}</td>
                             <td> {{ getDateFromData(ta(alquiler).fechaInicio) | date}} </td>
                             <td> {{ getDateFromData(ta(alquiler).fechaFin) | date}} </td>
-                            <td>{{ta(alquiler).procedencia}}</td>
-                            <td>{{ta(alquiler).costoDolar | currency:'USD'}}</td>
                             <td>
                                 <ul class="ml-4 list-disc">
-                                    <li>{{ta(alquiler).clientePrincipal.nombre}} {{ta(alquiler).clientePrincipal.apellido}}</li>
-                                    <li *ngFor="let inquilo of ta(alquiler).clientesSecundarios">
+                                    <li *ngFor="let inquilo of ta(alquiler).invitados">
                                         {{inquilo.nombre}} {{inquilo.apellido}}
                                     </li>
                                 </ul>
                             </td>
+                            <td>{{ta(alquiler).costoDolar | currency:'USD'}}</td>
                         </ng-template>                                              
                     </app-table-crud>
                 </div>                
