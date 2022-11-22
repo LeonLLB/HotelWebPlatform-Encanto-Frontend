@@ -192,6 +192,7 @@ export const QUERY_ALQUILERES_VENCIDOS_HOY = gql`
                 fechaInicio
                 fechaFin
                 costoDolar
+                procedencia
                 cliente {
                     nombre
                     apellido

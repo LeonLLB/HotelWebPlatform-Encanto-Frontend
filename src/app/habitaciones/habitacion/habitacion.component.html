@@ -42,14 +42,17 @@
             <button [routerLink]="['/main','habitaciones','alquilar',habitacion._id]" class="btn-action-primary">Alquilar</button>
         </div>
         <ng-template #conAlquiler>
-            <div>
-                <div class="flex flex-col w-full space-y-4 justify-center">
-                    <span class="text-2xl font-light">Habitación alquilada por: {{alquiler.cliente.nombre}} {{alquiler.cliente.apellido}}</span>
-                    <span class="text-2xl font-light">Datos de identidad: {{alquiler.cliente.tipoIdentidad}}-{{alquiler.cliente.cedula}}</span>
-                    <span class="text-2xl font-light">Nacionalidad: {{alquiler.cliente.nacionalidad}} Procedencia: {{alquiler.procedencia}}</span>
-                    <span class="text-2xl font-light">Número telefonico: {{alquiler.cliente.telefono}} Tarifa: {{alquiler.costoDolar}}</span>
-                    <span class="text-2xl font-light">Entrada: {{ getDateFromData((alquiler).fechaInicio) | date}} Salida: {{ getDateFromData((alquiler).fechaFin) | date}}</span>
-                    <span class="text-2xl font-light" *ngIf="alquiler.invitados && alquiler.invitados.length > 0">Datos de acomapañantes</span>
+            <div class="flex flex-col space-y-2 items-center w-full">
+                <div class="grid grid-cols-2 w-full gap-5">
+                    <span class="col-span-2 text-xl text-center ">Habitación alquilada por: {{alquiler.cliente.nombre}} {{alquiler.cliente.apellido}}</span>
+                    <span class="col-span-2 text-xl font-light">Datos de identidad: {{alquiler.cliente.tipoIdentidad}}-{{alquiler.cliente.cedula}}</span>
+                    <span class="text-xl font-light">Nacionalidad: {{alquiler.cliente.nacionalidad}}</span>
+                    <span class="text-xl font-light">Procedencia: {{alquiler.procedencia}}</span>
+                    <span class="text-xl font-light">Número telefonico: {{alquiler.cliente.telefono}}</span>
+                    <span class="text-xl font-light">Tarifa: {{alquiler.costoDolar}}</span>
+                    <span class="text-xl font-light">Entrada: {{ getDateFromData((alquiler).fechaInicio) | date}} </span>
+                    <span class="text-xl font-light">Salida: {{ getDateFromData((alquiler).fechaFin) | date}}</span>
+                    <span class="col-span-2 text-center text-xl " *ngIf="alquiler.invitados && alquiler.invitados.length > 0">Datos de acomapañantes</span>
                 </div>
                 <app-table-crud 
                         *ngIf="alquiler.invitados && alquiler.invitados.length > 0"
@@ -70,7 +73,7 @@
                             <!-- TODO: INTERNACIONALIZACION -->
                             <td>{{invitado.nombre}}</td>
                             <td>{{invitado.apellido}}</td>
-                            <td>{{invitado.cedula}}</td>                            
+                            <td>{{invitado.cedula || 'N/A'}}</td>                            
                         </ng-template>                                              
                     </app-table-crud>
             </div>

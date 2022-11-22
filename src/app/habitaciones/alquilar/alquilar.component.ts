@@ -160,7 +160,6 @@ export class AlquilarComponent implements OnInit {
     })
 
     //RELLENAR INVITADOS
-
     if(data.invitados){
       for(const invitado of data.invitados){
         this.addInvitadoToForm(invitado)

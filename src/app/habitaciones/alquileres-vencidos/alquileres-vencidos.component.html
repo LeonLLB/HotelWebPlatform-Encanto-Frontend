@@ -15,35 +15,7 @@
                             [extraOptions]="extraOptions"
                             [items]="vencidosHoy"
                             [showDefaultOptions]="{edit:false,del:false}"
-                            >
-                            <ng-template #labels>
-                                <th>N° Habitación</th>
-                                <th>Procedencia</th>
-                                <th>Nombre y apellido</th>
-                                <th>Documento de identidad</th>
-                                <th>Nacionalidad</th>
-                                <th>Entrada</th>
-                                <th>Salida</th>
-                                <th>Tarifa</th>
-                                <th>Inquilos</th>
-                            </ng-template>
-                            <ng-template #row let-alquiler>                            
-                                <td class="text-3xl"> {{ta(alquiler).habitacion.numero}} </td>
-                                <td>{{ta(alquiler).procedencia}}</td>
-                                <td>{{ta(alquiler).cliente.nombre}} {{ta(alquiler).cliente.apellido}}</td>
-                                <td>{{ta(alquiler).cliente.tipoIdentidad}}-{{ta(alquiler).cliente.cedula}}</td>
-                                <td>{{ta(alquiler).cliente.nacionalidad}}</td>
-                                <td> {{ getDateFromData(ta(alquiler).fechaInicio) | date}} </td>
-                                <td> {{ getDateFromData(ta(alquiler).fechaFin) | date}} </td>
-                                <td>
-                                    <ul class="ml-4 list-disc">
-                                        <li *ngFor="let inquilo of ta(alquiler).invitados">
-                                            {{inquilo.nombre}} {{inquilo.apellido}}
-                                        </li>
-                                    </ul>
-                                </td>
-                                <td>{{ta(alquiler).costoDolar | currency:'USD'}}</td>
-                            </ng-template>
+                            >                            
                             <ng-template #extraOptions let-alquiler>
                                 <span
                                 (click)="extendAlquiler(alquiler._id)"
@@ -94,35 +66,7 @@
                             [extraOptions]="extraOptionsVencidos"
                             [items]="vencidosAnteriores"
                             [showDefaultOptions]="{edit:false,del:false}"
-                            >
-                            <ng-template #labels>
-                                <th>N° Habitación</th>
-                                <th>Procedencia</th>
-                                <th>Nombre y apellido</th>
-                                <th>Documento de identidad</th>
-                                <th>Nacionalidad</th>
-                                <th>Entrada</th>
-                                <th>Salida</th>
-                                <th>Tarifa</th>
-                                <th>Inquilos</th>
-                            </ng-template>
-                            <ng-template #row let-alquiler>                            
-                                <td class="text-3xl"> {{ta(alquiler).habitacion.numero}} </td>
-                                <td>{{ta(alquiler).procedencia}}</td>
-                                <td>{{ta(alquiler).cliente.nombre}} {{ta(alquiler).cliente.apellido}}</td>
-                                <td>{{ta(alquiler).cliente.tipoIdentidad}}-{{ta(alquiler).cliente.cedula}}</td>
-                                <td>{{ta(alquiler).cliente.nacionalidad}}</td>
-                                <td> {{ getDateFromData(ta(alquiler).fechaInicio) | date}} </td>
-                                <td> {{ getDateFromData(ta(alquiler).fechaFin) | date}} </td>
-                                <td>
-                                    <ul class="ml-4 list-disc">
-                                        <li *ngFor="let inquilo of ta(alquiler).invitados">
-                                            {{inquilo.nombre}} {{inquilo.apellido}}
-                                        </li>
-                                    </ul>
-                                </td>
-                                <td>{{ta(alquiler).costoDolar | currency:'USD'}}</td>
-                            </ng-template> 
+                            >                            
                             <ng-template #extraOptionsVencidos let-alquiler>
                                 <span
                                 (click)="ceaseAlquiler(alquiler._id)"
@@ -152,4 +96,32 @@
             </div>
         </div>
     </div>
+    <ng-template #labels>
+        <th>N° Habitación</th>
+        <th>Procedencia</th>
+        <th>Nombre y apellido</th>
+        <th>Documento de identidad</th>
+        <th>Nacionalidad</th>
+        <th>Entrada</th>
+        <th>Salida</th>
+        <th>Acompañantes</th>
+        <th>Tarifa</th>
+    </ng-template>
+    <ng-template #row let-alquiler>                            
+        <td class="text-3xl"> {{ta(alquiler).habitacion.numero}} </td>
+        <td>{{ta(alquiler).procedencia}}</td>
+        <td>{{ta(alquiler).cliente.nombre}} {{ta(alquiler).cliente.apellido}}</td>
+        <td>{{ta(alquiler).cliente.tipoIdentidad}}-{{ta(alquiler).cliente.cedula}}</td>
+        <td>{{ta(alquiler).cliente.nacionalidad}}</td>
+        <td> {{ getDateFromData(ta(alquiler).fechaInicio) | date}} </td>
+        <td> {{ getDateFromData(ta(alquiler).fechaFin) | date}} </td>
+        <td>
+            <ul class="ml-4 list-disc">
+                <li *ngFor="let inquilo of ta(alquiler).invitados">
+                    {{inquilo.nombre}} {{inquilo.apellido}}
+                </li>
+            </ul>
+        </td>
+        <td>{{ta(alquiler).costoDolar | currency:'USD'}}</td>
+    </ng-template> 
 </div>
