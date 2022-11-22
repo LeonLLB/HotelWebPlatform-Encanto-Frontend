@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Alquiler, AlquilerFormData, Cliente, ClienteFormData, InvitadosFormData } from 'src/app/interfaces/alquiler.interface';
+import { Alquiler, AlquilerFormData, Cliente, ClienteFormData, Invitado, InvitadosFormData } from 'src/app/interfaces/alquiler.interface';
 import { Habitacion } from 'src/app/interfaces/habitacion.interface';
 import { NotifyService } from 'src/app/services/notify.service';
 import { ValidatorService } from 'src/app/services/validator.service';
@@ -43,12 +43,13 @@ export class AlquilarComponent implements OnInit {
     apellido: ['', Validators.required],
     cedula: [Number(undefined), Validators.required],
     telefono: ['', [Validators.required, (this.validatorsService.venezuelanNumber())]],
+    nacionalidad:['',Validators.required],
+    tipoIdentidad:['',Validators.required]
   })
   invitadosForm = this.fb.group({
     nombre: this.fb.array<string>([]),
     apellido: this.fb.array<string>([]),
     cedula: this.fb.array<number>([]),
-    telefono: this.fb.array<string>([]),
   })
   conditionForm = this.fb.group({
     condition:['Datos',Validators.required]
@@ -74,10 +75,6 @@ export class AlquilarComponent implements OnInit {
     return this.getAdditionalArrayInput('cedula')
   }
 
-  get additionalTelefonos() {
-    return this.getAdditionalArrayInput('telefono')
-  }
-
   get HabitacionesIntoSelectData(){
     return this.habitacionesData.map(habitacion=>({
       value:habitacion._id,
@@ -86,18 +83,18 @@ export class AlquilarComponent implements OnInit {
   }
 
 
-  private getAdditionalArrayInput(caso: 'nombre' | 'apellido' | 'cedula' | 'telefono'): FormArray {
+  private getAdditionalArrayInput(caso: 'nombre' | 'apellido' | 'cedula'): FormArray {
     return this.invitadosForm.get(caso) as FormArray
   }
 
-  addInvitadoToForm(defaultInvitado: (Cliente | undefined) = undefined) {
+  addInvitadoToForm(defaultInvitado: (Invitado | undefined) = undefined) {
 
     this.hasAddedInvitado = true
 
     this.additionalNombres.push(this.fb.control(defaultInvitado?.nombre ?? '', [Validators.required]))
     this.additionalApellidos.push(this.fb.control(defaultInvitado?.apellido ?? '', [Validators.required]))
-    this.additionalCedulas.push(this.fb.control(defaultInvitado?.cedula ?? '' as unknown as Number, [Validators.required]))
-    this.additionalTelefonos.push(this.fb.control(defaultInvitado?.telefono ?? '', [Validators.required, this.validatorsService.venezuelanNumber]))
+    this.additionalCedulas.push(this.fb.control(defaultInvitado?.cedula ?? '' as unknown as Number))
+    
 
   }  
 
@@ -105,13 +102,11 @@ export class AlquilarComponent implements OnInit {
     this.additionalNombres.removeAt(i)
     this.additionalApellidos.removeAt(i)
     this.additionalCedulas.removeAt(i)
-    this.additionalTelefonos.removeAt(i)
 
     if (
       this.additionalNombres.length === 0 &&
       this.additionalApellidos.length === 0 &&
-      this.additionalCedulas.length === 0 &&
-      this.additionalTelefonos.length === 0
+      this.additionalCedulas.length === 0
     ) { this.hasAddedInvitado = false }
   }
 
@@ -156,16 +151,18 @@ export class AlquilarComponent implements OnInit {
 
     //RELLENAR CLIENTE PRINCIPAL
     this.clientePrincipalForm.setValue({
-      nombre:data.clientePrincipal.nombre,
-      apellido:data.clientePrincipal.apellido,
-      cedula:data.clientePrincipal.cedula,
-      telefono:data.clientePrincipal.telefono as any,
+      nombre:data.cliente.nombre,
+      apellido:data.cliente.apellido,
+      cedula:data.cliente.cedula,
+      telefono:data.cliente.telefono as any,
+      nacionalidad:data.cliente.nacionalidad,
+      tipoIdentidad:data.cliente.tipoIdentidad
     })
 
     //RELLENAR INVITADOS
 
-    if(data.clientesSecundarios){
-      for(const invitado of data.clientesSecundarios){
+    if(data.invitados){
+      for(const invitado of data.invitados){
         this.addInvitadoToForm(invitado)
       }      
     }

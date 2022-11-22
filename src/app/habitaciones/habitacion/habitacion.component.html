@@ -12,7 +12,6 @@
             <button (click)="eliminarHabitacion()" class="btn-action-danger">Eliminar habitación</button>
         </span>
     </div>
-    <!-- TODO IMAGEN DE HABITACIÓN -->
     <div *ngIf="!isFetching" class="animate-display_right">
         <div [routerLink]="['/main','habitaciones','subir-imagen',habitacion._id]" class="relative">
             <div class="top-0 rounded-xl bg-transparent flex flex-col items-center bg-opacity-0 left-0 transition-colors duration-300 absolute w-full h-full hover:bg-gray-700 hover:bg-opacity-50">
@@ -44,36 +43,34 @@
         </div>
         <ng-template #conAlquiler>
             <div>
+                <div class="flex flex-col w-full space-y-4 justify-center">
+                    <span class="text-2xl font-light">Habitación alquilada por: {{alquiler.cliente.nombre}} {{alquiler.cliente.apellido}}</span>
+                    <span class="text-2xl font-light">Datos de identidad: {{alquiler.cliente.tipoIdentidad}}-{{alquiler.cliente.cedula}}</span>
+                    <span class="text-2xl font-light">Nacionalidad: {{alquiler.cliente.nacionalidad}} Procedencia: {{alquiler.procedencia}}</span>
+                    <span class="text-2xl font-light">Número telefonico: {{alquiler.cliente.telefono}} Tarifa: {{alquiler.costoDolar}}</span>
+                    <span class="text-2xl font-light">Entrada: {{ getDateFromData((alquiler).fechaInicio) | date}} Salida: {{ getDateFromData((alquiler).fechaFin) | date}}</span>
+                    <span class="text-2xl font-light" *ngIf="alquiler.invitados && alquiler.invitados.length > 0">Datos de acomapañantes</span>
+                </div>
                 <app-table-crud 
+                        *ngIf="alquiler.invitados && alquiler.invitados.length > 0"
                         [row]="row"
                         [labels]="labels"
-                        [items]="alquilerAsArrayData"
+                        [items]="alquiler.invitados"
                         [showDefaultOptions]="{
                             edit:false,
                             del:false
                         }"
                         >
                         <ng-template #labels>
-                            <th>Fecha de Inicio del alquiler</th>
-                            <th>Fecha de Fin del alquiler</th>
-                            <th>Procedencia</th>
-                            <th>Costo ($)</th>
-                            <th>Inquilos</th>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>N° de Identidad</th>
                         </ng-template>
-                        <ng-template #row let-alquiler>          
+                        <ng-template #row let-invitado>          
                             <!-- TODO: INTERNACIONALIZACION -->
-                            <td> {{ getDateFromData((alquiler).fechaInicio) | date}} </td>
-                            <td> {{ getDateFromData((alquiler).fechaFin) | date}} </td>
-                            <td>{{(alquiler).procedencia}}</td>
-                            <td>{{(alquiler).costoDolar | currency:'USD'}}</td>
-                            <td>
-                                <ul class="ml-4 list-disc">
-                                    <li>{{(alquiler).clientePrincipal.nombre}} {{(alquiler).clientePrincipal.apellido}}</li>
-                                    <li *ngFor="let inquilo of (alquiler).clientesSecundarios">
-                                        {{inquilo.nombre}} {{inquilo.apellido}}
-                                    </li>
-                                </ul>
-                            </td>
+                            <td>{{invitado.nombre}}</td>
+                            <td>{{invitado.apellido}}</td>
+                            <td>{{invitado.cedula}}</td>                            
                         </ng-template>                                              
                     </app-table-crud>
             </div>

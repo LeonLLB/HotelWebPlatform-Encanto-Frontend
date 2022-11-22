@@ -26,16 +26,21 @@ export class AlquilerService {
       costoDolar:+alquiler.costoDolar,
       fechaFin:(alquiler.fechaFin.split('-').join('/')),
       fechaInicio:(alquiler.fechaInicio.split('-').join('/')),
-      clientePrincipal:{
+      cliente:{
         ...cliente,
         cedula:+cliente.cedula
       },
-      clientesSecundarios: invitados.nombre.map((_,i)=>{
+      invitados: invitados.nombre.map((_,i)=>{
+        if(invitados.cedula[i] && invitados.cedula[i] !== ''){
+          return {
+            nombre: invitados.nombre[i],
+            apellido: invitados.apellido[i],
+            cedula: +invitados.cedula[i],
+          }
+        }
         return {
           nombre: invitados.nombre[i],
           apellido: invitados.apellido[i],
-          cedula: +invitados.cedula[i],
-          telefono: invitados.telefono[i],
         }
       })
     }

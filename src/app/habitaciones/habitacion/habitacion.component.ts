@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Alquiler } from 'src/app/interfaces/alquiler.interface';
+import { Alquiler, Invitado } from 'src/app/interfaces/alquiler.interface';
 import { Habitacion } from 'src/app/interfaces/habitacion.interface';
 import { AuthService } from 'src/app/services/auth.service';
 import { ConfirmService } from 'src/app/services/confirm.service';
@@ -79,10 +79,6 @@ export class HabitacionComponent implements OnInit {
 
   get isAdmin():boolean{
     return this.auth.rol === 'A'
-  }
-
-  get alquilerAsArrayData():Alquiler[]{
-    return [this.alquiler]
   }
 
 }

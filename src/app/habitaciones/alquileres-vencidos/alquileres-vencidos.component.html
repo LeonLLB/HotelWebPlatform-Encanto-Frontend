@@ -9,8 +9,6 @@
                     </div>                                  
                     
                     <div class="rounded-lg" [Block]="isFetching.hoy">
-                        <!-- (onDeleteClick)="eliminarHabitacion($event)"
-                        [updateRouterLink]="['actualizar']" -->
                         <app-table-crud 
                             [row]="row"
                             [labels]="labels"
@@ -20,28 +18,33 @@
                             >
                             <ng-template #labels>
                                 <th>N° Habitación</th>
-                                <th>Fecha de Inicio</th>
-                                <th>Fecha de Fin</th>
-                                <th>Costo ($)</th>
+                                <th>Procedencia</th>
+                                <th>Nombre y apellido</th>
+                                <th>Documento de identidad</th>
+                                <th>Nacionalidad</th>
+                                <th>Entrada</th>
+                                <th>Salida</th>
+                                <th>Tarifa</th>
                                 <th>Inquilos</th>
                             </ng-template>
                             <ng-template #row let-alquiler>                            
                                 <td class="text-3xl"> {{ta(alquiler).habitacion.numero}} </td>
+                                <td>{{ta(alquiler).procedencia}}</td>
+                                <td>{{ta(alquiler).cliente.nombre}} {{ta(alquiler).cliente.apellido}}</td>
+                                <td>{{ta(alquiler).cliente.tipoIdentidad}}-{{ta(alquiler).cliente.cedula}}</td>
+                                <td>{{ta(alquiler).cliente.nacionalidad}}</td>
                                 <td> {{ getDateFromData(ta(alquiler).fechaInicio) | date}} </td>
                                 <td> {{ getDateFromData(ta(alquiler).fechaFin) | date}} </td>
-                                <td>{{ta(alquiler).costoDolar | currency:'USD'}}</td>
                                 <td>
                                     <ul class="ml-4 list-disc">
-                                        <li>{{ta(alquiler).clientePrincipal.nombre}} {{ta(alquiler).clientePrincipal.apellido}}</li>
-                                        <li *ngFor="let inquilo of ta(alquiler).clientesSecundarios">
+                                        <li *ngFor="let inquilo of ta(alquiler).invitados">
                                             {{inquilo.nombre}} {{inquilo.apellido}}
                                         </li>
                                     </ul>
                                 </td>
-                            </ng-template> 
+                                <td>{{ta(alquiler).costoDolar | currency:'USD'}}</td>
+                            </ng-template>
                             <ng-template #extraOptions let-alquiler>
-                                <!-- [routerLink]="getRouterLink(item._id)" -->
-                                <!-- (click)="onUpdateButton(item)" -->
                                 <span
                                 (click)="extendAlquiler(alquiler._id)"
                                 class="material-icons text-gray-500 cursor-pointer"
@@ -94,24 +97,31 @@
                             >
                             <ng-template #labels>
                                 <th>N° Habitación</th>
-                                <th>Fecha de Inicio</th>
-                                <th>Fecha de Fin</th>
-                                <th>Costo ($)</th>
+                                <th>Procedencia</th>
+                                <th>Nombre y apellido</th>
+                                <th>Documento de identidad</th>
+                                <th>Nacionalidad</th>
+                                <th>Entrada</th>
+                                <th>Salida</th>
+                                <th>Tarifa</th>
                                 <th>Inquilos</th>
                             </ng-template>
                             <ng-template #row let-alquiler>                            
                                 <td class="text-3xl"> {{ta(alquiler).habitacion.numero}} </td>
+                                <td>{{ta(alquiler).procedencia}}</td>
+                                <td>{{ta(alquiler).cliente.nombre}} {{ta(alquiler).cliente.apellido}}</td>
+                                <td>{{ta(alquiler).cliente.tipoIdentidad}}-{{ta(alquiler).cliente.cedula}}</td>
+                                <td>{{ta(alquiler).cliente.nacionalidad}}</td>
                                 <td> {{ getDateFromData(ta(alquiler).fechaInicio) | date}} </td>
                                 <td> {{ getDateFromData(ta(alquiler).fechaFin) | date}} </td>
-                                <td>{{ta(alquiler).costoDolar | currency:'USD'}}</td>
                                 <td>
                                     <ul class="ml-4 list-disc">
-                                        <li>{{ta(alquiler).clientePrincipal.nombre}} {{ta(alquiler).clientePrincipal.apellido}}</li>
-                                        <li *ngFor="let inquilo of ta(alquiler).clientesSecundarios">
+                                        <li *ngFor="let inquilo of ta(alquiler).invitados">
                                             {{inquilo.nombre}} {{inquilo.apellido}}
                                         </li>
                                     </ul>
                                 </td>
+                                <td>{{ta(alquiler).costoDolar | currency:'USD'}}</td>
                             </ng-template> 
                             <ng-template #extraOptionsVencidos let-alquiler>
                                 <span
