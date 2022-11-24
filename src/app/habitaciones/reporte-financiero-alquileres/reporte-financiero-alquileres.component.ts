@@ -44,7 +44,7 @@ export class ReporteFinancieroAlquileresComponent implements OnInit {
   }
 
   generate(){
-    
+    this.alquilerService.generarReporteFinancieroAlquileres(this.mes,this.year)
   }
 
 }
