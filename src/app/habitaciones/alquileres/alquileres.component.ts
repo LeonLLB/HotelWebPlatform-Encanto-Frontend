@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Alquiler } from 'src/app/interfaces/alquiler.interface';
+import { ValidRoles } from 'src/app/interfaces/user.interface';
+import { AuthService } from 'src/app/services/auth.service';
 import { ConfirmService } from 'src/app/services/confirm.service';
 import { NotifyService } from 'src/app/services/notify.service';
 import { PaginationService } from 'src/app/services/pagination.service';
@@ -28,9 +30,11 @@ export class AlquileresComponent implements OnInit {
     private alquilerService: AlquilerService,
     private paginationService: PaginationService,
     private notify: NotifyService,
-    private confirm:ConfirmService
+    private confirm:ConfirmService,
+    private auth: AuthService
   ) { }
 
+  get isAdmin(): boolean {return this.auth.rol === ValidRoles.admin}
   
   paginate(page: number | string) {
 
