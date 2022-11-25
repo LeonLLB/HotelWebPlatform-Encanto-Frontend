@@ -21,6 +21,7 @@ import { ImagenHabitacionPipe } from './pipes/imagen-habitacion.pipe';
 import { HttpClientModule } from '@angular/common/http';
 import { AlquileresVencidosComponent } from './alquileres-vencidos/alquileres-vencidos.component';
 import { ReporteEntradaSalidaComponent } from './reporte-entrada-salida/reporte-entrada-salida.component';
+import { ReporteFinancieroAlquileresComponent } from './reporte-financiero-alquileres/reporte-financiero-alquileres.component';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { ReporteEntradaSalidaComponent } from './reporte-entrada-salida/reporte-
     TipoToIconPipe,
     ImagenHabitacionPipe,
     AlquileresVencidosComponent,
-    ReporteEntradaSalidaComponent
+    ReporteEntradaSalidaComponent,
+    ReporteFinancieroAlquileresComponent
   ],
   imports: [
     CommonModule,

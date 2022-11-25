@@ -1,0 +1,32 @@
+<app-center-box>
+    <div
+    class="h-fit space-y-3 grid grid-cols-1 items-center bg-slate-200 shadow-lg py-6 px-8 rounded-lg">    
+    <h1 class="text-2xl font-light">Reporte financiero de alquileres por habitaciones</h1>
+        <div class="grid grid-cols-2 gap-4">
+            <div class="flex flex-col">
+                <label for="mes" class="font-light">Mes de reporte</label>
+                    <select 
+                    class="form-select border-gray-300 rounded-lg"
+                    name="mes"
+                    [(ngModel)]="mes"
+                    id="mes">
+                        <option *ngFor="let option of months" [value]="option.value">{{option.label}}</option>
+                    </select>
+            </div>
+            <div class="flex flex-col">
+                <label for="year" class="font-light">Año de reporte</label>
+                    <select 
+                    class="form-select border-gray-300 rounded-lg"
+                    name="year"
+                    [(ngModel)]="year"
+                    id="year">
+                        <option *ngFor="let option of years" [value]="option.value">{{option.label}}</option>
+                    </select>
+            </div>
+            <div class="col-span-2 w-full flex flex-row justify-center">
+                <button type="button" (click)="generate()" class="btn-action-primary mt-2">Descargar reporte</button>
+            </div>    
+        </div>
+    </div>
+</app-center-box>
+

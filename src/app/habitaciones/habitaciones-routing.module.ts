@@ -9,6 +9,7 @@ import { ConsultarComponent } from './consultar/consultar.component';
 import { HabitacionComponent } from './habitacion/habitacion.component';
 import { RegistrarComponent } from './registrar/registrar.component';
 import { ReporteEntradaSalidaComponent } from './reporte-entrada-salida/reporte-entrada-salida.component';
+import { ReporteFinancieroAlquileresComponent } from './reporte-financiero-alquileres/reporte-financiero-alquileres.component';
 import { ReservarComponent } from './reservar/reservar.component';
 import { SubirFotoComponent } from './subir-foto/subir-foto.component';
 
@@ -18,6 +19,7 @@ const routes: Routes = [
   {path:'subir-imagen/:id',canActivate:[AuthGuard,AdminGuard],component:SubirFotoComponent},
   {path:'reservar',canActivate:[AuthGuard],component:ReservarComponent},
   {path:'reporte-entrada-salida',canActivate:[AuthGuard],component:ReporteEntradaSalidaComponent},
+  {path:'reporte-financiero-alquileres',canActivate:[AuthGuard,AdminGuard],component:ReporteFinancieroAlquileresComponent},
   {path:'alquilar/:habitacionId',canActivate:[AuthGuard],component:AlquilarComponent},
   {path:'actualizar-alquiler/:id',canActivate:[AuthGuard],component:AlquilarComponent},
   {path:'alquileres',canActivate:[AuthGuard],component:AlquileresComponent},

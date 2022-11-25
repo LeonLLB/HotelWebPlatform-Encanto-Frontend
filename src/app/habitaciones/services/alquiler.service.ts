@@ -223,4 +223,31 @@ export class AlquilerService {
         }
       })
   }
+
+  generarReporteFinancieroAlquileres(mes: string, year: string): void {
+
+    this.http.get(environment.apiUrl + '/files/alquiler/reporte-financiero?mes='+mes+'&year='+year, {
+      responseType: 'blob',
+      withCredentials:true
+    })
+      .pipe(
+        catchError((err) => {
+          this.loading.hideLoading()
+          if(err.status === 404){
+            this.notify.failure('No existen datos para esa fecha')
+            return of(null)
+          }
+          this.notify.failure('Hubo un error al generar el reporte')
+          console.log(err)
+          return of(null)
+        })
+      )
+      .subscribe(data => {
+        if (data) {
+          this.loading.hideLoading()
+          this.notify.success('Reporte generado')
+          saveAs(data, `${new Date().getTime()}-reporte-financiero-alquiler.pdf`)
+        }
+      })
+  }
 }

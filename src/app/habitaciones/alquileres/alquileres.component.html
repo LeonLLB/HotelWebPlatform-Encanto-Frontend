@@ -3,6 +3,7 @@
         <div class="space-x-4">
             <button [routerLink]="['/main','habitaciones','reservar']" class="btn-action-primary">Reservar una habitación</button>
             <button [routerLink]="['/main','habitaciones','reporte-entrada-salida']" class="btn-action-primary">Generar reporte de entrada y salida</button>
+            <button *ngIf="isAdmin" [routerLink]="['/main','habitaciones','reporte-financiero-alquileres']" class="btn-action-primary">Generar reporte financiero de alquileres</button>
         </div>
         <div>
             <div class="flex flex-col items-center space-y-4">

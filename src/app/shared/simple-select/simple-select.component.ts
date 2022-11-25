@@ -10,7 +10,7 @@ interface InputOption {
   selector: 'app-simple-select',
   template: `
       <div class="flex flex-col">
-        <label for="tipo" class="font-light">{{label}}</label>
+        <label [for]="inputName" class="font-light">{{label}}</label>
         <ng-container [formGroup]="formGroup">
             <select 
             class="form-select border-gray-300 rounded-lg"
