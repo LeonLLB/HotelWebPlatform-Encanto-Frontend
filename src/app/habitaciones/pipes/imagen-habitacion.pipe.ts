@@ -8,7 +8,8 @@ import { environment } from 'src/environments/environment';
 export class ImagenHabitacionPipe implements PipeTransform {
 
   transform(habitacion: Habitacion): string {
-    if(habitacion.imgUrl) return `${environment.apiUrl}/files/habitacion/foto/${habitacion._id}`
+    if(habitacion.imgUrl && !environment.production) return `${environment.apiUrl}/files/habitacion/foto/${habitacion._id}`
+    if(habitacion.imgUrl && environment.production) return habitacion.imgUrl
     return 'assets/img/no-image.jpeg';
   }
 
