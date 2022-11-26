@@ -13,8 +13,8 @@ export class UnnecesaryAuthGuard implements CanActivate, CanLoad {
 
   private isAbleToNavigateTo(): Observable<boolean> {
     this.loading.displayLoading('Espere un momento','dots')
-    return this.graphql.cachedQuery<VerifyUserQueryResultInterface, undefined>(
-      VERIFY_USER_QUERY,undefined
+    return this.graphql.query<VerifyUserQueryResultInterface, never>(
+      VERIFY_USER_QUERY
     )
       .pipe(
         catchError((err) => {
