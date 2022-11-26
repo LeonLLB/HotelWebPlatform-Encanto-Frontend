@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, CanLoad, Route, Router, RouterStateSnapshot, UrlSegment, UrlTree } from '@angular/router';
-import { catchError, delay, map, Observable, of, switchMap } from 'rxjs';
+import { catchError, map, Observable, of } from 'rxjs';
 import { VerifyUserQueryResultInterface, VERIFY_USER_QUERY } from '../graphql/queries';
 import { GraphqlService } from '../services/graphql.service';
 import { LoadingService } from '../services/loading.service';
@@ -13,8 +13,8 @@ export class UnnecesaryAuthGuard implements CanActivate, CanLoad {
 
   private isAbleToNavigateTo(): Observable<boolean> {
     this.loading.displayLoading('Espere un momento','dots')
-    return this.graphql.cachedQuery<VerifyUserQueryResultInterface, undefined>(
-      VERIFY_USER_QUERY,undefined
+    return this.graphql.query<VerifyUserQueryResultInterface, never>(
+      VERIFY_USER_QUERY
     )
       .pipe(
         catchError((err) => {
