@@ -31,7 +31,7 @@ export class AuthGuard implements CanActivate, CanLoad {
     clearTimeout(this.timer)
     return this.graphql
       .query<VerifyUserQueryResultInterface,never>(
-        VERIFY_USER_QUERY,undefined,'standby'
+        VERIFY_USER_QUERY,undefined,'cache-first'
       )
       .pipe(
         catchError((err) => {
