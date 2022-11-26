@@ -22,11 +22,10 @@ export class GraphqlService {
     private apollo: Apollo
   ) { }
 
-  query<ResponseType, RequestBodyType>(GQLQuery: TypedDocumentNode<unknown, unknown>,RequestBody:RequestBodyType | undefined = undefined,policy:FetchPolicy | undefined = undefined): Observable<ApolloQueryResult<ResponseType>>{
+  query<ResponseType, RequestBodyType>(GQLQuery: TypedDocumentNode<unknown, unknown>,RequestBody:RequestBodyType | undefined = undefined): Observable<ApolloQueryResult<ResponseType>>{
     return this.apollo.query<ResponseType,RequestBodyType>({
       query: GQLQuery,
-      variables:RequestBody,
-      fetchPolicy:policy     
+      variables:RequestBody
     })
   }
 
