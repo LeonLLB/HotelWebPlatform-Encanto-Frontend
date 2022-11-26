@@ -1,28 +1,27 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, CanLoad, Route, Router, RouterStateSnapshot, UrlSegment, UrlTree } from '@angular/router';
-import { gql } from 'apollo-angular';
 import { catchError, delay, map, Observable, of, switchMap } from 'rxjs';
-import { environment } from 'src/environments/environment';
 import { VerifyUserQueryResultInterface, VERIFY_USER_QUERY } from '../graphql/queries';
 import { GraphqlService } from '../services/graphql.service';
+import { LoadingService } from '../services/loading.service';
 
-//TODO: CAMBIAR A GRAPHQL
 @Injectable({
   providedIn: 'root'
 })
 export class UnnecesaryAuthGuard implements CanActivate, CanLoad {
-  constructor(private router: Router, private graphql: GraphqlService) { }
+  constructor(private router: Router, private graphql: GraphqlService,private loading: LoadingService) { }
 
   private isAbleToNavigateTo(): Observable<boolean> {
-    return this.graphql.query<VerifyUserQueryResultInterface, never>(
-      VERIFY_USER_QUERY
+    this.loading.displayLoading('Espere un momento','dots')
+    return this.graphql.cachedQuery<VerifyUserQueryResultInterface, undefined>(
+      VERIFY_USER_QUERY,undefined
     )
       .pipe(
         catchError((err) => {
           return of(err)
         }),
         map(res => {
+          this.loading.hideLoading()
           if (res.data) {
             this.router.navigate(['main'])
             return false;

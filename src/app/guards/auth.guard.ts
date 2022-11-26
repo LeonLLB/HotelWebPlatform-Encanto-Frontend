@@ -7,6 +7,7 @@ import { environment } from 'src/environments/environment';
 import { VerifyUserQueryResultInterface, VERIFY_USER_QUERY } from '../graphql/queries';
 import { AuthService } from '../services/auth.service';
 import { GraphqlService } from '../services/graphql.service';
+import { LoadingService } from '../services/loading.service';
 import { ReportService } from '../services/report.service';
 
 //TODO: CAMBIAR A GRAPHQL
@@ -19,22 +20,25 @@ export class AuthGuard implements CanActivate, CanLoad {
     private router: Router,
     private graphql: GraphqlService,
     private auth: AuthService,
-    private report: ReportService
+    private report: ReportService,
+    private loading: LoadingService
   ) { }
 
   private timer: any = undefined;
 
   private isAbleToNavigateTo(): Observable<boolean> {
+    this.loading.displayLoading('Espere un momento','dots')
     clearTimeout(this.timer)
     return this.graphql
-      .query<VerifyUserQueryResultInterface,never>(
-        VERIFY_USER_QUERY
+      .cachedQuery<VerifyUserQueryResultInterface,undefined>(
+        VERIFY_USER_QUERY,undefined
       )
       .pipe(
         catchError((err) => {
           return of(err)
         }),
         map(res => {
+          this.loading.hideLoading()
           if (res.error || res.errors) {
             this.router.navigate(['auth', 'login'])
             return false;

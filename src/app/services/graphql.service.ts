@@ -35,4 +35,11 @@ export class GraphqlService {
       variables:RequestBody
     })
   }
+
+  cachedQuery<ResponseType, RequestBodyType>(GQLQuery: TypedDocumentNode<unknown, unknown>,RequestBody:RequestBodyType): Observable<ApolloQueryResult<ResponseType>>{
+    return this.apollo.watchQuery<ResponseType,RequestBodyType>({
+      query: GQLQuery,
+      variables:RequestBody
+    }).valueChanges
+  }
 }

@@ -6,7 +6,11 @@ import { Loading } from 'notiflix/build/notiflix-loading-aio'
 })
 export class LoadingService {
 
-  displayLoading(message: string){
+  displayLoading(message: string,type:'hourglass'|'dots' = 'hourglass'){
+    if(type === 'dots'){
+      Loading.dots(message,{svgColor:'#EFC501',messageColor:'#EFC501'})
+      return
+    }
     Loading.hourglass(message,{svgColor:'#EFC501',messageColor:'#EFC501'})
   }
 
