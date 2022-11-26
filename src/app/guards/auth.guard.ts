@@ -10,6 +10,7 @@ import { GraphqlService } from '../services/graphql.service';
 import { LoadingService } from '../services/loading.service';
 import { ReportService } from '../services/report.service';
 
+//TODO: CAMBIAR A GRAPHQL
 @Injectable({
   providedIn: 'root'
 })
@@ -29,8 +30,8 @@ export class AuthGuard implements CanActivate, CanLoad {
     this.loading.displayLoading('Espere un momento','dots')
     clearTimeout(this.timer)
     return this.graphql
-      .query<VerifyUserQueryResultInterface,never>(
-        VERIFY_USER_QUERY
+      .cachedQuery<VerifyUserQueryResultInterface,undefined>(
+        VERIFY_USER_QUERY,undefined
       )
       .pipe(
         catchError((err) => {
