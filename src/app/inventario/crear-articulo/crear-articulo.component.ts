@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { NotifyService } from 'src/app/services/notify.service';
 import { ArticuloService } from '../services/articulo.service';
 
 @Component({
@@ -20,7 +22,9 @@ export class CrearArticuloComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private articuloService: ArticuloService
+    private articuloService: ArticuloService,
+    private notify:NotifyService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -31,6 +35,21 @@ export class CrearArticuloComponent implements OnInit {
       this.articuloForm.markAllAsTouched()
       return
     }
+
+    if(this.isEditableForm){
+      //TODO: LOGICA DE ACTUALIZACIÓN
+      return
+    }
+
+    this.articuloService.create({
+      ...this.articuloForm.value as any,
+      mesesUtiles:(this.articuloForm.value.tipo === 'Lenceria') ? +(this.articuloForm.value.mesesUtiles as number) : undefined
+    }).subscribe(response => {
+      if (response.data?.createArticulo._id) {
+        this.notify.success('Producto registrado con exito!')
+        this.router.navigate(['/main', 'inventario','articulos'])
+      }
+    })
   }
 
 }
