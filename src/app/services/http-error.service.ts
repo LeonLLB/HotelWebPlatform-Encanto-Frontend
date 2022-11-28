@@ -1,21 +1,17 @@
 import { Injectable } from '@angular/core';
 import { MutationResult } from 'apollo-angular';
-import { Observable } from 'rxjs';
-import { Articulo } from 'src/app/interfaces/articulo.interface';
-import { GraphqlService } from 'src/app/services/graphql.service';
-import { LoadingService } from 'src/app/services/loading.service';
-import { NotifyService } from 'src/app/services/notify.service';
-import { ArticuloInput, CREATE_ARTICULO } from '../graphql/mutations';
+import { NotifyService } from './notify.service';
 
-@Injectable()
-export class ArticuloService {
-  constructor(
-    private graphql: GraphqlService,    
+@Injectable({
+  providedIn: 'root'
+})
+export class HttpErrorService {
+
+  constructor(    
     private notify: NotifyService,
-    private loading: LoadingService
   ) { }
 
-  private onPostPatchFailure({ errors }: MutationResult<any>) {
+  onPostPatchFailure({ errors }: MutationResult<any>) {
     console.error(errors)
 
     // if (.error.message[0]?.includes('3')) {
@@ -29,7 +25,7 @@ export class ArticuloService {
     this.notify.failure('Ocurrio un error, por favor contacte al administrador de sistemas')
   }
 
-  private onCatchError(data: any) {
+  onCatchError(data: any) {
     if (data.networkError !== null && data.networkError !== undefined) {
       if ((data.networkError.error?.errors as { message: string }[])[0].message.includes('got invalid value')) {
         this.notify.failure('Parece que ciertos valores no puedieron ser enviados correctamente, consulte con el administrador')
@@ -49,12 +45,4 @@ export class ArticuloService {
     console.log({ ...data })
     this.notify.failure('Hubo un error, consulte al administrador de sistemas')
   }
-
-  create(data:ArticuloInput): Observable<MutationResult<{createArticulo:Articulo}>>{
-    return this.graphql.mutate<{createArticulo:Articulo},{data:ArticuloInput}>(
-      CREATE_ARTICULO,
-      {data}
-    )
-  }
-
 }
