@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Articulo } from 'src/app/interfaces/articulo.interface';
 import { NotifyService } from 'src/app/services/notify.service';
 import { ArticuloService } from '../services/articulo.service';
 
@@ -17,6 +18,7 @@ export class CrearArticuloComponent implements OnInit {
     tipo:['Limpieza',[Validators.required]],
     mesesUtiles: 1
   })
+  articuloId!:string
 
   isEditableForm = false
 
@@ -24,10 +26,28 @@ export class CrearArticuloComponent implements OnInit {
     private fb: FormBuilder,
     private articuloService: ArticuloService,
     private notify:NotifyService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
+    this.route.params.subscribe(params=>{
+      if(params['id']){
+        this.articuloService.getArticulo(params['id']).subscribe(response=>this.preLoadForm(response.data?.articulo))
+      }
+    })
+  }
+
+  preLoadForm(articulo:Articulo | undefined | null){
+    if(!articulo) {this.router.navigate(['/main','inventario','articulos','consultar']);return}
+
+    this.isEditableForm = true
+    this.articuloId = articulo._id
+    this.articuloForm.setValue({
+      nombre:articulo.nombre,
+      tipo:articulo.tipo,
+      mesesUtiles: (articulo.mesesUtiles) ? articulo.mesesUtiles : 1
+    })
   }
 
   registerArticuloSubmit(){
@@ -36,15 +56,23 @@ export class CrearArticuloComponent implements OnInit {
       return
     }
 
+    const data = {
+      ...this.articuloForm.value as any,
+      mesesUtiles:(this.articuloForm.value.tipo === 'Lenceria') ? +(this.articuloForm.value.mesesUtiles as number) : undefined
+    }
+
     if(this.isEditableForm){
       //TODO: LOGICA DE ACTUALIZACIÓN
+      this.articuloService.update(data,this.articuloId).subscribe(response => {
+        if (response.data?.updateArticulo._id) {
+          this.notify.success('Producto actualizado con exito!')
+          this.router.navigate(['/main', 'inventario','articulos','consultar'])
+        }
+      })
       return
     }
 
-    this.articuloService.create({
-      ...this.articuloForm.value as any,
-      mesesUtiles:(this.articuloForm.value.tipo === 'Lenceria') ? +(this.articuloForm.value.mesesUtiles as number) : undefined
-    }).subscribe(response => {
+    this.articuloService.create(data).subscribe(response => {
       if (response.data?.createArticulo._id) {
         this.notify.success('Producto registrado con exito!')
         this.router.navigate(['/main', 'inventario','articulos','consultar'])

@@ -11,6 +11,16 @@ export const CREATE_ARTICULO = gql`
 
 `
 
+export const UPDATE_ARTICULO = gql`
+
+    mutation UPDATE_ARTICULO($data: UpdateArticuloInput!,$id: String!){
+        updateArticulo(updateArticuloInput: $data,id:$id){
+            _id
+        }
+    }
+
+`
+
 export interface ArticuloInput{
     nombre: string
     tipo: 'Lenceria' | 'Limpieza'

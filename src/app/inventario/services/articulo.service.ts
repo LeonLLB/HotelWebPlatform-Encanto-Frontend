@@ -7,9 +7,9 @@ import { GraphqlService } from 'src/app/services/graphql.service';
 import { HttpErrorService } from 'src/app/services/http-error.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import {Response} from 'src/app/interfaces/response.interface'
-import { ArticuloInput, CREATE_ARTICULO } from '../graphql/mutations';
-import { PaginateInput } from 'src/app/habitaciones/graphql/queries';
-import { QUERY_ARTICULOS_LENCERIA, QUERY_ARTICULOS_LIMPIEZA } from '../graphql/queries';
+import { ArticuloInput, CREATE_ARTICULO, UPDATE_ARTICULO } from '../graphql/mutations';
+import { PaginateInput, QUERY_ALQUILER } from 'src/app/habitaciones/graphql/queries';
+import { QUERY_ARTICULO, QUERY_ARTICULOS_LENCERIA, QUERY_ARTICULOS_LIMPIEZA } from '../graphql/queries';
 
 @Injectable()
 export class ArticuloService {
@@ -41,6 +41,28 @@ export class ArticuloService {
       )
   }
 
+  update(data:ArticuloInput,id:string): Observable<MutationResult<{updateArticulo:Articulo}>>{
+    this.loading.displayLoading('Actualizando producto...')
+    return this.graphql.mutate<{updateArticulo:Articulo},{data:ArticuloInput,id:string}>(
+      UPDATE_ARTICULO,
+      {data,id}
+    )
+    .pipe(
+        catchError(data => {
+          this.loading.hideLoading()
+          this.httpError.onCatchError(data)
+          return of({} as any)
+        }),
+        map(response => {
+          this.loading.hideLoading()
+          if (response.errors) {
+            this.httpError.onPostPatchFailure(response)
+          }
+          return response
+        })
+      )
+  }
+
   getLimpieza(limit: number, pagina:number): Observable<SingleExecutionResult<{articulos:Response<Articulo[]>}>>{
     return this.graphql.query<{articulos:Response<Articulo[]>},{pagination: PaginateInput}>(
       QUERY_ARTICULOS_LIMPIEZA,
@@ -52,6 +74,13 @@ export class ArticuloService {
     return this.graphql.query<{articulos:Response<Articulo[]>},{pagination: PaginateInput}>(
       QUERY_ARTICULOS_LENCERIA,
       {pagination:{limit,offset:pagina-1}}
+    )
+  }
+
+  getArticulo(id:string):Observable<SingleExecutionResult<{articulo:Articulo}>>{
+    return this.graphql.query<{articulo:Articulo},{id:string}>(
+      QUERY_ARTICULO,
+      {id}
     )
   }
 

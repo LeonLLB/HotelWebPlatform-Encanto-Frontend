@@ -31,3 +31,16 @@ export const QUERY_ARTICULOS_LENCERIA = gql`
     }
 
 `
+
+export const QUERY_ARTICULO = gql`
+
+    query Articulo($id: String!){
+        articulo(id: $id) {
+            _id
+            nombre
+            tipo
+            mesesUtiles
+        }
+    }
+
+`

@@ -9,9 +9,9 @@
                     <h1 class="text-3xl font-light">Artículos de limpieza del hotel</h1>
                 </div>
                 <div class="rounded-lg" [Block]="isFetching.limpieza">
-                    <!-- (onDeleteClick)="eliminarHabitacion($event)"
-                    [updateRouterLink]="['actualizar']" -->
+                    <!-- (onDeleteClick)="eliminarHabitacion($event)" -->
                     <app-table-crud 
+                        [updateRouterLink]="['/main','inventario','articulos','actualizar']"
                         [row]="row1"
                         [labels]="labels1"
                         [items]="articulos.limpieza"
@@ -47,9 +47,9 @@
                     <h1 class="text-3xl font-light">Artículos de lenceria del hotel</h1>
                 </div>
                 <div class="rounded-lg" [Block]="isFetching.lenceria">
-                    <!-- (onDeleteClick)="eliminarHabitacion($event)"
-                    [updateRouterLink]="['actualizar']" -->
+                    <!-- <!-- (onDeleteClick)="eliminarHabitacion($event)" -->
                     <app-table-crud 
+                        [updateRouterLink]="['/main','inventario','articulos','actualizar']"
                         [row]="row2"
                         [labels]="labels2"
                         [items]="articulos.lenceria"
