@@ -62,7 +62,6 @@ export class CrearArticuloComponent implements OnInit {
     }
 
     if(this.isEditableForm){
-      //TODO: LOGICA DE ACTUALIZACIÓN
       this.articuloService.update(data,this.articuloId).subscribe(response => {
         if (response.data?.updateArticulo._id) {
           this.notify.success('Producto actualizado con exito!')
