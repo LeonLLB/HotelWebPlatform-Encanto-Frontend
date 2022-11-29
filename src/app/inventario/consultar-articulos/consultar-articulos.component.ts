@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Articulo } from 'src/app/interfaces/articulo.interface';
+import { ConfirmService } from 'src/app/services/confirm.service';
 import { NotifyService } from 'src/app/services/notify.service';
 import { PaginationService } from 'src/app/services/pagination.service';
 import { ArticuloService } from '../services/articulo.service';
@@ -47,6 +48,7 @@ export class ConsultarArticulosComponent implements OnInit {
   constructor(
     private paginationService: PaginationService,
     private notify: NotifyService,
+    private confirm: ConfirmService,
     private articuloService: ArticuloService
   ) { }
 
@@ -85,13 +87,13 @@ export class ConsultarArticulosComponent implements OnInit {
 
   onLimitChange(newLimit: EventTarget, type: 'limpieza' | 'lenceria') {
     if (type === 'lenceria') {
-      this.limit.lenceria = ((newLimit as any).value)
+      this.limit.lenceria = +((newLimit as any).value)
       this.pagina.lenceria = 1
 
       this.fetchLenceria()
       return
     }
-    this.limit.limpieza = ((newLimit as any).value)
+    this.limit.limpieza = +((newLimit as any).value)
     this.pagina.limpieza = 1
 
     this.fetchLimpieza()
@@ -103,6 +105,7 @@ export class ConsultarArticulosComponent implements OnInit {
   }
 
   fetchLimpieza(fullreload = true) {
+    this.isFetching.limpieza=true
     this.articuloService.getLimpieza(this.limit.limpieza,this.pagina.limpieza)
       .subscribe(response => {
         this.isFetching.limpieza = false
@@ -129,6 +132,7 @@ export class ConsultarArticulosComponent implements OnInit {
   }
 
   fetchLenceria(fullreload = true) {
+    this.isFetching.lenceria=true
     this.articuloService.getLenceria(this.limit.lenceria,this.pagina.lenceria)
       .subscribe(response => {
         this.isFetching.lenceria = false
@@ -153,4 +157,40 @@ export class ConsultarArticulosComponent implements OnInit {
         console.log(response)
       })
   }
+
+  eliminarArticulo({_id,nombre,tipo}: Articulo){
+    this.confirm.danger({
+      title:'Eliminar producto: ' + nombre,
+      message:'Esta seguro de querer eliminar este producto? Tenga en cuenta que eliminar este producto tambien eliminará los registros de compras donde se incluya',
+      okText:'Eliminar',
+      onOk:()=>{
+        this.articuloService.delete(_id)
+        .subscribe((response)=>{
+          if (response.data?.removeArticulo._id) {
+            this.notify.success('Producto eliminado con exito!')
+            this.postDelete(tipo)
+          }
+        })
+      }
+    })
+  }
+
+  private postDelete(tipo:string){
+    if(tipo === 'Lenceria'){
+      if(this.articulos.lenceria.length === 1 && this.pagina.lenceria > 1){
+        this.paginas.lenceria -= 1
+        this.pagina.lenceria -= 1
+        this.paginationRange.lenceria.pop()
+      }
+      this.paginate(this.pagina.lenceria, 'lenceria')
+      return
+    }
+    if(this.articulos.limpieza.length === 1 && this.pagina.limpieza > 1){
+      this.paginas.limpieza -= 1
+      this.pagina.limpieza -= 1
+      this.paginationRange.limpieza.pop()
+    }
+    this.paginate(this.pagina.limpieza,'limpieza')
+  }
+
 }

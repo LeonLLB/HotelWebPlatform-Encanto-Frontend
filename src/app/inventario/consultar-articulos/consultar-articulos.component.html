@@ -3,14 +3,14 @@
         <div>
             <button [routerLink]="['/main','inventario','articulos','crear']" class="btn-action-primary">Añadir producto</button>
         </div>
-        <div class="grid grid-cols-2 gap-4">
+        <div class="grid grid-cols-2 gap-x-20">
             <div class="flex flex-col items-center space-y-4">
                 <div class="flex flex-col items-center">
                     <h1 class="text-3xl font-light">Artículos de limpieza del hotel</h1>
                 </div>
                 <div class="rounded-lg" [Block]="isFetching.limpieza">
-                    <!-- (onDeleteClick)="eliminarHabitacion($event)" -->
                     <app-table-crud 
+                        (onDeleteClick)="eliminarArticulo($event)"
                         [updateRouterLink]="['/main','inventario','articulos','actualizar']"
                         [row]="row1"
                         [labels]="labels1"
@@ -38,6 +38,7 @@
                         [limit]="limit.limpieza"
                         [pagina]="pagina.limpieza"
                         [items]="total.limpieza"
+                        limitName="limit-limpieza"
                         (onLimitChange)="onLimitChange($event,'limpieza')"
                     ></app-pagination-info>                    
                 </div>
@@ -47,8 +48,8 @@
                     <h1 class="text-3xl font-light">Artículos de lenceria del hotel</h1>
                 </div>
                 <div class="rounded-lg" [Block]="isFetching.lenceria">
-                    <!-- <!-- (onDeleteClick)="eliminarHabitacion($event)" -->
                     <app-table-crud 
+                        (onDeleteClick)="eliminarArticulo($event)"
                         [updateRouterLink]="['/main','inventario','articulos','actualizar']"
                         [row]="row2"
                         [labels]="labels2"
@@ -78,6 +79,7 @@
                         [limit]="limit.lenceria"
                         [pagina]="pagina.lenceria"
                         [items]="total.lenceria"
+                        limitName="limit-lenceria"
                         (onLimitChange)="onLimitChange($event,'lenceria')"
                     ></app-pagination-info>                    
                 </div>

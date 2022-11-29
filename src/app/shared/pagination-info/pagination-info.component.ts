@@ -11,6 +11,7 @@ export class PaginationInfoComponent implements OnInit {
   @Input() limit!: number
   @Input() pagina!: number
   @Input() items!: number
+  @Input() limitName = 'limit'
   @Input() validLimits = [5, 10, 15]
   @Input() message!: string
   @Input() renderLimitSelect = true

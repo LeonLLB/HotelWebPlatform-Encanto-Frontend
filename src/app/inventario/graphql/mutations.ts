@@ -21,6 +21,17 @@ export const UPDATE_ARTICULO = gql`
 
 `
 
+export const REMOVE_ARTICULO = gql`
+
+    mutation REMOVE_ARTICULO($id: String!){
+        removeArticulo(id:$id){
+            _id
+        }
+    }
+
+`
+
+
 export interface ArticuloInput{
     nombre: string
     tipo: 'Lenceria' | 'Limpieza'
