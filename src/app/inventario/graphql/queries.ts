@@ -5,8 +5,12 @@ export const QUERY_ARTICULOS_LIMPIEZA = gql`
 
     query ArticulosLimpieza($pagination: PaginateInput!){
         articulos(paginate:$pagination,tipo:"Limpieza"){
-            _id
-            nombre
+            result{
+                _id
+                nombre
+            }
+            pages
+            total
         }
     }
 
@@ -16,9 +20,13 @@ export const QUERY_ARTICULOS_LENCERIA = gql`
 
     query ArticulosLenceria($pagination: PaginateInput!){
         articulos(paginate:$pagination,tipo:"Lenceria"){
-            _id
-            nombre
-            mesesUtiles
+            result{
+                _id
+                nombre
+                mesesUtiles
+            }
+            pages
+            total
         }
     }
 

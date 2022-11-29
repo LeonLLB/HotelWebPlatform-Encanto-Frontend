@@ -76,8 +76,8 @@ export class NavbarComponent implements OnInit {
   }
 
   inventarioOptions: Options[] = [
-    { label: 'Añadir producto', icon: 'add', route: 'main/inventario/articulo/crear' },
-    { label: 'Consultar productos', icon: 'search', route: 'main/inventario/articulo/consultar' },
+    { label: 'Añadir producto', icon: 'add', route: 'main/inventario/articulos/crear' },
+    { label: 'Consultar productos', icon: 'search', route: 'main/inventario/articulos/consultar' },
     { label: 'Consultar stock de inventario', icon: 'inventory_2', route: 'main/inventario/stock' },
     { label: 'Registrar compra', icon: 'add_shopping_cart', route: 'main/inventario/compras/registrar' },
     { label: 'Consultar compras', icon: 'shopping_cart', route: 'main/inventario/compras' },

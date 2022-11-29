@@ -32,8 +32,14 @@ export class ConsultarArticulosComponent implements OnInit {
     lenceria: 1
   }
 
-  paginas!: { limpieza: number, lenceria: number }
-  total!: { limpieza: number, lenceria: number }
+  paginas = {
+    limpieza:0,
+    lenceria:0
+  }
+  total = {
+    limpieza:0,
+    lenceria:0
+  }
 
   paginationRange: { limpieza: number[], lenceria: number[] } = { limpieza: [], lenceria: [] }
   maxPagesInPaginationBar = 5
@@ -92,13 +98,15 @@ export class ConsultarArticulosComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.fetchLimpieza()
+    this.fetchLenceria()
   }
 
   fetchLimpieza(fullreload = true) {
     this.articuloService.getLimpieza(this.limit.limpieza,this.pagina.limpieza)
       .subscribe(response => {
         this.isFetching.limpieza = false
-        if (response.data && response.data.articulos.result.length > 0) {
+        if (response.data && response.data?.articulos?.result.length > 0) {
           const data = response.data.articulos
           if (fullreload) {
             this.paginas.limpieza = data.pages
@@ -124,7 +132,7 @@ export class ConsultarArticulosComponent implements OnInit {
     this.articuloService.getLenceria(this.limit.lenceria,this.pagina.lenceria)
       .subscribe(response => {
         this.isFetching.lenceria = false
-        if (response.data && response.data.articulos.result.length > 0) {
+        if (response.data && response.data.articulos?.result.length > 0) {
           const data = response.data.articulos
           if (fullreload) {
             this.paginas.lenceria = data.pages

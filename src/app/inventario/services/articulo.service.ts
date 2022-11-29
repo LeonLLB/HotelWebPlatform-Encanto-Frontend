@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { SingleExecutionResult } from '@apollo/client';
+import { SingleExecutionResult } from '@apollo/client/core';
 import { MutationResult } from 'apollo-angular';
 import { catchError, map, Observable, of } from 'rxjs';
 import { Articulo } from 'src/app/interfaces/articulo.interface';

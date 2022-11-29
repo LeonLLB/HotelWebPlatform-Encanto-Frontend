@@ -47,7 +47,7 @@ export class CrearArticuloComponent implements OnInit {
     }).subscribe(response => {
       if (response.data?.createArticulo._id) {
         this.notify.success('Producto registrado con exito!')
-        this.router.navigate(['/main', 'inventario','articulos'])
+        this.router.navigate(['/main', 'inventario','articulos','consultar'])
       }
     })
   }
