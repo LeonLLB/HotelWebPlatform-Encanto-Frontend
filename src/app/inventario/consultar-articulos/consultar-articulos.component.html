@@ -1,1 +1,87 @@
-<p>consultar-articulos works!</p>
+<div class="flex flex-row mx-4 my-4 justify-center">
+    <div class="flex flex-col items-center space-y-4">
+        <div>
+            <button routerLink="crear" class="btn-action-primary">Añadir producto</button>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+            <div class="flex flex-col items-center space-y-4">
+                <div class="flex flex-col items-center">
+                    <h1 class="text-3xl font-light">Artículos de limpieza del hotel</h1>
+                </div>
+                <div class="rounded-lg" [Block]="isFetching.limpieza">
+                    <!-- (onDeleteClick)="eliminarHabitacion($event)"
+                    [updateRouterLink]="['actualizar']" -->
+                    <app-table-crud 
+                        [row]="row1"
+                        [labels]="labels1"
+                        [items]="articulos.limpieza"
+                        >
+                        <ng-template #labels1>
+                            <th>Nombre</th>
+                        </ng-template>
+                        <ng-template #row1 let-articulo>
+                            <td> {{articulo.nombre}} </td>                            
+                        </ng-template>                                              
+                    </app-table-crud>
+                </div>                
+                <div class="w-full">
+                    <app-pagination-bar
+                        [pagina]="pagina.limpieza"
+                        [paginas]="paginas.limpieza"
+                        [paginationRange]="paginationRange.limpieza"
+                        (onPaginate)="paginate($event,'limpieza')"
+                    ></app-pagination-bar>
+                </div>
+                <div class="w-full">
+                    <app-pagination-info
+                        message="artículos de limpieza"
+                        [limit]="limit.limpieza"
+                        [pagina]="pagina.limpieza"
+                        [items]="total.limpieza"
+                        (onLimitChange)="onLimitChange($event,'limpieza')"
+                    ></app-pagination-info>                    
+                </div>
+            </div>
+            <div class="flex flex-col items-center space-y-4">
+                <div class="flex flex-col items-center">
+                    <h1 class="text-3xl font-light">Artículos de lenceria del hotel</h1>
+                </div>
+                <div class="rounded-lg" [Block]="isFetching.lenceria">
+                    <!-- (onDeleteClick)="eliminarHabitacion($event)"
+                    [updateRouterLink]="['actualizar']" -->
+                    <app-table-crud 
+                        [row]="row2"
+                        [labels]="labels2"
+                        [items]="articulos.lenceria"
+                        >
+                        <ng-template #labels2>
+                            <th>Nombre</th>
+                            <th>Meses utiles</th>
+                        </ng-template>
+                        <ng-template #row2 let-articulo>
+                            <td> {{articulo.nombre}} </td>                            
+                            <td> {{articulo.mesesUtiles}} meses </td>                            
+                        </ng-template>                                              
+                    </app-table-crud>
+                </div>                
+                <div class="w-full">
+                    <app-pagination-bar
+                        [pagina]="pagina.lenceria"
+                        [paginas]="paginas.lenceria"
+                        [paginationRange]="paginationRange.lenceria"
+                        (onPaginate)="paginate($event,'lenceria')"
+                    ></app-pagination-bar>
+                </div>
+                <div class="w-full">
+                    <app-pagination-info
+                        message="artículos de lenceria"
+                        [limit]="limit.lenceria"
+                        [pagina]="pagina.lenceria"
+                        [items]="total.lenceria"
+                        (onLimitChange)="onLimitChange($event,'lenceria')"
+                    ></app-pagination-info>                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
