@@ -39,4 +39,38 @@
 </nav>
 <div *ngIf="isOpen" class="absolute top-0 left-0 w-screen h-screen z-[9998]">
     <div (click)="toggleNavbar()" class="bg-gray-800 backdrop-blur-[1px] bg-opacity-40 w-screen h-screen"></div>
+    <div 
+        class="transition-all flex flex-col top-[3rem] left-0 absolute w-full duration-500 z-[9999] animate-open_top rounded-lg shadow-sm p-4 bg-gray-800 space-y-2"
+        [ngClass]="{ '-translate-y-12 opacity-0' : isClosing  }"
+    >
+        <div>
+            <app-navbar-item icon="hotel" label="Habitaciones"></app-navbar-item>
+            <app-navbar-subitem forLabel="Habitaciones" [options]="navbarData.habitacionesOptions"></app-navbar-subitem>
+        </div>
+
+        
+        <div *ngIf="navbarData.isAdmin">
+            <app-navbar-item icon="inventory" label="Inventario"></app-navbar-item>
+            <app-navbar-subitem forLabel="Inventario" [options]="navbarData.inventarioOptions"></app-navbar-subitem>
+        </div>
+
+        <div *ngIf="navbarData.isAdmin">
+            <app-navbar-item icon="person" label="Proveedores"></app-navbar-item>
+            <app-navbar-subitem forLabel="Proveedores" [options]="navbarData.proveedoresOptions"></app-navbar-subitem>
+        </div>
+
+        <div *ngIf="navbarData.isAdmin">
+            <app-navbar-item icon="admin_panel_settings" label="Administración"></app-navbar-item>
+            <app-navbar-subitem forLabel="Administración" [options]="navbarData.adminOptions"></app-navbar-subitem>
+        </div>
+        <div>
+            <span 
+                (click)="navbarData.logout()"
+                class="transition-all flex flex-row items-center space-x-1 text-gray-300 cursor-pointer rounded-lg "
+            >
+                <span class=" material-icons-outlined !text-lg">logout</span>
+                <span>Cerrar sesión</span>
+            </span>
+        </div>
+    </div>
 </div>
