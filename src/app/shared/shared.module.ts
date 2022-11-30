@@ -19,6 +19,7 @@ import { DateRangeInputComponent } from './date-range-input/date-range-input.com
 import { NumRangeInputComponent } from './num-range-input/num-range-input.component';
 import { ArrNumRangeInputComponent } from './arr-num-range-input/arr-num-range-input.component';
 import { IconRadioInputComponent } from './icon-radio-input/icon-radio-input.component';
+import { MobileNavbarComponent } from './mobile-navbar/mobile-navbar.component';
 
 
 
@@ -40,7 +41,8 @@ import { IconRadioInputComponent } from './icon-radio-input/icon-radio-input.com
     DateRangeInputComponent,
     NumRangeInputComponent,
     ArrNumRangeInputComponent,
-    IconRadioInputComponent
+    IconRadioInputComponent,
+    MobileNavbarComponent
   ],
   imports: [
     ReactiveFormsModule,
@@ -50,6 +52,7 @@ import { IconRadioInputComponent } from './icon-radio-input/icon-radio-input.com
   exports:[
     InputComponent,
     NavbarComponent,
+    MobileNavbarComponent,
     CenterBoxComponent,
     RadioInputComponent,
     TableCrudComponent,
