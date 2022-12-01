@@ -4,27 +4,27 @@
 
         <div>
             <app-navbar-item icon="hotel" label="Habitaciones"></app-navbar-item>
-            <app-navbar-subitem forLabel="Habitaciones" [options]="habitacionesOptions"></app-navbar-subitem>
+            <app-navbar-subitem forLabel="Habitaciones" [options]="navbarData.habitacionesOptions"></app-navbar-subitem>
         </div>
 
-        <div *ngIf="isAdmin">
+        <div *ngIf="navbarData.isAdmin">
             <app-navbar-item icon="inventory" label="Inventario"></app-navbar-item>
-            <app-navbar-subitem forLabel="Inventario" [options]="inventarioOptions"></app-navbar-subitem>
+            <app-navbar-subitem forLabel="Inventario" [options]="navbarData.inventarioOptions"></app-navbar-subitem>
         </div>
 
-        <div *ngIf="isAdmin">
+        <div *ngIf="navbarData.isAdmin">
             <app-navbar-item icon="person" label="Proveedores"></app-navbar-item>
-            <app-navbar-subitem forLabel="Proveedores" [options]="proveedoresOptions"></app-navbar-subitem>
+            <app-navbar-subitem forLabel="Proveedores" [options]="navbarData.proveedoresOptions"></app-navbar-subitem>
         </div>
 
-        <div *ngIf="isAdmin">
+        <div *ngIf="navbarData.isAdmin">
             <app-navbar-item icon="admin_panel_settings" label="Administración"></app-navbar-item>
-            <app-navbar-subitem forLabel="Administración" [options]="adminOptions"></app-navbar-subitem>
+            <app-navbar-subitem forLabel="Administración" [options]="navbarData.adminOptions"></app-navbar-subitem>
         </div>
     </div>
     <div>
         <span 
-            (click)="logout()"
+            (click)="navbarData.logout()"
             class="transition-all flex flex-row items-center space-x-1 text-gray-300 cursor-pointer rounded-lg "
             >
             <span class=" material-icons-outlined !text-lg">logout</span>

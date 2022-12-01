@@ -1,0 +1,27 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+import { InventarioRoutingModule } from './inventario-routing.module';
+import { ConsultarArticulosComponent } from './consultar-articulos/consultar-articulos.component';
+import { CrearArticuloComponent } from './crear-articulo/crear-articulo.component';
+import { GraphQLModule } from '../graphql.module';
+import { SharedModule } from '../shared/shared.module';
+import { ReactiveFormsModule } from '@angular/forms';
+import { ArticuloService } from './services/articulo.service';
+
+
+@NgModule({
+  declarations: [
+    ConsultarArticulosComponent,
+    CrearArticuloComponent
+  ],
+  imports: [
+    CommonModule,
+    GraphQLModule,
+    SharedModule,
+    ReactiveFormsModule,
+    InventarioRoutingModule
+  ],
+  providers:[ArticuloService]
+})
+export class InventarioModule { }

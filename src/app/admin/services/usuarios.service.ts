@@ -8,6 +8,7 @@ import { formToJson } from 'src/app/helpers/formToJson.helper';
 import { User } from 'src/app/interfaces/user.interface';
 import { ConfirmService } from 'src/app/services/confirm.service';
 import { GraphqlService } from 'src/app/services/graphql.service';
+import { HttpErrorService } from 'src/app/services/http-error.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { NotifyService } from 'src/app/services/notify.service';
 import { CREATE_USER_MUTATION, DELETE_USER_MUTATION, ICreateUserInput, IUpdateUserInput, IUserInput, UPDATE_USER_MUTATION, UPDATE_USER_PASSWORD_MUTATION } from '../graphql/mutations';
@@ -20,21 +21,9 @@ export class UsuariosService {
     private graphql: GraphqlService,
     private confirmService: ConfirmService,
     private notifyService: NotifyService,
+    private httpError: HttpErrorService,
     private loading: LoadingService
   ) { }
-
-  private onPostPatchFailure({ errors }: MutationResult<any>) {
-    console.error(errors)
-    // if (.error.message[0]?.includes('3')) {
-    //   this.notifyService.failure('Tanto el nombre como el apellido deben tener más de 3 caracteres')
-    //   return;
-    // }
-    // if (typeof err.error.message === 'string' && err.error.statusCode < 500) {
-    //   this.notifyService.failure(err.error.message)
-    //   return
-    // }
-    this.notifyService.failure('Ocurrio un error, por favor contacte al administrador de sistemas')
-  }
 
   createUser(userForm: FormGroup) {
     const formData = formToJson<IUserInput>(userForm,true)
@@ -50,7 +39,7 @@ export class UsuariosService {
           this.router.navigate(['/main', 'admin', 'usuarios'])
           return
         }
-        this.onPostPatchFailure(response)
+        this.httpError.onPostPatchFailure(response)
       })
   }
 
@@ -68,7 +57,7 @@ export class UsuariosService {
           this.router.navigate(['/main', 'admin', 'usuarios'])
           return
         }
-        this.onPostPatchFailure(response)
+        this.httpError.onPostPatchFailure(response)
       })
   }
 
@@ -84,7 +73,7 @@ export class UsuariosService {
           this.notifyService.success(`Contraseña actualizada para este usuario: ${response.data.updateUserPassword.password}`, { timeout: 8000 })
           return
         }
-        this.onPostPatchFailure(response)
+        this.httpError.onPostPatchFailure(response)
       }
       )
   }
@@ -128,7 +117,7 @@ export class UsuariosService {
             postAction()
             return
           }
-          this.onPostPatchFailure(response)
+          this.httpError.onPostPatchFailure(response)
         })        
       }
     })
