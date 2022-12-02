@@ -12,6 +12,9 @@
       "root": "",
       "sourceRoot": "src",
       "prefix": "hwp",
+      "i18n": {
+        "sourceLocale":"es-VE"
+      },
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
