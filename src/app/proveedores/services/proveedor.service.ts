@@ -8,7 +8,7 @@ import { GraphqlService } from 'src/app/services/graphql.service';
 import { HttpErrorService } from 'src/app/services/http-error.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { NotifyService } from 'src/app/services/notify.service';
-import { CREATE_PROVEEDOR_MUTATION } from '../graphql/mutations';
+import { CREATE_PROVEEDOR_MUTATION, UPDATE_PROVEEDOR_MUTATION } from '../graphql/mutations';
 import { QUERY_PROVEEDORES } from '../graphql/queries';
 
 @Injectable()
@@ -40,10 +40,37 @@ export class ProveedorService {
     )
   }
 
+  update(data: ProveedorInput, id:string): Observable<MutationResult<{updateProveedor:Proveedor}>>{
+    return this.graphql.mutate<{createProveedor:Proveedor},{data:ProveedorInput,id:string}>(
+      UPDATE_PROVEEDOR_MUTATION,
+      {data,id}
+    ).pipe(
+      catchError(data => {
+        this.loading.hideLoading()
+        this.httpError.onCatchError(data)
+        return of({} as any)
+      }),
+      map(response => {
+        this.loading.hideLoading()
+        if (response.errors) {
+          this.httpError.onPostPatchFailure(response)
+        }
+        return response
+      })
+    )
+  }
+
   getAll(limit:number,offset:number): Observable<SingleExecutionResult<{proveedores:Response<Proveedor[]>}>>{
     return this.graphql.query<{proveedores:Response<Proveedor[]>},{paginacion: {limit:number,offset:number}}>(
       QUERY_PROVEEDORES,
       {paginacion:{limit,offset}}
+    )
+  }
+
+  getProveedor(id:string): Observable<SingleExecutionResult<{proveedor:Proveedor}>>{
+    return this.graphql.query<{proveedor:Proveedor},{id:string}>(
+      QUERY_PROVEEDORES,
+      {id}
     )
   }
 }

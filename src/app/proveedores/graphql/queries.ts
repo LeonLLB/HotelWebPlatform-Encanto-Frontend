@@ -22,3 +22,21 @@ export const QUERY_PROVEEDORES = gql`
     }
 
 `
+
+export const QUERY_PROVEEDOR = gql`
+
+    query GetProveedor($id: String!){
+        proveedor(id:$id){
+            _id
+            nombre
+            rif
+            direccion
+            contacto{
+                nombre
+                apellido
+                telefono
+            }
+        }
+    }
+
+`

@@ -10,3 +10,13 @@ export const CREATE_PROVEEDOR_MUTATION = gql`
     }
 
 `
+
+export const UPDATE_PROVEEDOR_MUTATION = gql`
+
+    mutation UpdateProveedor($data: UpdateProveedorInput!, $id: String!){
+        updateProveedor(updateProveedorInput: $data,id: $id){
+            _id
+        }
+    }
+
+`
