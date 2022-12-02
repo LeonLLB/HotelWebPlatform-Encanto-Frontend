@@ -20,3 +20,13 @@ export const UPDATE_PROVEEDOR_MUTATION = gql`
     }
 
 `
+
+export const REMOVE_PROVEEDOR_MUTATION = gql`
+
+    mutation RemoveProveedor($id: String!){
+        removeProveedor(id: $id){
+            _id
+        }
+    }
+
+`

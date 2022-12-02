@@ -100,26 +100,26 @@ export class ConsultarComponent implements OnInit {
     })
   }
 
-  // eliminarHabitacion({_id,numero}: Habitacion){
-  //   this.confirm.danger({
-  //     title:'Eliminar habitación N° ' + numero,
-  //     message:'Esta seguro de querer eliminar esta habitación? Tenga en cuenta que eliminar está habitación tambien eliminará los alquileres y reportes financieros de la misma',
-  //     okText:'Eliminar',
-  //     onOk:()=>{
-  //       this.habitacionesService.delete(_id)
-  //       .subscribe((response)=>{
-  //         if (response.data?.removeHabitacion._id) {
-  //           this.notify.success('Habitación eliminada con exito!')
-  //           if(this.habitaciones.length === 1 && this.pagina > 1){
-  //             this.paginas -= 1
-  //             this.pagina -= 1
-  //             this.paginationRange.pop()
-  //           }
-  //           this.paginate(this.pagina)
-  //         }
-  //       })
-  //     }
-  //   })
-  // }
+  eliminarProveedor({_id,nombre}: Proveedor){
+    this.confirm.danger({
+      title:'Eliminar proveedor: ' + nombre,
+      message:'Esta seguro de querer eliminar este proveedor? Tenga en cuenta que eliminar este proveedor tambien eliminará todas las compras hechos al mismo',
+      okText:'Eliminar',
+      onOk:()=>{
+        this.proveedoresService.delete(_id)
+        .subscribe((response)=>{
+          if (response.data?.removeProveedor._id) {
+            this.notify.success('Proveedor eliminado con exito!')
+            if(this.proveedores.length === 1 && this.pagina > 1){
+              this.paginas -= 1
+              this.pagina -= 1
+              this.paginationRange.pop()
+            }
+            this.paginate(this.pagina)
+          }
+        })
+      }
+    })
+  }
 
 }

@@ -8,7 +8,7 @@ import { GraphqlService } from 'src/app/services/graphql.service';
 import { HttpErrorService } from 'src/app/services/http-error.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { NotifyService } from 'src/app/services/notify.service';
-import { CREATE_PROVEEDOR_MUTATION, UPDATE_PROVEEDOR_MUTATION } from '../graphql/mutations';
+import { CREATE_PROVEEDOR_MUTATION, REMOVE_PROVEEDOR_MUTATION, UPDATE_PROVEEDOR_MUTATION } from '../graphql/mutations';
 import { QUERY_PROVEEDORES } from '../graphql/queries';
 
 @Injectable()
@@ -21,6 +21,7 @@ export class ProveedorService {
   ) { }
 
   create(data: ProveedorInput): Observable<MutationResult<{createProveedor:Proveedor}>>{
+    this.loading.displayLoading('Registrando al proveedor...')
     return this.graphql.mutate<{createProveedor:Proveedor},{data:ProveedorInput}>(
       CREATE_PROVEEDOR_MUTATION,
       {data}
@@ -41,9 +42,31 @@ export class ProveedorService {
   }
 
   update(data: ProveedorInput, id:string): Observable<MutationResult<{updateProveedor:Proveedor}>>{
-    return this.graphql.mutate<{createProveedor:Proveedor},{data:ProveedorInput,id:string}>(
+    this.loading.displayLoading('Actualizando al proveedor...')
+    return this.graphql.mutate<{removeProveedor:Proveedor},{data:ProveedorInput,id:string}>(
       UPDATE_PROVEEDOR_MUTATION,
       {data,id}
+    ).pipe(
+      catchError(data => {
+        this.loading.hideLoading()
+        this.httpError.onCatchError(data)
+        return of({} as any)
+      }),
+      map(response => {
+        this.loading.hideLoading()
+        if (response.errors) {
+          this.httpError.onPostPatchFailure(response)
+        }
+        return response
+      })
+    )
+  }
+
+  delete(id:string): Observable<MutationResult<{removeProveedor:Proveedor}>>{
+    this.loading.displayLoading('Eliminando al proveedor...')
+    return this.graphql.mutate<{removeProveedor:Proveedor},{id:string}>(
+      REMOVE_PROVEEDOR_MUTATION,
+      {id}
     ).pipe(
       catchError(data => {
         this.loading.hideLoading()
