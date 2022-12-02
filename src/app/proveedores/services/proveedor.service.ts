@@ -1,12 +1,15 @@
 import { Injectable } from '@angular/core';
+import { SingleExecutionResult } from '@apollo/client/core';
 import { MutationResult } from 'apollo-angular';
 import { catchError, map, Observable, of } from 'rxjs';
 import { Proveedor, ProveedorInput } from 'src/app/interfaces/proveedor.interface';
+import { Response } from 'src/app/interfaces/response.interface';
 import { GraphqlService } from 'src/app/services/graphql.service';
 import { HttpErrorService } from 'src/app/services/http-error.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { NotifyService } from 'src/app/services/notify.service';
 import { CREATE_PROVEEDOR_MUTATION } from '../graphql/mutations';
+import { QUERY_PROVEEDORES } from '../graphql/queries';
 
 @Injectable()
 export class ProveedorService {
@@ -34,6 +37,13 @@ export class ProveedorService {
         }
         return response
       })
+    )
+  }
+
+  getAll(limit:number,offset:number): Observable<SingleExecutionResult<{proveedores:Response<Proveedor[]>}>>{
+    return this.graphql.query<{proveedores:Response<Proveedor[]>},{paginacion: {limit:number,offset:number}}>(
+      QUERY_PROVEEDORES,
+      {paginacion:{limit,offset}}
     )
   }
 }

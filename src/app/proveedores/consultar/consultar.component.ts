@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Proveedor } from 'src/app/interfaces/proveedor.interface';
+import { ConfirmService } from 'src/app/services/confirm.service';
+import { NotifyService } from 'src/app/services/notify.service';
+import { PaginationService } from 'src/app/services/pagination.service';
+import { ProveedorService } from '../services/proveedor.service';
 
 @Component({
   selector: 'hwp-consultar',
@@ -7,10 +12,108 @@ import { Component, OnInit } from '@angular/core';
   ]
 })
 export class ConsultarComponent implements OnInit {
+ 
+  proveedores: Proveedor[] = []
+  paginas!: number
+  pagina: number = 1
+  total!: number
+  isFetching = true
 
-  constructor() { }
+  paginationRange: number[] = []
+  maxPagesInPaginationBar = 5
+
+  limit = 5
+
+  constructor(
+    private proveedoresService: ProveedorService,
+    private paginationService: PaginationService,
+    private confirm: ConfirmService,
+    private notify: NotifyService
+  ) { }
 
   ngOnInit(): void {
+    this.fetchProveedores()
   }
+
+  tp(data:any){
+    return data as Proveedor
+  } 
+
+  paginate(page: number | string) {
+
+    const {newPaginationRange,newPage} = this.paginationService.paginate({
+      page,
+      paginationRange: this.paginationRange,
+      maxPagesInPaginationBar: this.maxPagesInPaginationBar,
+      currentPage: this.pagina,
+      paginas: this.paginas
+    })
+
+    this.paginationRange = newPaginationRange
+    this.pagina = newPage
+
+    this.fetchProveedores(false)
+
+  }
+
+  onLimitChange(newLimit: EventTarget) {
+
+    this.limit = ((newLimit as any).value)
+    this.pagina = 1
+
+    this.fetchProveedores()
+  }
+
+  fetchProveedores(forceReload = true){
+    this.isFetching=true
+    this.proveedoresService.getAll(
+      this.limit,
+      this.pagina-1
+    )
+    .subscribe(response=>{
+      this.isFetching=false
+      if(response.data && response.data.proveedores.result.length>0 ){
+        const data = response.data.proveedores
+        if(forceReload){
+          this.paginas=data.pages
+          this.paginationRange = []
+          for (let i = 1; i <= data.pages; i++) {
+            if (i > this.maxPagesInPaginationBar) break;
+            this.paginationRange.push(i)
+          }
+        }
+        this.proveedores=data.result
+        this.total = data.total
+        return
+      }
+      if(response.errors && response.errors.length > 0){
+        this.notify.failure(response.errors[0].message)
+        return
+      }
+      console.log(response)
+    })
+  }
+
+  // eliminarHabitacion({_id,numero}: Habitacion){
+  //   this.confirm.danger({
+  //     title:'Eliminar habitación N° ' + numero,
+  //     message:'Esta seguro de querer eliminar esta habitación? Tenga en cuenta que eliminar está habitación tambien eliminará los alquileres y reportes financieros de la misma',
+  //     okText:'Eliminar',
+  //     onOk:()=>{
+  //       this.habitacionesService.delete(_id)
+  //       .subscribe((response)=>{
+  //         if (response.data?.removeHabitacion._id) {
+  //           this.notify.success('Habitación eliminada con exito!')
+  //           if(this.habitaciones.length === 1 && this.pagina > 1){
+  //             this.paginas -= 1
+  //             this.pagina -= 1
+  //             this.paginationRange.pop()
+  //           }
+  //           this.paginate(this.pagina)
+  //         }
+  //       })
+  //     }
+  //   })
+  // }
 
 }
