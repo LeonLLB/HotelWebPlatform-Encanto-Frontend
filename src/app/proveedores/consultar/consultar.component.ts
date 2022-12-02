@@ -3,6 +3,7 @@ import { Proveedor } from 'src/app/interfaces/proveedor.interface';
 import { ConfirmService } from 'src/app/services/confirm.service';
 import { NotifyService } from 'src/app/services/notify.service';
 import { PaginationService } from 'src/app/services/pagination.service';
+import { ReportService } from 'src/app/services/report.service';
 import { ProveedorService } from '../services/proveedor.service';
 
 @Component({
@@ -28,6 +29,7 @@ export class ConsultarComponent implements OnInit {
     private proveedoresService: ProveedorService,
     private paginationService: PaginationService,
     private confirm: ConfirmService,
+    private report: ReportService,
     private notify: NotifyService
   ) { }
 
@@ -38,6 +40,10 @@ export class ConsultarComponent implements OnInit {
   tp(data:any){
     return data as Proveedor
   } 
+
+  displayUbicacion({direccion}:Proveedor){
+    this.report.info('Ubicación',direccion,true)
+  }
 
   paginate(page: number | string) {
 
