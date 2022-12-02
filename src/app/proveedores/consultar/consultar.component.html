@@ -11,8 +11,8 @@
                 
                 <div class="rounded-lg" [Block]="isFetching">
                     <!-- (onDeleteClick)="eliminarHabitacion($event)" -->
-                    <!-- [updateRouterLink]="['actualizar']" -->
                     <app-table-crud 
+                        [updateRouterLink]="['actualizar']"
                         [row]="row"
                         [labels]="labels"
                         [items]="proveedores"
