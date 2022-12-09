@@ -1,7 +1,7 @@
 import { Articulo } from "./articulo.interface"
+import { Proveedor } from "./proveedor.interface"
 
 interface CompraCore{
-    proveedor: string
     fechaCompra: string 
     baseImponible: number
     exento: number
@@ -21,9 +21,10 @@ export interface CompraFromForm extends Partial<{
 export interface Compra extends CompraCore{
     _id: string        
     articulosComprados: {articulo: Articulo, cantidad: number}[]
+    proveedor: Proveedor
 }
 
-export interface CompraDTO extends CompraCore{
-    
+export interface CompraDTO extends CompraCore{    
+    proveedor: string
     articulosComprados: {articulo: string, cantidad: number}[]
 }

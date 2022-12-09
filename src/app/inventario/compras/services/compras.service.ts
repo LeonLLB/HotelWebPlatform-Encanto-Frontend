@@ -9,7 +9,7 @@ import { GraphqlService } from 'src/app/services/graphql.service';
 import { HttpErrorService } from 'src/app/services/http-error.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { CREATE_COMPRA_MUTATION } from '../graphql/mutations';
-import { QUERY_COMPRAS } from '../graphql/queries';
+import { FilterComprasInput, QUERY_COMPRAS } from '../graphql/queries';
 
 @Injectable()
 export class ComprasService { 
@@ -57,7 +57,7 @@ export class ComprasService {
     )
   }
 
-  getAll({paginationData}:{paginationData:{limit:number,offset:number}}) :Observable<SingleExecutionResult<{compras:Response<Compra[]>}>> {
+  getAll({paginationData,filterData}:{paginationData:{limit:number,offset:number},filterData:FilterComprasInput}) :Observable<SingleExecutionResult<{compras:Response<Compra[]>}>> {
     // const data = filterForm?.value
     // const filterData: FilterHabitacionInput = {}
 
@@ -67,9 +67,9 @@ export class ComprasService {
     // if(data && data.tipo !== '') filterData.tipo = data.tipo
     // if(data && data.estado !== '') filterData.estado = data.estado
 
-    return this.graphql.query<{compras:Response<Compra[]>},{/* filterComprasInput?:FilterCompraInput, */paginacion?: PaginateInput}>(
+    return this.graphql.query<{compras:Response<Compra[]>},{filterData:FilterComprasInput, paginacion?: PaginateInput}>(
       QUERY_COMPRAS,
-      {paginacion:paginationData}
+      {paginacion:paginationData,filterData}
     )
   }
 }

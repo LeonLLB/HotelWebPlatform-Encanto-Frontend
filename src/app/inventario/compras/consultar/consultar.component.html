@@ -9,42 +9,36 @@
                     <h1 class="text-3xl font-light">Compras del hotel</h1>
                     <h2 class="text-2xl font-light">Opciones de filtrado</h2>
                 </div>
-                <div class="flex flex-row justify-between items-center">
+                <div class="flex flex-row justify-between items-center">                    
                     
-                    <!-- <div>
-                        <app-input (onDebounce)="fetchHabitaciones()" [formGroup]="filterForm" inputName="numero" label="N° Habitación"></app-input>
-                    </div>
-                    <div>
-                        <app-input (onDebounce)="fetchHabitaciones()" [formGroup]="filterForm" inputName="piso" label="Piso"></app-input>
-                    </div>
                     <div class="ml-4">
                         <app-simple-select
-                            [Block]="isFetching.caracteristicas"
                             [formGroup]="filterForm"
-                            inputName="caracteristica"
-                            label="Caracteristica en la habitación"
-                            [inputOptions]="selectValues['caracteristicas']"
-                            (onChangeFunc)="fetchHabitaciones()"
+                            inputName="anio"
+                            label="Año de las compras"
+                            [inputOptions]="aniosValidos"
+                            (onChangeFunc)="fetchCompras()"
                         ></app-simple-select>
                     </div>
                     <div class="ml-4">
                         <app-simple-select
                             [formGroup]="filterForm"
-                            inputName="tipo"
-                            label="Tipo de habitación"
-                            [inputOptions]="selectValues['tipo']"
-                            (onChangeFunc)="fetchHabitaciones()"
+                            inputName="mes"
+                            label="Mes de las compras"
+                            [inputOptions]="mesesDelAnio"
+                            (onChangeFunc)="fetchCompras()"
                         ></app-simple-select>
                     </div>
                     <div class="ml-4">
                         <app-simple-select
+                            [Block]="isFetchingProveedores"
                             [formGroup]="filterForm"
-                            inputName="estado"
-                            label="Estado de la habitación"
-                            [inputOptions]="selectValues['estado']"
-                            (onChangeFunc)="fetchHabitaciones()"
+                            inputName="proveedor"
+                            label="Proveedor"
+                            [inputOptions]="proveedoresSelect"
+                            (onChangeFunc)="fetchCompras()"
                         ></app-simple-select>
-                    </div>                     -->
+                    </div>                    
 
                 </div>                
                 
@@ -66,14 +60,15 @@
                             <th>IVA</th>
                         </ng-template>
                         <ng-template #row let-compra>
-                            <td>Proveedor</td>
-                            <td>RIF</td>
-                            <td>Fecha de la compra</td>
-                            <td>Total</td>
-                            <td>Exento</td>
-                            <td>Base Imponible</td>
-                            <td>IVA</td>
-                        </ng-template>                                              
+                            <td>{{tc(compra).proveedor.nombre}}</td>
+                            <td>{{tc(compra).proveedor.rif}}</td>
+                            <td>{{tc(compra).fechaCompra | date}}</td>
+                            <td>{{calcTotalCompra(compra)}}</td>
+                            <td>{{tc(compra).exento}}</td>
+                            <td>{{tc(compra).baseImponible}}</td>
+                            <td>{{tc(compra).porcentajeIVA}}%</td>
+                        </ng-template>  
+                        <!-- TODO: OPCIONES ADICIONALES (PARA VER LOS ARTICULOS) -->
                     </app-table-crud>
                 </div>                
                 <div class="w-full">

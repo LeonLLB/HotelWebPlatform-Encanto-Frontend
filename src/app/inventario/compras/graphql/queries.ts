@@ -3,8 +3,8 @@ import { gql } from "apollo-angular";
 
 export const QUERY_COMPRAS = gql`
 
-    query Compras($paginacion: PaginateInput!){
-        compras(pagination:$paginacion){
+    query Compras($paginacion: PaginateInput!,$filterData:FilterComprasInput){
+        compras(pagination:$paginacion,filterData:$filterData){
             result{
                 _id
                 fechaCompra
@@ -28,3 +28,9 @@ export const QUERY_COMPRAS = gql`
     }
 
 `
+
+export interface FilterComprasInput {
+    anio: number
+    mes: number
+    proveedor?: string
+}
