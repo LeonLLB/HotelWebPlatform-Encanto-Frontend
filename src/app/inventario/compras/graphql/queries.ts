@@ -5,21 +5,25 @@ export const QUERY_COMPRAS = gql`
 
     query Compras($paginacion: PaginateInput!){
         compras(pagination:$paginacion){
-            _id
-            fechaCompra
-            articulosComprados{
-                cantidad
-                articulo{
-                    nombre
+            result{
+                _id
+                fechaCompra
+                articulosComprados{
+                    cantidad
+                    articulo{
+                        nombre
+                    }
                 }
+                proveedor{
+                    nombre
+                    rif
+                }
+                baseImponible
+                exento
+                porcentajeIVA
             }
-            proveedor{
-                nombre
-                rif
-            }
-            baseImponible
-            exento
-            porcentajeIVA
+            pages
+            total
         }
     }
 
