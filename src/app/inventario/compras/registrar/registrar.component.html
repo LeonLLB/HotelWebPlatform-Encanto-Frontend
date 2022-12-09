@@ -34,8 +34,7 @@
                 <div class="grid-cols-1 grid w-full ml-7 space-y-2">
                     <hwp-arr-simple-select
                         formArrayName="articulos"
-                        [formGroup]="compraForm"
-                        type="text"                        
+                        [formGroup]="compraForm"        
                         [inputIndex]="i"  
                         [inputOptions]="avaliablesArticulos"
                         label="Articulo"
@@ -46,7 +45,7 @@
                         formArrayName="cantidades"
                         [formGroup]="compraForm"
                         class="w-auto"
-                        type="text"                        
+                        type="number"                        
                         [inputIndex]="i"
                     ></app-arr-input>
                 </div>            

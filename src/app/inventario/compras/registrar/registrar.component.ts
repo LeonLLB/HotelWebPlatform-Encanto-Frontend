@@ -5,6 +5,7 @@ import { Proveedor } from 'src/app/interfaces/proveedor.interface';
 import { ProveedorService } from 'src/app/proveedores/services/proveedor.service';
 import { NotifyService } from 'src/app/services/notify.service';
 import { ArticuloService } from '../../services/articulo.service';
+import { ComprasService } from '../services/compras.service';
 
 @Component({
   selector: 'hwp-registrar',
@@ -37,7 +38,7 @@ export class RegistrarComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    // private habitacionService: HabitacionService,
+    private comprasService: ComprasService,
     private proveedoresService: ProveedorService,
     private articulosService: ArticuloService,
     private notify: NotifyService,
@@ -125,6 +126,26 @@ export class RegistrarComponent implements OnInit {
     if (this.additionalArticulos.length === 0 || this.additionalCantidades.length === 0) this.hasAddedArticulo = false
   }
 
-  registerCompraSubmit(){}
+  registerCompraSubmit(){
+    if(this.compraForm.invalid){
+      this.compraForm.markAllAsTouched()
+      return
+    }
+
+    const data = this.comprasService.prepareData(this.compraForm.value)
+
+    if(this.isEditableForm){
+      //TODO: LOGICA DE ACTUALIZACION
+      return
+    }
+
+    this.comprasService.create(data).subscribe(response => {
+      if (response.data?.createCompra._id) {
+        this.notify.success('Compra registrada con exito!')
+        this.router.navigate(['/main', 'inventario','compras'])
+      }
+    })
+
+  }
 
 }
