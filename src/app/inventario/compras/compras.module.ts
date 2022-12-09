@@ -5,6 +5,11 @@ import { ComprasRoutingModule } from './compras-routing.module';
 import { RegistrarComponent } from './registrar/registrar.component';
 import { ConsultarComponent } from './consultar/consultar.component';
 import { ComprasService } from './services/compras.service';
+import { ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { GraphQLModule } from 'src/app/graphql.module';
+import { ArticuloService } from '../services/articulo.service';
+import { ProveedorService } from 'src/app/proveedores/services/proveedor.service';
 
 
 @NgModule({
@@ -14,10 +19,15 @@ import { ComprasService } from './services/compras.service';
   ],
   imports: [
     CommonModule,
-    ComprasRoutingModule
+    ComprasRoutingModule,
+    ReactiveFormsModule,
+    SharedModule,    
+    GraphQLModule  
   ],
   providers:[
-    ComprasService
+    ComprasService,
+    ArticuloService,
+    ProveedorService
   ]
 })
 export class ComprasModule { }
