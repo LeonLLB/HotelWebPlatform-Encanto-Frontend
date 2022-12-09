@@ -11,7 +11,7 @@ const routes: Routes = [
     {path:'actualizar/:id',/* canActivate: ,*/ component:CrearArticuloComponent},
     {path:'consultar',/* canActivate: ,*/ component:ConsultarArticulosComponent},
   ]},
-  {path:'compras',canLoad:[AuthGuard,AdminGuard],canActivate:[AuthGuard,AdminGuard], loadChildren: () => import('../inventario/compras/compras.module').then(m=>m.ComprasModule)}
+  {path:'compras',canLoad:[AuthGuard,AdminGuard],canActivate:[AuthGuard,AdminGuard], loadChildren: () => import('./compras/compras.module').then(m=>m.ComprasModule)}
 ];
 
 @NgModule({
