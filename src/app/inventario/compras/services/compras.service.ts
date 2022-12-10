@@ -8,7 +8,7 @@ import { Response } from 'src/app/interfaces/response.interface';
 import { GraphqlService } from 'src/app/services/graphql.service';
 import { HttpErrorService } from 'src/app/services/http-error.service';
 import { LoadingService } from 'src/app/services/loading.service';
-import { CREATE_COMPRA_MUTATION, UPDATE_COMPRA_MUTATION } from '../graphql/mutations';
+import { CREATE_COMPRA_MUTATION, DELETE_COMPRA_MUTATION, UPDATE_COMPRA_MUTATION } from '../graphql/mutations';
 import { FilterComprasInput, QUERY_COMPRA, QUERY_COMPRAS } from '../graphql/queries';
 
 @Injectable()
@@ -61,6 +61,27 @@ export class ComprasService {
     return this.graphql.mutate<{updateCompra:Compra},{data:CompraDTO,id:string}>(
       UPDATE_COMPRA_MUTATION,
       {data,id}
+    )
+    .pipe(
+      catchError(data => {
+        this.loading.hideLoading()
+        this.httpError.onCatchError(data)
+        return of({} as any)
+      }),
+      map(response => {
+        this.loading.hideLoading()
+        if (response.errors) {
+          this.httpError.onPostPatchFailure(response)
+        }
+        return response
+      })
+    )
+  }
+
+  delete(id:string): Observable<MutationResult<{removeCompra: Compra}>>{
+    return this.graphql.mutate<{removeCompra:Compra},{id:string}>(
+      DELETE_COMPRA_MUTATION,
+      {id}
     )
     .pipe(
       catchError(data => {

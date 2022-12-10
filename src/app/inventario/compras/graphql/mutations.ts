@@ -20,3 +20,13 @@ export const UPDATE_COMPRA_MUTATION = gql`
     }
 
 `
+
+export const DELETE_COMPRA_MUTATION = gql`
+
+    mutation DeleteCompra($id:String!){
+        removeCompra(id:$id){
+            _id
+        }
+    }
+
+`

@@ -165,25 +165,25 @@ export class ConsultarComponent implements OnInit {
     })
   }
 
-  // eliminarHabitacion({_id,numero}: Habitacion){
-  //   this.confirm.danger({
-  //     title:'Eliminar habitación N° ' + numero,
-  //     message:'Esta seguro de querer eliminar esta habitación? Tenga en cuenta que eliminar está habitación tambien eliminará los alquileres y reportes financieros de la misma',
-  //     okText:'Eliminar',
-  //     onOk:()=>{
-  //       this.habitacionesService.delete(_id)
-  //       .subscribe((response)=>{
-  //         if (response.data?.removeHabitacion._id) {
-  //           this.notify.success('Habitación eliminada con exito!')
-  //           if(this.habitaciones.length === 1 && this.pagina > 1){
-  //             this.paginas -= 1
-  //             this.pagina -= 1
-  //             this.paginationRange.pop()
-  //           }
-  //           this.paginate(this.pagina)
-  //         }
-  //       })
-  //     }
-  //   })
-  // }
+  eliminarCompra({_id}: Compra){
+    this.confirm.danger({
+      title:'Eliminar Compra',
+      message:'Esta seguro de querer eliminar está compra? El inventario reducirá todos los articulos que tenian esta compra. Está acción es irrecuperable',
+      okText:'Eliminar',
+      onOk:()=>{
+        this.comprasService.delete(_id)
+        .subscribe((response)=>{
+          if (response.data?.removeCompra._id) {
+            this.notify.success('Compra eliminada con exito!')
+            if(this.compras.length === 1 && this.pagina > 1){
+              this.paginas -= 1
+              this.pagina -= 1
+              this.paginationRange.pop()
+            }
+            this.paginate(this.pagina)
+          }
+        })
+      }
+    })
+  }
 }
