@@ -10,3 +10,13 @@ export const CREATE_COMPRA_MUTATION = gql`
     }
 
 `
+
+export const UPDATE_COMPRA_MUTATION = gql`
+
+    mutation UpdateCompra($data: UpdateCompraInput!,$id:String!){
+        updateCompra(updateCompraInput:$data,id:$id){
+            _id
+        }
+    }
+
+`

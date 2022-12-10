@@ -8,8 +8,8 @@ import { Response } from 'src/app/interfaces/response.interface';
 import { GraphqlService } from 'src/app/services/graphql.service';
 import { HttpErrorService } from 'src/app/services/http-error.service';
 import { LoadingService } from 'src/app/services/loading.service';
-import { CREATE_COMPRA_MUTATION } from '../graphql/mutations';
-import { FilterComprasInput, QUERY_COMPRAS } from '../graphql/queries';
+import { CREATE_COMPRA_MUTATION, UPDATE_COMPRA_MUTATION } from '../graphql/mutations';
+import { FilterComprasInput, QUERY_COMPRA, QUERY_COMPRAS } from '../graphql/queries';
 
 @Injectable()
 export class ComprasService { 
@@ -57,6 +57,27 @@ export class ComprasService {
     )
   }
 
+  update(data:CompraDTO,id:string): Observable<MutationResult<{updateCompra: Compra}>>{
+    return this.graphql.mutate<{updateCompra:Compra},{data:CompraDTO,id:string}>(
+      UPDATE_COMPRA_MUTATION,
+      {data,id}
+    )
+    .pipe(
+      catchError(data => {
+        this.loading.hideLoading()
+        this.httpError.onCatchError(data)
+        return of({} as any)
+      }),
+      map(response => {
+        this.loading.hideLoading()
+        if (response.errors) {
+          this.httpError.onPostPatchFailure(response)
+        }
+        return response
+      })
+    )
+  }
+
   getAll({paginationData,filterData: filterDataRaw}:{paginationData:{limit:number,offset:number},filterData:FilterComprasInput}) :Observable<SingleExecutionResult<{compras:Response<Compra[]>}>> {
 
     const filterData: FilterComprasInput = {
@@ -69,6 +90,13 @@ export class ComprasService {
     return this.graphql.query<{compras:Response<Compra[]>},{filterData:FilterComprasInput, paginacion?: PaginateInput}>(
       QUERY_COMPRAS,
       {paginacion:paginationData,filterData}
+    )
+  }
+
+  getOne(id:string): Observable<SingleExecutionResult<{compra:Compra}>>{
+    return this.graphql.query<{compra:Compra},{id:string}>(
+      QUERY_COMPRA,
+      {id}
     )
   }
 }

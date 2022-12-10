@@ -34,3 +34,26 @@ export interface FilterComprasInput {
     mes: number
     proveedor?: string
 }
+
+export const QUERY_COMPRA = gql`
+
+    query Compra($id: String!){
+        compra(id:$id){
+            _id
+            fechaCompra
+            articulosComprados{
+                cantidad
+                articulo{
+                    _id
+                }
+            }
+            proveedor{
+                _id
+            }
+            baseImponible
+            exento
+            porcentajeIVA
+        }
+    }
+
+`

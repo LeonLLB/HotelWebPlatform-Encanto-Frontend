@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Compra } from 'src/app/interfaces/compra.interface';
 import { Proveedor } from 'src/app/interfaces/proveedor.interface';
 import { ProveedorService } from 'src/app/proveedores/services/proveedor.service';
 import { NotifyService } from 'src/app/services/notify.service';
@@ -31,9 +32,8 @@ export class RegistrarComponent implements OnInit {
     articulos: this.fb.array<string>([],[Validators.required,Validators.minLength(1)]),
     cantidades: this.fb.array<string>([],[Validators.required,Validators.minLength(1)]),
   })
+  compraId!: string
 
-  extraArticulo = this.fb.control('')
-  extraCantidad = this.fb.control(0)
   hasAddedArticulo = false
 
   constructor(
@@ -43,12 +43,25 @@ export class RegistrarComponent implements OnInit {
     private articulosService: ArticuloService,
     private notify: NotifyService,
     private router: Router,
-    // private route: ActivatedRoute
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
-    this.addArticuloToForm()
     this.preloadProveedoresYArticulos()
+    this.route.params.subscribe(params=>{
+      if(params['id']){
+        this.comprasService.getOne(params['id'])
+        .subscribe(response=>{
+          if(response.data){
+            this.preloadForm(response.data.compra)
+            return
+          } 
+          this.router.navigate(['/main','inventario','compras'])
+        })
+        return
+      }
+      this.addArticuloToForm()
+    })
   }  
   
   get additionalArticulos() {
@@ -64,16 +77,33 @@ export class RegistrarComponent implements OnInit {
     return new Date(date.getFullYear(),date.getMonth()+1,date.getDate()+1).toISOString().split('T')[0]
   }
 
-  addArticuloToForm() {
+  preloadForm(compra: Compra){
+    
+    this.isEditableForm = true
+    this.compraId = compra._id
 
-    if (this.extraArticulo.invalid || this.extraCantidad.invalid) return;
+    this.compraForm.setValue({
+      fechaCompra:new Date(compra.fechaCompra).toISOString().split('T')[0],
+      proveedor:compra.proveedor._id,
+      exento:compra.exento,
+      baseImponible:compra.baseImponible,
+      porcentajeIVA:compra.porcentajeIVA,
+      articulos:[],
+      cantidades:[]
+    })
+
+    compra.articulosComprados.forEach(({articulo,cantidad})=>{
+      this.addArticuloToForm(articulo._id,cantidad)
+    })
+  }
+
+  addArticuloToForm(articulo: string | undefined = undefined, cantidad: number | undefined = undefined) {
+
     this.hasAddedArticulo = true
 
-    this.additionalArticulos.push(this.fb.control(this.extraArticulo.value, [Validators.required]))
-    this.additionalCantidades.push(this.fb.control(this.extraCantidad.value, [Validators.required,Validators.min(1)]))
+    this.additionalArticulos.push(this.fb.control( (articulo) ? articulo : '', [Validators.required]))
+    this.additionalCantidades.push(this.fb.control( (cantidad) ? cantidad : 0, [Validators.required,Validators.min(1)]))
 
-    this.extraArticulo.reset()
-    this.extraCantidad.reset()
   }
 
   preloadProveedoresYArticulos() {
@@ -136,6 +166,12 @@ export class RegistrarComponent implements OnInit {
 
     if(this.isEditableForm){
       //TODO: LOGICA DE ACTUALIZACION
+      this.comprasService.update(data,this.compraId).subscribe(response => {
+        if (response.data?.updateCompra._id) {
+          this.notify.success('Compra actualizada con exito!')
+          this.router.navigate(['/main', 'inventario','compras'])
+        }
+      })
       return
     }
 
