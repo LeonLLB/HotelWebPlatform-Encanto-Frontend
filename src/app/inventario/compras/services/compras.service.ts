@@ -57,15 +57,14 @@ export class ComprasService {
     )
   }
 
-  getAll({paginationData,filterData}:{paginationData:{limit:number,offset:number},filterData:FilterComprasInput}) :Observable<SingleExecutionResult<{compras:Response<Compra[]>}>> {
-    // const data = filterForm?.value
-    // const filterData: FilterHabitacionInput = {}
+  getAll({paginationData,filterData: filterDataRaw}:{paginationData:{limit:number,offset:number},filterData:FilterComprasInput}) :Observable<SingleExecutionResult<{compras:Response<Compra[]>}>> {
 
-    // if(data && data.numero && data.numero>0) filterData.numero = parseInt(data.numero)
-    // if(data && data.piso && data.piso>0) filterData.piso = parseInt(data.piso)
-    // if(data && data.caracteristica !== '') filterData.caracteristica = data.caracteristica
-    // if(data && data.tipo !== '') filterData.tipo = data.tipo
-    // if(data && data.estado !== '') filterData.estado = data.estado
+    const filterData: FilterComprasInput = {
+      anio:filterDataRaw.anio,
+      mes:filterDataRaw.mes,
+    }
+
+    if(filterDataRaw && filterDataRaw.proveedor !== '') filterData.proveedor = filterDataRaw.proveedor
 
     return this.graphql.query<{compras:Response<Compra[]>},{filterData:FilterComprasInput, paginacion?: PaginateInput}>(
       QUERY_COMPRAS,
