@@ -9,7 +9,7 @@ import { HttpErrorService } from 'src/app/services/http-error.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { NotifyService } from 'src/app/services/notify.service';
 import { CREATE_PROVEEDOR_MUTATION, REMOVE_PROVEEDOR_MUTATION, UPDATE_PROVEEDOR_MUTATION } from '../graphql/mutations';
-import { QUERY_PROVEEDOR, QUERY_PROVEEDORES } from '../graphql/queries';
+import { QUERY_PROVEEDOR, QUERY_PROVEEDORES, QUERY_PROVEEDORES_CORE } from '../graphql/queries';
 
 @Injectable()
 export class ProveedorService {
@@ -87,6 +87,12 @@ export class ProveedorService {
     return this.graphql.query<{proveedores:Response<Proveedor[]>},{paginacion: {limit:number,offset:number}}>(
       QUERY_PROVEEDORES,
       {paginacion:{limit,offset}}
+    )
+  }
+
+  getAllCore(): Observable<SingleExecutionResult<{proveedores:Response<Proveedor[]>}>>{
+    return this.graphql.query<{proveedores:Response<Proveedor[]>},never>(
+      QUERY_PROVEEDORES_CORE
     )
   }
 

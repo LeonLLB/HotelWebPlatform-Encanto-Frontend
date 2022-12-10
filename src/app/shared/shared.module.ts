@@ -20,6 +20,7 @@ import { NumRangeInputComponent } from './num-range-input/num-range-input.compon
 import { ArrNumRangeInputComponent } from './arr-num-range-input/arr-num-range-input.component';
 import { IconRadioInputComponent } from './icon-radio-input/icon-radio-input.component';
 import { MobileNavbarComponent } from './mobile-navbar/mobile-navbar.component';
+import { ArrSimpleSelectComponent } from './arr-simple-select/arr-simple-select.component';
 
 
 
@@ -42,7 +43,8 @@ import { MobileNavbarComponent } from './mobile-navbar/mobile-navbar.component';
     NumRangeInputComponent,
     ArrNumRangeInputComponent,
     IconRadioInputComponent,
-    MobileNavbarComponent
+    MobileNavbarComponent,
+    ArrSimpleSelectComponent
   ],
   imports: [
     ReactiveFormsModule,
@@ -63,7 +65,8 @@ import { MobileNavbarComponent } from './mobile-navbar/mobile-navbar.component';
     DateRangeInputComponent,
     NumRangeInputComponent,
     ArrNumRangeInputComponent,
-    IconRadioInputComponent,
+    IconRadioInputComponent,    
+    ArrSimpleSelectComponent,
     
     BlockableDirective,
     InputErrorDirective,

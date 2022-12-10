@@ -1,0 +1,102 @@
+<div class="flex flex-row mx-4 my-4 justify-center">
+    <div class="flex flex-col items-center space-y-4">
+        <div>
+            <button routerLink="registrar" class="btn-action-primary">Registrar una compra</button>
+        </div>
+        <div>
+            <div class="flex flex-col items-center space-y-4">
+                <div class="flex flex-col items-center">
+                    <h1 class="text-3xl font-light">Compras del hotel</h1>
+                    <h2 class="text-2xl font-light">Opciones de filtrado</h2>
+                </div>
+                <div class="flex flex-row justify-between items-center">                    
+                    
+                    <div class="ml-4">
+                        <app-simple-select
+                            [formGroup]="filterForm"
+                            inputName="anio"
+                            label="Año de las compras"
+                            [inputOptions]="aniosValidos"
+                            (onChangeFunc)="fetchCompras()"
+                        ></app-simple-select>
+                    </div>
+                    <div class="ml-4">
+                        <app-simple-select
+                            [formGroup]="filterForm"
+                            inputName="mes"
+                            label="Mes de las compras"
+                            [inputOptions]="mesesDelAnio"
+                            (onChangeFunc)="fetchCompras()"
+                        ></app-simple-select>
+                    </div>
+                    <div class="ml-4">
+                        <app-simple-select
+                            [Block]="isFetchingProveedores"
+                            [formGroup]="filterForm"
+                            inputName="proveedor"
+                            label="Proveedor"
+                            [inputOptions]="proveedoresSelect"
+                            (onChangeFunc)="fetchCompras()"
+                        ></app-simple-select>
+                    </div>                    
+
+                </div>                
+                
+                <div class="rounded-lg" [Block]="isFetching">
+                    <app-table-crud 
+                        (onDeleteClick)="eliminarCompra($event)"
+                         [updateRouterLink]="['actualizar']"
+                        [row]="row"
+                        [labels]="labels"
+                        [items]="compras"
+                        [extraOptions]="extraOptions"
+                        >
+                        <ng-template #labels>
+                            <th>Proveedor</th>
+                            <th>RIF</th>
+                            <th>Fecha de la compra</th>
+                            <th>Total</th>
+                            <th>Exento</th>
+                            <th>Base Imponible</th>
+                            <th>IVA</th>
+                        </ng-template>
+                        <ng-template #row let-compra>
+                            <td>{{tc(compra).proveedor.nombre}}</td>
+                            <td>{{tc(compra).proveedor.rif}}</td>
+                            <td>{{tc(compra).fechaCompra | date}}</td>
+                            <td>{{calcTotalCompra(compra)}}</td>
+                            <td>{{tc(compra).exento}}</td>
+                            <td>{{tc(compra).baseImponible}}</td>
+                            <td>{{tc(compra).porcentajeIVA}}%</td>
+                        </ng-template>
+                        <ng-template #extraOptions let-compra>
+                            <td>
+                                <span
+                                (click)="showArticulosComprados(compra)"
+                                class="material-icons text-gray-500 cursor-pointer"
+                                >info</span>
+                            </td>
+                        </ng-template>
+                    </app-table-crud>
+                </div>                
+                <div class="w-full">
+                    <app-pagination-bar
+                        [pagina]="pagina"
+                        [paginas]="paginas"
+                        [paginationRange]="paginationRange"
+                        (onPaginate)="paginate($event)"
+                    ></app-pagination-bar>
+                </div>
+                <div class="w-full">
+                    <app-pagination-info
+                        message="compras"
+                        [limit]="limit"
+                        [pagina]="pagina"
+                        [items]="total"
+                        (onLimitChange)="onLimitChange($event)"
+                    ></app-pagination-info>                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

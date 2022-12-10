@@ -9,7 +9,7 @@ import { LoadingService } from 'src/app/services/loading.service';
 import {Response} from 'src/app/interfaces/response.interface'
 import { ArticuloInput, CREATE_ARTICULO, REMOVE_ARTICULO, UPDATE_ARTICULO } from '../graphql/mutations';
 import { PaginateInput, QUERY_ALQUILER } from 'src/app/habitaciones/graphql/queries';
-import { QUERY_ARTICULO, QUERY_ARTICULOS_LENCERIA, QUERY_ARTICULOS_LIMPIEZA } from '../graphql/queries';
+import { QUERY_ARTICULO, QUERY_ARTICULOS_CORE, QUERY_ARTICULOS_LENCERIA, QUERY_ARTICULOS_LIMPIEZA } from '../graphql/queries';
 
 @Injectable()
 export class ArticuloService {
@@ -96,6 +96,12 @@ export class ArticuloService {
     return this.graphql.query<{articulos:Response<Articulo[]>},{pagination: PaginateInput}>(
       QUERY_ARTICULOS_LENCERIA,
       {pagination:{limit:limit,offset:pagina-1}}
+    )
+  }
+
+  getAllCore(): Observable<SingleExecutionResult<{articulosNoPaginados:Articulo[]}>>{
+    return this.graphql.query<{articulosNoPaginados:Articulo[]},never>(
+      QUERY_ARTICULOS_CORE,
     )
   }
 

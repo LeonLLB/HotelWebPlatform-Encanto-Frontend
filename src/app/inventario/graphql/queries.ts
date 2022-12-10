@@ -32,6 +32,17 @@ export const QUERY_ARTICULOS_LENCERIA = gql`
 
 `
 
+export const QUERY_ARTICULOS_CORE = gql`
+
+    query ArticulosSinPaginar(){
+        articulosNoPaginados(){
+            _id
+            nombre
+        }
+    }
+
+`
+
 export const QUERY_ARTICULO = gql`
 
     query Articulo($id: String!){

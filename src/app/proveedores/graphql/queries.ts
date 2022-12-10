@@ -23,6 +23,19 @@ export const QUERY_PROVEEDORES = gql`
 
 `
 
+export const QUERY_PROVEEDORES_CORE = gql`
+
+    query GetProveedoresCore(){
+        proveedores(doPaginate: true){
+            result{
+                _id
+                nombre
+            }
+        }
+    }
+
+`
+
 export const QUERY_PROVEEDOR = gql`
 
     query GetProveedor($id: String!){
