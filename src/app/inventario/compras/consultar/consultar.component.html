@@ -49,6 +49,7 @@
                         [row]="row"
                         [labels]="labels"
                         [items]="compras"
+                        [extraOptions]="extraOptions"
                         >
                         <ng-template #labels>
                             <th>Proveedor</th>
@@ -67,8 +68,15 @@
                             <td>{{tc(compra).exento}}</td>
                             <td>{{tc(compra).baseImponible}}</td>
                             <td>{{tc(compra).porcentajeIVA}}%</td>
-                        </ng-template>  
-                        <!-- TODO: OPCIONES ADICIONALES (PARA VER LOS ARTICULOS) -->
+                        </ng-template>
+                        <ng-template #extraOptions let-compra>
+                            <td>
+                                <span
+                                (click)="showArticulosComprados(compra)"
+                                class="material-icons text-gray-500 cursor-pointer"
+                                >info</span>
+                            </td>
+                        </ng-template>
                     </app-table-crud>
                 </div>                
                 <div class="w-full">

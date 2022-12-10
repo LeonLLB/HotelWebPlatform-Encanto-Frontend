@@ -6,6 +6,7 @@ import { ProveedorService } from 'src/app/proveedores/services/proveedor.service
 import { ConfirmService } from 'src/app/services/confirm.service';
 import { NotifyService } from 'src/app/services/notify.service';
 import { PaginationService } from 'src/app/services/pagination.service';
+import { ReportService } from 'src/app/services/report.service';
 import { ComprasService } from '../services/compras.service';
 
 @Component({
@@ -42,6 +43,7 @@ export class ConsultarComponent implements OnInit {
     private paginationService: PaginationService,
     private fb: FormBuilder,
     private confirm: ConfirmService,
+    private report: ReportService,
     private notify: NotifyService
   ) { }
 
@@ -82,6 +84,23 @@ export class ConsultarComponent implements OnInit {
         })
       }
     })
+  }
+
+  showArticulosComprados({articulosComprados}:Compra){
+    let messageArr: string[] = articulosComprados
+    .map(({articulo,cantidad},index) => {
+      if(index === 0){
+        return `<ul class="list-disc ml-6"><li class="list-disc">${articulo.nombre}: ${cantidad} Unidades</li>`
+      }
+      if (index === articulosComprados.length -1){
+        return `<li class="list-disc">${articulo}: ${cantidad} Unidades</li></ul>`
+      }
+      return `<li class="list-disc">${articulo}: ${cantidad} Unidades</li>`
+    })    
+
+    messageArr.unshift('<span class="text-xl">Cantidad de articulos</span><div class="w-full flex flex-col items-end">')   
+    
+    this.report.info('Articulos comprados',messageArr.join(''))
   }
 
   paginate(page: number | string) {
