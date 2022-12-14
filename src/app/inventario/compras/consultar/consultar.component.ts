@@ -49,6 +49,7 @@ export class ConsultarComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchCompras()
+    this.fetchProveedores()
   }
 
   get mesesDelAnio(): {value:string,label:string}[] {
@@ -69,8 +70,12 @@ export class ConsultarComponent implements OnInit {
   }
 
   calcTotalCompra(compra:Compra): number {
+    return (compra.exento) + compra.baseImponible + this.calcIVA(compra)
+  }
+
+  calcIVA(compra:Compra): number{
     const porcentaje = compra.porcentajeIVA / 100
-    return (compra.exento) + (compra.baseImponible * porcentaje)
+    return (compra.baseImponible * porcentaje)
   }
 
   fetchProveedores(){
@@ -80,7 +85,7 @@ export class ConsultarComponent implements OnInit {
       this.isFetchingProveedores = false
       if(result.data && result.data.proveedores.result.length > 0){
         result.data.proveedores.result.forEach(proveedor=>{
-          this.proveedoresSelect.push({label:proveedor.nombre,value:proveedor._id})
+          this.proveedoresSelect.push({label:proveedor.nombre,value:proveedor.id})
         })
       }
     })
@@ -161,19 +166,19 @@ export class ConsultarComponent implements OnInit {
         this.notify.failure(response.errors[0].message)
         return
       }
-      console.log(response)
+      // console.log(response)
     })
   }
 
-  eliminarCompra({_id}: Compra){
+  eliminarCompra({id}: Compra){
     this.confirm.danger({
       title:'Eliminar Compra',
       message:'Esta seguro de querer eliminar está compra? El inventario reducirá todos los articulos que tenian esta compra. Está acción es irrecuperable',
       okText:'Eliminar',
       onOk:()=>{
-        this.comprasService.delete(_id)
+        this.comprasService.delete(id)
         .subscribe((response)=>{
-          if (response.data?.removeCompra._id) {
+          if (response.data?.removeCompra.id) {
             this.notify.success('Compra eliminada con exito!')
             if(this.compras.length === 1 && this.pagina > 1){
               this.paginas -= 1

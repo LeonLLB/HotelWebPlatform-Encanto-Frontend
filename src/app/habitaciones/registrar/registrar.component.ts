@@ -13,7 +13,7 @@ import { HabitacionService } from '../services/habitacion.service';
 export class RegistrarComponent implements OnInit {
 
   invalidInputs = [
-    '_id',
+    'id',
     '__typename',
     'estado'
   ]
@@ -62,7 +62,7 @@ export class RegistrarComponent implements OnInit {
                 return
               }
               const habitacion = response.data.habitacion
-              this.habitacionId = habitacion._id
+              this.habitacionId = habitacion.id
               let newForm: { [x: string]: any } = {}
 
               for (let habitacionMap of Object.entries(habitacion)) {
@@ -110,7 +110,7 @@ export class RegistrarComponent implements OnInit {
     if(this.isEditableForm){
       this.habitacionService.update(this.habitacionForm, this.habitacionId)
       .subscribe(response => {
-        if (response.data?.updateHabitacion._id) {
+        if (response.data?.updateHabitacion.id) {
           this.notify.success('Habitación modificada y actualizada con exito!')
           this.router.navigate(['/main', 'habitaciones'])
         }
@@ -120,7 +120,7 @@ export class RegistrarComponent implements OnInit {
 
     this.habitacionService.create(this.habitacionForm)
       .subscribe(response => {
-        if (response.data?.createHabitacion._id) {
+        if (response.data?.createHabitacion.id) {
           this.notify.success('Habitación creada con exito!')
           this.router.navigate(['/main', 'habitaciones'])
         }

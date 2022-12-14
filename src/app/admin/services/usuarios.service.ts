@@ -34,7 +34,7 @@ export class UsuariosService {
     )
       .subscribe(response => {
         this.loading.hideLoading()
-        if (response.data?.createUser._id) {
+        if (response.data?.createUser.id) {
           this.notifyService.success(`Usuario creado con exito, su contraseña es: ${response.data.createUser.password}`, { timeout: 8000 })
           this.router.navigate(['/main', 'admin', 'usuarios'])
           return
@@ -109,7 +109,7 @@ export class UsuariosService {
         this.loading.displayLoading('Eliminando...')
         this.graphql.mutate<{removeUser:{_id:string}},{id:string}>(
           DELETE_USER_MUTATION,
-          {id:user._id!}
+          {id:user.id!}
         ).subscribe(response=>{
           this.loading.hideLoading()
           if(response.data){

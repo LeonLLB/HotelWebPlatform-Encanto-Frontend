@@ -6,7 +6,7 @@ export const QUERY_PROVEEDORES = gql`
     query GetProveedores($paginacion: PaginateInput!){
         proveedores(pagination:$paginacion){
             result{
-                _id
+                id
                 nombre
                 rif
                 direccion
@@ -25,10 +25,10 @@ export const QUERY_PROVEEDORES = gql`
 
 export const QUERY_PROVEEDORES_CORE = gql`
 
-    query GetProveedoresCore(){
+    query GetProveedoresCore{
         proveedores(doPaginate: true){
             result{
-                _id
+                id
                 nombre
             }
         }
@@ -40,7 +40,7 @@ export const QUERY_PROVEEDOR = gql`
 
     query GetProveedor($id: String!){
         proveedor(id:$id){
-            _id
+            id
             nombre
             rif
             direccion

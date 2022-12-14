@@ -14,5 +14,5 @@ interface ContactoInput{
 }
 
 export interface Proveedor extends ProveedorInput{
-    _id: string
+    id: string
 }

@@ -24,15 +24,14 @@ export class ComprasService {
     let data: CompraDTO = {
       fechaCompra:rawData.fechaCompra!,
       proveedor:rawData.proveedor!,
-      baseImponible:+rawData.baseImponible!,
-      exento:+rawData.exento!,
+      baseImponible:+((rawData.baseImponible! as number).toString().replace(',','.'))!,
+      exento:+((rawData.exento! as number).toString().replace(',','.'))!,
       porcentajeIVA:+rawData.porcentajeIVA!,
       articulosComprados: rawData.articulos!.map((articulo,i)=>({
         articulo:articulo!,
         cantidad:+rawData.cantidades![i]!
       }))
     }
-
     return data
   }
 

@@ -5,7 +5,7 @@ export const GET_USER_QUERY =  gql`
 
     query GetUser($id:String!){
         user(id: $id) {
-            _id
+            id
             nombre
             apellido
             cedula
@@ -19,7 +19,7 @@ export const GET_USERS_QUERY = gql`
 
     query GetUsers{
         users {
-            _id
+            id
             nombre
             apellido
             cedula

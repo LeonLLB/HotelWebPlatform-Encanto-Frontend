@@ -50,7 +50,7 @@ export class RegistrarComponent implements OnInit {
     if(!proveedor) {this.router.navigate(['/main','proveedores']);return}
 
     this.isEditableForm = true
-    this.proveedorId = proveedor._id
+    this.proveedorId = proveedor.id
     this.empresaForm.setValue({
       nombre:proveedor.nombre,
       rif:proveedor.rif,
@@ -78,7 +78,7 @@ export class RegistrarComponent implements OnInit {
     if(this.isEditableForm){
       this.proveedorService.update(data,this.proveedorId)
       .subscribe(response => {
-        if (response.data?.updateProveedor._id) {
+        if (response.data?.updateProveedor.id) {
           this.notify.success('Proveedor actualizado con exito!')
           this.router.navigate(['/main', 'proveedores'])
         }
@@ -88,7 +88,7 @@ export class RegistrarComponent implements OnInit {
 
     this.proveedorService.create(data)
       .subscribe(response => {
-        if (response.data?.createProveedor._id) {
+        if (response.data?.createProveedor.id) {
           this.notify.success('Proveedor registrado con exito!')
           this.router.navigate(['/main', 'proveedores'])
         }

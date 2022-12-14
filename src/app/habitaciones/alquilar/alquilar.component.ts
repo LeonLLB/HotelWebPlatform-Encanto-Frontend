@@ -77,7 +77,7 @@ export class AlquilarComponent implements OnInit {
 
   get HabitacionesIntoSelectData(){
     return this.habitacionesData.map(habitacion=>({
-      value:habitacion._id,
+      value:habitacion.id,
       label:`Habitación N° ${habitacion.numero}`
     }))
   }
@@ -142,7 +142,7 @@ export class AlquilarComponent implements OnInit {
 
     //RELLENAR ALQUILER
     this.alquilerForm.setValue({
-      habitacion:data.habitacion._id,
+      habitacion:data.habitacion.id,
       costoDolar:data.costoDolar,
       procedencia:data.procedencia,
       fechaFin:this.formatDateFromNumber(data.fechaFin),
@@ -224,12 +224,12 @@ export class AlquilarComponent implements OnInit {
     if(this.isEditableForm){
 
       if(this.conditionForm.value.condition === 'Datos'){
-        this.alquilerForm.controls.habitacion.setValue(this.habitacionData._id)
+        this.alquilerForm.controls.habitacion.setValue(this.habitacionData.id)
       }
 
       this.alquilerService.update(data, this.conditionForm.value.condition as any,this.alquilerId )
       .subscribe(response => {
-        if (response.data?.updateAlquiler._id) {
+        if (response.data?.updateAlquiler.id) {
           this.notify.success('Alquiler modificado y actualizado con exito!')
           this.router.navigate(['/main', 'habitaciones','alquileres'])
         }
@@ -239,7 +239,7 @@ export class AlquilarComponent implements OnInit {
 
     this.alquilerService.alquilar(data)
       .subscribe(response => {
-        if (response.data?.alquilar._id) {
+        if (response.data?.alquilar.id) {
           this.notify.success('Habitación alquilada con exito!')
           this.router.navigate(['/main', 'habitaciones', 'reservar'])
         }

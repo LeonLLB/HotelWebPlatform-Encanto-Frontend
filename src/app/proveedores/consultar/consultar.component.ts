@@ -100,15 +100,15 @@ export class ConsultarComponent implements OnInit {
     })
   }
 
-  eliminarProveedor({_id,nombre}: Proveedor){
+  eliminarProveedor({id,nombre}: Proveedor){
     this.confirm.danger({
       title:'Eliminar proveedor: ' + nombre,
       message:'Esta seguro de querer eliminar este proveedor? Tenga en cuenta que eliminar este proveedor tambien eliminará todas las compras hechos al mismo',
       okText:'Eliminar',
       onOk:()=>{
-        this.proveedoresService.delete(_id)
+        this.proveedoresService.delete(id)
         .subscribe((response)=>{
-          if (response.data?.removeProveedor._id) {
+          if (response.data?.removeProveedor.id) {
             this.notify.success('Proveedor eliminado con exito!')
             if(this.proveedores.length === 1 && this.pagina > 1){
               this.paginas -= 1

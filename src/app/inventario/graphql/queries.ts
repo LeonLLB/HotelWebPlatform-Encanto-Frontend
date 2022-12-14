@@ -6,7 +6,7 @@ export const QUERY_ARTICULOS_LIMPIEZA = gql`
     query ArticulosLimpieza($pagination: PaginateInput!){
         articulos(paginate:$pagination,tipo:"Limpieza"){
             result{
-                _id
+                id
                 nombre
             }
             pages
@@ -21,7 +21,7 @@ export const QUERY_ARTICULOS_LENCERIA = gql`
     query ArticulosLenceria($pagination: PaginateInput!){
         articulos(paginate:$pagination,tipo:"Lenceria"){
             result{
-                _id
+                id
                 nombre
                 mesesUtiles
             }
@@ -34,9 +34,9 @@ export const QUERY_ARTICULOS_LENCERIA = gql`
 
 export const QUERY_ARTICULOS_CORE = gql`
 
-    query ArticulosSinPaginar(){
-        articulosNoPaginados(){
-            _id
+    query ArticulosSinPaginar{
+        articulosNoPaginados{
+            id
             nombre
         }
     }
@@ -47,7 +47,7 @@ export const QUERY_ARTICULO = gql`
 
     query Articulo($id: String!){
         articulo(id: $id) {
-            _id
+            id
             nombre
             tipo
             mesesUtiles

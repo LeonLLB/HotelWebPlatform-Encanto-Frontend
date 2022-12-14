@@ -18,7 +18,7 @@ import { UsuariosService } from '../../services/usuarios.service';
 export class RegistrarComponent implements OnInit {
 
   private unvalidInputs = [
-    '_id',
+    'id',
     '__typename',
     'password'
   ]

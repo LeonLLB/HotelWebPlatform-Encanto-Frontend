@@ -57,7 +57,7 @@ export class HabitacionComponent implements OnInit {
   }
 
   getDateFromData(dateAsString: string){
-    return new Date(+dateAsString)
+    return new Date(dateAsString)
   }
 
   eliminarHabitacion(){
@@ -66,9 +66,9 @@ export class HabitacionComponent implements OnInit {
       message:'Esta seguro de querer eliminar esta habitación? Tenga en cuenta que eliminar está habitación tambien eliminará los alquileres y reportes financieros de la misma',
       okText:'Eliminar',
       onOk:()=>{
-        this.habitacionService.delete(this.habitacion._id)
+        this.habitacionService.delete(this.habitacion.id)
         .subscribe((response)=>{
-          if (response.data?.removeHabitacion._id) {
+          if (response.data?.removeHabitacion.id) {
             this.notify.success('Habitación eliminada con exito!')
             this.router.navigate(['/main','habitaciones'])
           }

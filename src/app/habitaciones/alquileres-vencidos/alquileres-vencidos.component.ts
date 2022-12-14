@@ -60,7 +60,7 @@ export class AlquileresVencidosComponent implements OnInit {
   ta(data: any){return data as Alquiler}
 
   getDateFromData(dateAsString: string){
-    return new Date(+dateAsString)
+    return new Date(dateAsString)
   }
   
 
@@ -184,9 +184,9 @@ export class AlquileresVencidosComponent implements OnInit {
   actualizarAlquiler(id:string,caso:'Extension' | 'Culminacion'){
     this.alquilerService.actualizarEstadoAlquiler(id,caso)
     .subscribe(response=>{
-      if (response.data?.actualizarEstadoAlquiler._id) {
+      if (response.data?.actualizarEstadoAlquiler.id) {
         this.notify.success('El alquiler fue actualizado con exito!, sea para culminación o extensión')
-        const isInVencidosAnteriores = this.vencidosAnteriores.filter(alquiler=>alquiler._id === id)
+        const isInVencidosAnteriores = this.vencidosAnteriores.filter(alquiler=>alquiler.id === id)
         if(isInVencidosAnteriores.length>0){
           if(this.vencidosAnteriores.length === 1 && this.pagina.anteriores > 1){
             this.paginas.anteriores -= 1

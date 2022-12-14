@@ -80,11 +80,11 @@ export class RegistrarComponent implements OnInit {
   preloadForm(compra: Compra){
     
     this.isEditableForm = true
-    this.compraId = compra._id
+    this.compraId = compra.id
 
     this.compraForm.setValue({
       fechaCompra:new Date(compra.fechaCompra).toISOString().split('T')[0],
-      proveedor:compra.proveedor._id,
+      proveedor:compra.proveedor.id,
       exento:compra.exento,
       baseImponible:compra.baseImponible,
       porcentajeIVA:compra.porcentajeIVA,
@@ -93,7 +93,7 @@ export class RegistrarComponent implements OnInit {
     })
 
     compra.articulosComprados.forEach(({articulo,cantidad})=>{
-      this.addArticuloToForm(articulo._id,cantidad)
+      this.addArticuloToForm(articulo.id,cantidad)
     })
   }
 
@@ -118,7 +118,7 @@ export class RegistrarComponent implements OnInit {
       if(result.data && result.data.proveedores.result.length > 0){
         result.data.proveedores.result.forEach(proveedor=>{
           this.avaliablesProveedores.push({
-            value:proveedor._id,
+            value:proveedor.id,
             label:proveedor.nombre
           })
         })
@@ -136,7 +136,7 @@ export class RegistrarComponent implements OnInit {
       if(result.data && result.data.articulosNoPaginados.length > 0){
         result.data.articulosNoPaginados.forEach(articulo=>{
           this.avaliablesArticulos.push({
-            value:articulo._id,
+            value:articulo.id,
             label:articulo.nombre
           })
         })
@@ -167,7 +167,7 @@ export class RegistrarComponent implements OnInit {
     if(this.isEditableForm){
       //TODO: LOGICA DE ACTUALIZACION
       this.comprasService.update(data,this.compraId).subscribe(response => {
-        if (response.data?.updateCompra._id) {
+        if (response.data?.updateCompra.id) {
           this.notify.success('Compra actualizada con exito!')
           this.router.navigate(['/main', 'inventario','compras'])
         }
@@ -176,7 +176,7 @@ export class RegistrarComponent implements OnInit {
     }
 
     this.comprasService.create(data).subscribe(response => {
-      if (response.data?.createCompra._id) {
+      if (response.data?.createCompra.id) {
         this.notify.success('Compra registrada con exito!')
         this.router.navigate(['/main', 'inventario','compras'])
       }

@@ -6,10 +6,10 @@ import { ConsultarComponent } from './consultar/consultar.component';
 import { RegistrarComponent } from './registrar/registrar.component';
 
 const routes: Routes = [
-  {path:'',canActivate:[AuthGuard,AdminGuard],component:ConsultarComponent,children:[
-    {path:'registrar',component:RegistrarComponent},
-    {path:'actualizar/:id',component:RegistrarComponent},
-  ]}
+  {path:'',canActivate:[AuthGuard,AdminGuard],component:ConsultarComponent},
+  {path:'registrar',canActivate:[AuthGuard,AdminGuard],component:RegistrarComponent},
+  {path:'actualizar/:id',canActivate:[AuthGuard,AdminGuard],component:RegistrarComponent},
+
 ];
 
 @NgModule({
