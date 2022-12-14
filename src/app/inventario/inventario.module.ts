@@ -8,12 +8,14 @@ import { GraphQLModule } from '../graphql.module';
 import { SharedModule } from '../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ArticuloService } from './services/articulo.service';
+import { StockComponent } from './stock/stock.component';
 
 
 @NgModule({
   declarations: [
     ConsultarArticulosComponent,
-    CrearArticuloComponent
+    CrearArticuloComponent,
+    StockComponent
   ],
   imports: [
     CommonModule,

@@ -37,3 +37,13 @@ export interface ArticuloInput{
     tipo: 'Lenceria' | 'Limpieza'
     mesesUtiles?: number
 }
+
+export const UPDATE_STOCK = gql`
+
+    mutation UpdateStock($cantidad:Int!,$articuloId: String!){
+        updateStock(cantidad:$cantidad,articuloId:$articuloId){
+            id
+        }
+    }
+
+`

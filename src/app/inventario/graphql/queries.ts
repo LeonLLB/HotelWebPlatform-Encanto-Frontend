@@ -55,3 +55,24 @@ export const QUERY_ARTICULO = gql`
     }
 
 `
+
+export const QUERY_STOCKS = gql`
+
+    query Stocks($paginate: PaginateInput!){
+        stocks(pagination: $paginate) {
+            result{
+                id
+                stockActual
+                updatedAt
+                articulo{
+                    id
+                    nombre
+                    tipo
+                }
+            }
+            pages
+            total
+        }
+    }
+
+`
