@@ -1,1 +1,56 @@
-<p>stock works!</p>
+<div class="flex flex-row mx-4 my-4 justify-center">
+    <div class="flex flex-col items-center space-y-4">
+        <div>
+            <button routerLink="registrar" class="btn-action-primary">Registrar una compra</button>
+        </div>
+        <div>
+            <div class="flex flex-col items-center space-y-4">
+                <div class="flex flex-col items-center">
+                    <h1 class="text-3xl font-light">Compras del hotel</h1>
+                </div>
+                              
+                
+                <div class="rounded-lg" [Block]="isFetching">
+                    <!-- (onDeleteClick)="eliminarCompra($event)" -->
+                     <!-- [updateRouterLink]="['actualizar']" -->
+                    <app-table-crud 
+                        [row]="row"
+                        [labels]="labels"
+                        [items]="stocks"
+                        [showDefaultOptions]="{del:false,edit:true}"
+                        >
+                        <ng-template #labels>
+                            <th>Articulo</th>
+                            <th>Tipo de articulo</th>
+                            <th>Inventario actual</th>
+                            <th>Última actualizacion</th>
+                        </ng-template>
+                        <ng-template #row let-stock>
+                            <td>{{ts(stock).articulo.nombre}}</td>
+                            <td>{{ts(stock).articulo.tipo}}</td>
+                            <td>{{ts(stock).stockActual }}</td>
+                            <td>{{ts(stock).updatedAt | date}}</td>
+                        </ng-template>                        
+                    </app-table-crud>
+                </div>                
+                <div class="w-full">
+                    <app-pagination-bar
+                        [pagina]="pagina"
+                        [paginas]="paginas"
+                        [paginationRange]="paginationRange"
+                        (onPaginate)="paginate($event)"
+                    ></app-pagination-bar>
+                </div>
+                <div class="w-full">
+                    <app-pagination-info
+                        message="compras"
+                        [limit]="limit"
+                        [pagina]="pagina"
+                        [items]="total"
+                        (onLimitChange)="onLimitChange($event)"
+                    ></app-pagination-info>                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
