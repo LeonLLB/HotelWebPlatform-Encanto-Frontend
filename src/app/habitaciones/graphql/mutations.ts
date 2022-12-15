@@ -44,6 +44,25 @@ export const DELETE_HABITACION_MUTATION = gql`
 
 `
 
+export const MANTENIMIENTO_HABITACION_MUTATION = gql`
+
+    mutation MantenimientoHabitacion($id:String!,$data:MantenimientoHabitiacionInput!){
+        mantenimientoHabitiacion(id: $id,mantenimientoHabitiacionInput: $data) {
+            id
+        }
+    }
+
+`
+
+export interface ArticuloUtilizadoInput {
+    articuloId: string
+    cantidad: number
+}
+
+export interface IArticulosUtilizadosInput {
+    articulosUtilizados: ArticuloUtilizadoInput[]
+}
+
 export const ALQUILAR_HABITACION_MUTATION = gql`
 
     mutation AlquilarHabitacion($data:CreateAlquilerInput!){

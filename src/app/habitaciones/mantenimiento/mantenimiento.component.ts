@@ -69,8 +69,14 @@ export class MantenimientoComponent implements OnInit {
       this.mantenimientoForm.markAllAsTouched()
       return
     }
+    const data = this.habitacionService.genMantenimientoData(this.stocks.map(stock=>stock.articulo),this.mantenimientoForm.value.cantidades as any)
 
-
+    this.habitacionService.mantenimiento(data,this.habitacionId).subscribe(response=>{
+      if (response.data?.mantenimiento.id) {
+        this.notify.success('Mantenimiento exitoso!, la habitación vuelve a estar disponible')
+        this.router.navigate(['/main', 'habitaciones'])
+      }
+    })
   }
 
 }

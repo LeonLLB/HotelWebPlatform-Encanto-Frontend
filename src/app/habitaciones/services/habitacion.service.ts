@@ -8,9 +8,10 @@ import { Habitacion } from 'src/app/interfaces/habitacion.interface';
 import { GraphqlService } from 'src/app/services/graphql.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import {Response} from 'src/app/interfaces/response.interface'
-import { CREATE_HABITACION_MUTATION, DELETE_HABITACION_MUTATION, HabitacionInput, IHabitacionInput, UPDATE_HABITACION_MUTATION } from '../graphql/mutations';
+import { CREATE_HABITACION_MUTATION, DELETE_HABITACION_MUTATION, HabitacionInput, IArticulosUtilizadosInput, IHabitacionInput, MANTENIMIENTO_HABITACION_MUTATION, UPDATE_HABITACION_MUTATION } from '../graphql/mutations';
 import { FilterHabitacionInput, GET_CARACTERISTICAS_QUERY, PaginateInput, QUERY_CORE_HABITACION, QUERY_CORE_HABITACIONES, QUERY_HABITACION, QUERY_HABITACIONES } from '../graphql/queries';
 import { HttpErrorService } from 'src/app/services/http-error.service';
+import { Articulo } from 'src/app/interfaces/articulo.interface';
 
 
 @Injectable()
@@ -90,12 +91,20 @@ export class HabitacionService {
       )
   }
 
-  mantenimiento(data: IArticulosUtilizadosInput,id:string): Observable<MutationResult<{ mantenimie: Habitacion }>> {
-    const data = formToJson<HabitacionInput>(formData, true)
-    this.loading.displayLoading('Actualizando habitación...')
-    return this.graphql.mutate<{ updateHabitacion: Habitacion }, (IHabitacionInput & {id:string})>(
-      UPDATE_HABITACION_MUTATION,
-      { habitacionInput: data ,id}
+  genMantenimientoData(articulos: Articulo[],cantidades:number[]): IArticulosUtilizadosInput{
+    return {
+      articulosUtilizados: articulos.map((articulo,i)=>({
+        articuloId: articulo.id,
+        cantidad: cantidades[i]
+      }))
+    }
+  }
+
+  mantenimiento(data: IArticulosUtilizadosInput,id:string): Observable<MutationResult<{ mantenimiento: Habitacion }>> {
+    this.loading.displayLoading('Terminando el mantenimiento de la habitación...')
+    return this.graphql.mutate<{ mantenimiento: Habitacion }, {data:IArticulosUtilizadosInput,id:string}>(
+      MANTENIMIENTO_HABITACION_MUTATION,
+      { data ,id}
     )
       .pipe(
         catchError(data => {
