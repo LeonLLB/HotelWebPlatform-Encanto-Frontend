@@ -90,6 +90,29 @@ export class HabitacionService {
       )
   }
 
+  mantenimiento(data: IArticulosUtilizadosInput,id:string): Observable<MutationResult<{ mantenimie: Habitacion }>> {
+    const data = formToJson<HabitacionInput>(formData, true)
+    this.loading.displayLoading('Actualizando habitación...')
+    return this.graphql.mutate<{ updateHabitacion: Habitacion }, (IHabitacionInput & {id:string})>(
+      UPDATE_HABITACION_MUTATION,
+      { habitacionInput: data ,id}
+    )
+      .pipe(
+        catchError(data => {
+          this.loading.hideLoading()
+          this.httpError.onCatchError(data)
+          return of({} as any)
+        }),
+        map(response => {
+          this.loading.hideLoading()
+          if (response.errors) {
+            this.httpError.onPostPatchFailure(response)
+          }
+          return response
+        })
+      )
+  }
+
   getAll({paginationData,doPaginate = true}:{paginationData?:PaginateInput,filterForm?:FormGroup,doPaginate?:boolean}): Observable<SingleExecutionResult<{habitaciones:Response<Habitacion[]>}>>{
 
     return this.graphql.query<{habitaciones:Response<Habitacion[]>},{filterHabitacionesInput?:FilterHabitacionInput,paginacion?: PaginateInput,doPaginate?:boolean}>(

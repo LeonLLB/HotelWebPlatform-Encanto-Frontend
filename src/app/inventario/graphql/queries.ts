@@ -76,3 +76,19 @@ export const QUERY_STOCKS = gql`
     }
 
 `
+
+export const QUERY_NONPAGINATED_STOCKS = gql`
+
+    query NonPaginatedStocks{
+        stocks(doPaginate: false) {
+            result{
+                stockActual
+                articulo{
+                    id
+                    nombre
+                }
+            }
+        }
+    }
+
+`
