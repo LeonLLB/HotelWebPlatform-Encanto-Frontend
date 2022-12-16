@@ -11,15 +11,15 @@ interface CompraCore{
 export interface CompraFromForm extends Partial<{
     fechaCompra: string | null;
     proveedor: string | null;
-    baseImponible: number | null;
-    exento: number | null;
+    baseImponible: number | null | string;
+    exento: number | null | string;
     porcentajeIVA: number | null;
     articulos: (string | null)[];
     cantidades: (string | null)[];
 }>{}
 
 export interface Compra extends CompraCore{
-    _id: string        
+    id: string        
     articulosComprados: {articulo: Articulo, cantidad: number}[]
     proveedor: Proveedor
 }

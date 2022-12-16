@@ -20,7 +20,6 @@ export class ConsultarComponent implements OnInit {
   total!: number
   isFetching = {
     habitaciones:true,
-    caracteristicas:true
   }
 
   paginationRange: number[] = []
@@ -28,58 +27,19 @@ export class ConsultarComponent implements OnInit {
 
   limit = 5
 
-  filterForm = this.fb.group({
-    numero: [null as unknown as number, [Validators.min(1)]],
-    piso: [null as unknown as number, [Validators.min(1)]],
-    tipo: '',
-    caracteristica: '',
-    estado: ''
-  })
-
-  selectValues: {[x:string]:{value:string,label:string}[]} = {
-    caracteristicas:[],
-    tipo:[
-      {value: 'Singular', label: 'Singular' },
-      {value: 'Matrimonial', label: 'Matrimonial' },
-      {value: 'Doble Singular', label: 'Doble Singular'}, 
-      {value: 'Singular - Matrimonial', label: 'Singular - Matrimonial'},
-    ],
-    estado:[
-      {value:'D',label:'Disponible'},
-      {value:'O',label:'Ocupada'},
-      {value:'M',label:'Mantenimiento'},
-    ]
-  }
-
   constructor(
     private habitacionesService: HabitacionService,
     private paginationService: PaginationService,
-    private fb: FormBuilder,
     private confirm: ConfirmService,
     private notify: NotifyService
   ) { }
 
   ngOnInit(): void {
     this.fetchHabitaciones()
-    this.fetchCaracteristicas()
   }
 
   th(habitacion:any){
     return habitacion as Habitacion
-  }
-
-  fetchCaracteristicas(){
-    this.isFetching.habitaciones = true
-    this.habitacionesService.getCaracteristicas()
-    .subscribe(data=>{
-      for (const caracteristica of data) {
-        this.selectValues['caracteristicas'].push({
-          label:caracteristica,
-          value:caracteristica
-        })
-      }
-      this.isFetching.caracteristicas = false
-    })
   }
 
   paginate(page: number | string) {
@@ -114,7 +74,6 @@ export class ConsultarComponent implements OnInit {
         limit:this.limit,
         offset:this.pagina-1
       },
-      filterForm:this.filterForm
     })
     .subscribe(response=>{
       this.isFetching.habitaciones=false
@@ -140,15 +99,15 @@ export class ConsultarComponent implements OnInit {
     })
   }
 
-  eliminarHabitacion({_id,numero}: Habitacion){
+  eliminarHabitacion({id,numero}: Habitacion){
     this.confirm.danger({
       title:'Eliminar habitación N° ' + numero,
       message:'Esta seguro de querer eliminar esta habitación? Tenga en cuenta que eliminar está habitación tambien eliminará los alquileres y reportes financieros de la misma',
       okText:'Eliminar',
       onOk:()=>{
-        this.habitacionesService.delete(_id)
+        this.habitacionesService.delete(id)
         .subscribe((response)=>{
-          if (response.data?.removeHabitacion._id) {
+          if (response.data?.removeHabitacion.id) {
             this.notify.success('Habitación eliminada con exito!')
             if(this.habitaciones.length === 1 && this.pagina > 1){
               this.paginas -= 1

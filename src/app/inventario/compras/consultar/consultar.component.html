@@ -29,7 +29,7 @@
                             (onChangeFunc)="fetchCompras()"
                         ></app-simple-select>
                     </div>
-                    <div class="ml-4">
+                    <div class="ml-4" *ngIf="!isFetchingProveedores && proveedoresSelect.length > 0">
                         <app-simple-select
                             [Block]="isFetchingProveedores"
                             [formGroup]="filterForm"
@@ -58,24 +58,24 @@
                             <th>Total</th>
                             <th>Exento</th>
                             <th>Base Imponible</th>
-                            <th>IVA</th>
+                            <th>IVA %</th>
+                            <th>IVA Total</th>
                         </ng-template>
                         <ng-template #row let-compra>
                             <td>{{tc(compra).proveedor.nombre}}</td>
                             <td>{{tc(compra).proveedor.rif}}</td>
                             <td>{{tc(compra).fechaCompra | date}}</td>
-                            <td>{{calcTotalCompra(compra)}}</td>
-                            <td>{{tc(compra).exento}}</td>
-                            <td>{{tc(compra).baseImponible}}</td>
+                            <td>{{calcTotalCompra(compra) | number:'.2'}} Bs</td>
+                            <td>{{tc(compra).exento | number:'.2'}} Bs</td>
+                            <td>{{tc(compra).baseImponible | number:'.2'}} Bs</td>
                             <td>{{tc(compra).porcentajeIVA}}%</td>
+                            <td>{{calcIVA(compra) | number:'.2'}} Bs</td>
                         </ng-template>
                         <ng-template #extraOptions let-compra>
-                            <td>
-                                <span
-                                (click)="showArticulosComprados(compra)"
-                                class="material-icons text-gray-500 cursor-pointer"
-                                >info</span>
-                            </td>
+                            <span
+                            (click)="showArticulosComprados(compra)"
+                            class="material-icons text-gray-500 cursor-pointer"
+                            >info</span>
                         </ng-template>
                     </app-table-crud>
                 </div>                

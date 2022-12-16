@@ -19,6 +19,8 @@ export class ArrInputComponent implements OnInit {
   @Input() inputIndex!: number;
   @Input() label!: string;
   @Input() placeholder: string = '';
+  @Input() min!: number;
+  @Input() max!: number;
   
   inputName!: string;
   control!: FormControl;

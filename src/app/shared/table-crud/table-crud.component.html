@@ -15,7 +15,7 @@
                     *ngTemplateOutlet="extraOptions;context:{$implicit: item}"
                 ></ng-container>
                 <span
-                    [routerLink]="getRouterLink(item._id)"
+                    [routerLink]="getRouterLink(item.id)"
                     (click)="onUpdateButton(item)"
                     class="material-icons text-gray-500 cursor-pointer"
                     *ngIf="showDefaultOptions.edit"

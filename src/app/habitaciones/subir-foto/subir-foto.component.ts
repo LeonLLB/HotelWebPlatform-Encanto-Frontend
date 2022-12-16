@@ -42,9 +42,11 @@ export class SubirFotoComponent implements OnInit {
   onFileSubmit(){    
     this.fileService.subirArchivo(`/files/habitacion/subir-foto/${this.habitacionId}`,this.file)
     .subscribe({
-      next:()=>{
-        this.notifyService.success('Foto de la habitación subida con exito')
-        this.router.navigate(['main','habitaciones',this.habitacionId])
+      next:(data)=>{
+        if(data){
+          this.notifyService.success('Foto de la habitación subida con exito')
+          this.router.navigate(['main','habitaciones',this.habitacionId])
+        }
       },
       error:(err)=>{
         this.notifyService.failure(err.error.message) 

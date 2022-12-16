@@ -8,9 +8,10 @@ import { Habitacion } from 'src/app/interfaces/habitacion.interface';
 import { GraphqlService } from 'src/app/services/graphql.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import {Response} from 'src/app/interfaces/response.interface'
-import { CREATE_HABITACION_MUTATION, DELETE_HABITACION_MUTATION, HabitacionInput, IHabitacionInput, UPDATE_HABITACION_MUTATION } from '../graphql/mutations';
+import { CREATE_HABITACION_MUTATION, DELETE_HABITACION_MUTATION, HabitacionInput, IArticulosUtilizadosInput, IHabitacionInput, MANTENIMIENTO_HABITACION_MUTATION, UPDATE_HABITACION_MUTATION } from '../graphql/mutations';
 import { FilterHabitacionInput, GET_CARACTERISTICAS_QUERY, PaginateInput, QUERY_CORE_HABITACION, QUERY_CORE_HABITACIONES, QUERY_HABITACION, QUERY_HABITACIONES } from '../graphql/queries';
 import { HttpErrorService } from 'src/app/services/http-error.service';
+import { Articulo } from 'src/app/interfaces/articulo.interface';
 
 
 @Injectable()
@@ -90,19 +91,42 @@ export class HabitacionService {
       )
   }
 
-  getAll({paginationData,filterForm,doPaginate = true}:{paginationData?:PaginateInput,filterForm?:FormGroup,doPaginate?:boolean}): Observable<SingleExecutionResult<{habitaciones:Response<Habitacion[]>}>>{
-    const data = filterForm?.value
-    const filterData: FilterHabitacionInput = {}
+  genMantenimientoData(articulos: Articulo[],cantidades:number[]): IArticulosUtilizadosInput{
+    return {
+      articulosUtilizados: articulos.map((articulo,i)=>({
+        articuloId: articulo.id,
+        cantidad: cantidades[i]
+      }))
+    }
+  }
 
-    if(data && data.numero && data.numero>0) filterData.numero = parseInt(data.numero)
-    if(data && data.piso && data.piso>0) filterData.piso = parseInt(data.piso)
-    if(data && data.caracteristica !== '') filterData.caracteristica = data.caracteristica
-    if(data && data.tipo !== '') filterData.tipo = data.tipo
-    if(data && data.estado !== '') filterData.estado = data.estado
+  mantenimiento(data: IArticulosUtilizadosInput,id:string): Observable<MutationResult<{ mantenimiento: Habitacion }>> {
+    this.loading.displayLoading('Terminando el mantenimiento de la habitación...')
+    return this.graphql.mutate<{ mantenimiento: Habitacion }, {data:IArticulosUtilizadosInput,id:string}>(
+      MANTENIMIENTO_HABITACION_MUTATION,
+      { data ,id}
+    )
+      .pipe(
+        catchError(data => {
+          this.loading.hideLoading()
+          this.httpError.onCatchError(data)
+          return of({} as any)
+        }),
+        map(response => {
+          this.loading.hideLoading()
+          if (response.errors) {
+            this.httpError.onPostPatchFailure(response)
+          }
+          return response
+        })
+      )
+  }
+
+  getAll({paginationData,doPaginate = true}:{paginationData?:PaginateInput,filterForm?:FormGroup,doPaginate?:boolean}): Observable<SingleExecutionResult<{habitaciones:Response<Habitacion[]>}>>{
 
     return this.graphql.query<{habitaciones:Response<Habitacion[]>},{filterHabitacionesInput?:FilterHabitacionInput,paginacion?: PaginateInput,doPaginate?:boolean}>(
       QUERY_HABITACIONES,
-      {filterHabitacionesInput:filterData,paginacion:paginationData,doPaginate}
+      {paginacion:paginationData,doPaginate}
     )
   }
 

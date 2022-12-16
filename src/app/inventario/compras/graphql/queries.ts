@@ -6,7 +6,7 @@ export const QUERY_COMPRAS = gql`
     query Compras($paginacion: PaginateInput!,$filterData:FilterComprasInput){
         compras(pagination:$paginacion,filterData:$filterData){
             result{
-                _id
+                id
                 fechaCompra
                 articulosComprados{
                     cantidad
@@ -39,16 +39,16 @@ export const QUERY_COMPRA = gql`
 
     query Compra($id: String!){
         compra(id:$id){
-            _id
+            id
             fechaCompra
             articulosComprados{
                 cantidad
                 articulo{
-                    _id
+                    id
                 }
             }
             proveedor{
-                _id
+                id
             }
             baseImponible
             exento

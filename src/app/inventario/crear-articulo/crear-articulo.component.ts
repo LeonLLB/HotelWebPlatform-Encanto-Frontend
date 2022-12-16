@@ -42,7 +42,7 @@ export class CrearArticuloComponent implements OnInit {
     if(!articulo) {this.router.navigate(['/main','inventario','articulos','consultar']);return}
 
     this.isEditableForm = true
-    this.articuloId = articulo._id
+    this.articuloId = articulo.id
     this.articuloForm.setValue({
       nombre:articulo.nombre,
       tipo:articulo.tipo,
@@ -63,7 +63,7 @@ export class CrearArticuloComponent implements OnInit {
 
     if(this.isEditableForm){
       this.articuloService.update(data,this.articuloId).subscribe(response => {
-        if (response.data?.updateArticulo._id) {
+        if (response.data?.updateArticulo.id) {
           this.notify.success('Producto actualizado con exito!')
           this.router.navigate(['/main', 'inventario','articulos','consultar'])
         }
@@ -72,7 +72,7 @@ export class CrearArticuloComponent implements OnInit {
     }
 
     this.articuloService.create(data).subscribe(response => {
-      if (response.data?.createArticulo._id) {
+      if (response.data?.createArticulo.id) {
         this.notify.success('Producto registrado con exito!')
         this.router.navigate(['/main', 'inventario','articulos','consultar'])
       }

@@ -127,7 +127,7 @@ export class ConsultarArticulosComponent implements OnInit {
           this.notify.failure(response.errors[0].message)
           return
         }
-        console.log(response)
+        // console.log(response)
       })
   }
 
@@ -154,19 +154,19 @@ export class ConsultarArticulosComponent implements OnInit {
           this.notify.failure(response.errors[0].message)
           return
         }
-        console.log(response)
+        // console.log(response)
       })
   }
 
-  eliminarArticulo({_id,nombre,tipo}: Articulo){
+  eliminarArticulo({id,nombre,tipo}: Articulo){
     this.confirm.danger({
       title:'Eliminar producto: ' + nombre,
       message:'Esta seguro de querer eliminar este producto? Tenga en cuenta que eliminar este producto tambien eliminará los registros de compras donde se incluya',
       okText:'Eliminar',
       onOk:()=>{
-        this.articuloService.delete(_id)
+        this.articuloService.delete(id)
         .subscribe((response)=>{
-          if (response.data?.removeArticulo._id) {
+          if (response.data?.removeArticulo.id) {
             this.notify.success('Producto eliminado con exito!')
             this.postDelete(tipo)
           }
