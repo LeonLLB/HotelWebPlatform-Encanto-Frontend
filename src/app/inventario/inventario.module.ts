@@ -6,23 +6,28 @@ import { ConsultarArticulosComponent } from './consultar-articulos/consultar-art
 import { CrearArticuloComponent } from './crear-articulo/crear-articulo.component';
 import { GraphQLModule } from '../graphql.module';
 import { SharedModule } from '../shared/shared.module';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ArticuloService } from './services/articulo.service';
 import { StockComponent } from './stock/stock.component';
+import { ReporteStockComponent } from './reporte-stock/reporte-stock.component';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
   declarations: [
     ConsultarArticulosComponent,
     CrearArticuloComponent,
-    StockComponent
+    StockComponent,
+    ReporteStockComponent
   ],
   imports: [
     CommonModule,
     GraphQLModule,
     SharedModule,
     ReactiveFormsModule,
-    InventarioRoutingModule
+    FormsModule,
+    InventarioRoutingModule,
+    HttpClientModule
   ],
   providers:[ArticuloService]
 })
