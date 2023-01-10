@@ -19,7 +19,7 @@ export class ReservarComponent implements OnInit {
 
   onHabitacionClick(habitacion: Habitacion){
     if(habitacion.estado === 'D'){
-      this.router.navigate(['/main','habitaciones','alquilar',habitacion._id])
+      this.router.navigate(['/main','habitaciones','alquilar',habitacion.id])
     }
   }
 

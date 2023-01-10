@@ -7,46 +7,7 @@
             <div class="flex flex-col items-center space-y-4">
                 <div class="flex flex-col items-center">
                     <h1 class="text-3xl font-light">Habitaciones del hotel</h1>
-                    <h2 class="text-2xl font-light">Opciones de filtrado</h2>
-                </div>
-                <div class="flex flex-row justify-between items-center">
-                    
-                    <div>
-                        <app-input (onDebounce)="fetchHabitaciones()" [formGroup]="filterForm" inputName="numero" label="N° Habitación"></app-input>
-                    </div>
-                    <div>
-                        <app-input (onDebounce)="fetchHabitaciones()" [formGroup]="filterForm" inputName="piso" label="Piso"></app-input>
-                    </div>
-                    <div class="ml-4">
-                        <app-simple-select
-                            [Block]="isFetching.caracteristicas"
-                            [formGroup]="filterForm"
-                            inputName="caracteristica"
-                            label="Caracteristica en la habitación"
-                            [inputOptions]="selectValues['caracteristicas']"
-                            (onChangeFunc)="fetchHabitaciones()"
-                        ></app-simple-select>
-                    </div>
-                    <div class="ml-4">
-                        <app-simple-select
-                            [formGroup]="filterForm"
-                            inputName="tipo"
-                            label="Tipo de habitación"
-                            [inputOptions]="selectValues['tipo']"
-                            (onChangeFunc)="fetchHabitaciones()"
-                        ></app-simple-select>
-                    </div>
-                    <div class="ml-4">
-                        <app-simple-select
-                            [formGroup]="filterForm"
-                            inputName="estado"
-                            label="Estado de la habitación"
-                            [inputOptions]="selectValues['estado']"
-                            (onChangeFunc)="fetchHabitaciones()"
-                        ></app-simple-select>
-                    </div>                    
-
-                </div>                
+                </div>                              
                 
                 <div class="rounded-lg" [Block]="isFetching.habitaciones">
                     <app-table-crud 
@@ -64,7 +25,7 @@
                             <th>Caracteristicas</th>
                         </ng-template>
                         <ng-template #row let-habitacion>                            
-                            <td class="text-3xl cursor-pointer" [routerLink]="[habitacion._id]"> 
+                            <td class="text-3xl cursor-pointer" [routerLink]="[habitacion.id]"> 
                                 <span class="border-b w-full border-black">
                                     {{th(habitacion).numero}} 
                                 </span>

@@ -7,6 +7,7 @@ import { AlquileresVencidosComponent } from './alquileres-vencidos/alquileres-ve
 import { AlquileresComponent } from './alquileres/alquileres.component';
 import { ConsultarComponent } from './consultar/consultar.component';
 import { HabitacionComponent } from './habitacion/habitacion.component';
+import { MantenimientoComponent } from './mantenimiento/mantenimiento.component';
 import { RegistrarComponent } from './registrar/registrar.component';
 import { ReporteEntradaSalidaComponent } from './reporte-entrada-salida/reporte-entrada-salida.component';
 import { ReporteFinancieroAlquileresComponent } from './reporte-financiero-alquileres/reporte-financiero-alquileres.component';
@@ -25,6 +26,7 @@ const routes: Routes = [
   {path:'alquileres',canActivate:[AuthGuard],component:AlquileresComponent},
   {path:'alquileres-vencidos',canActivate:[AuthGuard],component:AlquileresVencidosComponent},
   {path:'actualizar/:id',canActivate:[AuthGuard,AdminGuard],component:RegistrarComponent},
+  {path:'mantenimiento/:id',canActivate:[AuthGuard],component:MantenimientoComponent},
   {path:':id',canActivate:[AuthGuard],component:HabitacionComponent}
 ];
 

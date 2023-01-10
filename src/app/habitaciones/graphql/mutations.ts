@@ -7,7 +7,7 @@ export const CREATE_HABITACION_MUTATION = gql`
 
     mutation CreateHabitacion($habitacionInput: CreateHabitacionInput!){
         createHabitacion(createHabitacionInput: $habitacionInput) {
-            _id
+            id
         }
     }
 
@@ -28,7 +28,7 @@ export const UPDATE_HABITACION_MUTATION = gql`
 
     mutation UpdateHabitacion($habitacionInput: UpdateHabitacionInput!,$id:String!){
         updateHabitacion(updateHabitacionInput: $habitacionInput,id:$id) {
-            _id
+            id
         }
     }
 
@@ -38,17 +38,36 @@ export const DELETE_HABITACION_MUTATION = gql`
 
     mutation DeleteHabitacion($id:String!){
         removeHabitacion(id: $id) {
-            _id
+            id
         }
     }
 
 `
 
+export const MANTENIMIENTO_HABITACION_MUTATION = gql`
+
+    mutation MantenimientoHabitacion($id:String!,$data:MantenimientoHabitiacionInput!){
+        mantenimientoHabitiacion(id: $id,mantenimientoHabitacionInput: $data) {
+            id
+        }
+    }
+
+`
+
+export interface ArticuloUtilizadoInput {
+    articuloId: string
+    cantidad: number
+}
+
+export interface IArticulosUtilizadosInput {
+    articulosUtilizados: ArticuloUtilizadoInput[]
+}
+
 export const ALQUILAR_HABITACION_MUTATION = gql`
 
     mutation AlquilarHabitacion($data:CreateAlquilerInput!){
         alquilar(alquilerInput: $data) {
-            _id
+            id
         }
     }
 
@@ -78,7 +97,7 @@ export const ACTUALIZAR_ALQUILER_MUTATION = gql`
 
     mutation ActualizarAlquiler($id: String!,$data:UpdateAlquilerInput!,$motivo:String!){
         updateAlquiler(id: $id, alquilerInput: $data, motivoActualizacion: $motivo) {
-            _id
+            id
         }
     }
 
@@ -88,7 +107,7 @@ export const ELIMINAR_ALQUILER_MUTATION = gql`
 
     mutation EliminarAlquiler($id:String!){
         eliminarAlquiler(id: $id) {
-            _id
+            id
         }
     }
 
@@ -98,7 +117,7 @@ export const EXTENDER_O_CULMINAR_ALQUILER_MUTATION = gql`
 
     mutation ExtenderCulminarAlquiler($id:String!,$caso:String!){
         actualizarEstadoAlquiler(id: $id, caso: $caso) {
-            _id
+            id
         }
     }
 

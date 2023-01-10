@@ -5,10 +5,10 @@ export type EstadoHabitacion = 'D' | 'O' | 'M'
 
 export const QUERY_HABITACIONES = gql`
 
-    query Habitaciones($filterHabitacionesInput: FilterHabitacionInput,$paginacion: PaginateInput,$doPaginate: Boolean){
-        habitaciones(filterHabitacionInput: $filterHabitacionesInput,pagination:$paginacion,doPaginate:$doPaginate) {
+    query Habitaciones($paginacion: PaginateInput,$doPaginate: Boolean){
+        habitaciones(pagination:$paginacion,doPaginate:$doPaginate) {
             result {
-                _id
+                id
                 numero
                 piso
                 tipo
@@ -39,7 +39,7 @@ export const QUERY_HABITACION = gql`
 
     query Habitacion($id: String!){
         habitacion(id: $id) {
-            _id
+            id
             numero
             piso
             tipo            
@@ -53,7 +53,7 @@ export const QUERY_CORE_HABITACION = gql`
 
     query HabitacionsSimple($id: String!){
         habitacion(id: $id) {
-            _id
+            id
             numero
         }
     }
@@ -62,10 +62,10 @@ export const QUERY_CORE_HABITACION = gql`
 
 export const QUERY_CORE_HABITACIONES = gql`
 
-    query HabiatcionesSimples($filterHabitacionesInput: FilterHabitacionInput,$paginacion: PaginateInput,$doPaginate: Boolean){
-        habitaciones(filterHabitacionInput: $filterHabitacionesInput,pagination:$paginacion,doPaginate:$doPaginate) {
+    query HabiatcionesSimples($paginacion: PaginateInput,$doPaginate: Boolean){
+        habitaciones(pagination:$paginacion,doPaginate:$doPaginate) {
             result {
-                _id
+                id
                 numero
             }
         }
@@ -88,7 +88,7 @@ export const QUERY_ALQUILERES = gql`
     query FetchAlquileres($paginacion: PaginateInput!){
         alquileres(paginateInput:$paginacion) {
             result {
-                _id
+                id
                 habitacion {
                     numero
                 }
@@ -123,7 +123,7 @@ export const QUERY_ALQUILER = gql`
     query FetchAlquiler($id: String!){
         alquiler(id: $id) {
             habitacion {
-                _id
+                id
                 numero
             }
             costoDolar
@@ -171,7 +171,7 @@ export const QUERY_FULL_ALQUILER = gql`
             }
         }
         habitacion(id: $id) {
-            _id
+            id
             numero
             piso
             tipo
@@ -188,7 +188,7 @@ export const QUERY_ALQUILERES_VENCIDOS_HOY = gql`
     query FetchAlquileresVencidosHoy($paginateInput:PaginateInput!){
         alquileresVencidosHoy(paginateInput:$paginateInput) {
             result {
-                _id
+                id
                 fechaInicio
                 fechaFin
                 costoDolar
@@ -222,7 +222,7 @@ export const QUERY_ALQUILERES_VENCIDOS_ANTERIORES = gql`
     query FetchAlquileresVencidosAnteriores($paginateInput:PaginateInput!){
         alquileresVencidosAnteriores(paginateInput:$paginateInput) {
             result {
-                _id
+                id
                 fechaInicio
                 fechaFin
                 costoDolar

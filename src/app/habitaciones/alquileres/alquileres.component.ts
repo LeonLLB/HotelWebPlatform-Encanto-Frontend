@@ -68,7 +68,7 @@ export class AlquileresComponent implements OnInit {
   ta(data: any){return data as Alquiler}
 
   getDateFromData(dateAsString: string){
-    return new Date(+dateAsString)
+    return new Date(dateAsString)
   }
   
   fetchAlquileres(fullReload = true){
@@ -98,15 +98,15 @@ export class AlquileresComponent implements OnInit {
     })
   }
 
-  eliminarAlquiler({_id}: Alquiler){
+  eliminarAlquiler({id}: Alquiler){
     this.confirm.danger({
       title:'Eliminar Alquiler',
       message:'Esta seguro de querer eliminar este alquiler? Tenga en cuenta que al eliminar este alquiler la habitación volvera a estar disponible, como si no hubiera sido usada, en caso de culminación de alquiler, dirigirse a "Culminar" ',
       okText:'Eliminar',
       onOk:()=>{
-        this.alquilerService.delete(_id)
+        this.alquilerService.delete(id)
         .subscribe((response)=>{
-          if (response.data?.eliminarAlquiler._id) {
+          if (response.data?.eliminarAlquiler.id) {
             this.notify.success('Alquiler eliminado con exito!')
             if(this.alquileres.length === 1 && this.pagina > 1){
               this.paginas -= 1

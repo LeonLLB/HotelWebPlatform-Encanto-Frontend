@@ -1,0 +1,56 @@
+<app-center-box>
+    <form 
+        [formGroup]="compraForm"
+        autocomplete="off"
+        (ngSubmit)="registerCompraSubmit()"
+        class="h-fit space-y-3 grid grid-cols-2 items-center bg-slate-200 shadow-lg py-6 px-8 rounded-lg"
+    >
+        <h1 class="text-xl text-center col-span-2 -mt-4">{{ (isEditableForm) ? 'Modificar compra' :  'Registrar una compra'}}</h1>
+        <div>
+            <app-input [formGroup]="compraForm" max="tomorrowDate" type="date" inputName="fechaCompra" label="Fecha de la compra"></app-input>
+        </div>
+        <div [Block]="isFetchingProveedores">
+            <app-simple-select *ngIf="!isFetchingProveedores"
+            inputName="proveedor"
+            [formGroup]="compraForm"
+            [inputOptions]="avaliablesProveedores"
+            label="Proveedor"
+            ></app-simple-select>
+        </div>
+        <div class="flex flex-row justify-end">
+            <button [Block]="isFetchingArticulos" (click)="addArticuloToForm()" type="button" class="btn-action-primary mt-2">Añadir articulo a la compra</button>
+        </div>
+        <div *ngIf="hasAddedArticulo" class="col-span-2 w-full flex flex-col">
+            <div class="mb-2 grid grid-cols-3 justify-items-center" *ngFor="let _ of additionalArticulos.controls; let i = index">
+                <div>
+                    <hwp-arr-simple-select
+                        formArrayName="articulos"
+                        [formGroup]="compraForm"        
+                        [inputIndex]="i"  
+                        [inputOptions]="avaliablesArticulos"
+                        label="Articulo"
+                    ></hwp-arr-simple-select>               
+                </div>            
+                <div class="place-items-center grid">
+                    <app-arr-input
+                        label="Cantidad"
+                        formArrayName="cantidades"
+                        [formGroup]="compraForm"
+                        type="number"                        
+                        [inputIndex]="i"
+                    ></app-arr-input>
+                </div>            
+                <div class="ml-3 place-items-center grid mt-1">
+                    <button type="button" (click)="deleteInputFromArr(i)" class="btn-action-primary-small">
+                        <span class="material-icons">delete</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="col-span-2 w-full flex flex-row justify-center">
+            <button type="submit" class="btn-action-primary mt-2">{{(isEditableForm) ? 'Modificar compra' :'Registrar compra'}}</button>
+        </div>
+
+    </form>
+</app-center-box>
+

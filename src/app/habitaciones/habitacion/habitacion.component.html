@@ -7,13 +7,14 @@
             <span class="material-icons !text-5xl"> {{habitacion.tipo | tipoToIcon}} </span>
             <span class="font-light text-2xl italic">{{habitacion.tipo}}</span>
         </div>
-        <span *ngIf="isAdmin" class="animate-display_left flex flex-row space-x-2">
-            <button [routerLink]="['/main','habitaciones','actualizar',habitacion._id]" class="btn-action-primary">Modificar habitación</button>
-            <button (click)="eliminarHabitacion()" class="btn-action-danger">Eliminar habitación</button>
+        <span *ngIf="isAdmin || habitacion.estado === 'M'" class="animate-display_left grid grid-cols-2 gap-2">
+            <button *ngIf="isAdmin" [routerLink]="['/main','habitaciones','actualizar',habitacion.id]" class="btn-action-primary">Modificar habitación</button>
+            <button *ngIf="isAdmin" (click)="eliminarHabitacion()" class="btn-action-danger">Eliminar habitación</button>
+            <button *ngIf="habitacion.estado === 'M' " [routerLink]="['/main','habitaciones','mantenimiento',habitacion.id]" class="btn-action-primary">Mantenimiento</button>
         </span>
     </div>
     <div *ngIf="!isFetching" class="animate-display_right">
-        <div [routerLink]="['/main','habitaciones','subir-imagen',habitacion._id]" class="relative">
+        <div [routerLink]="['/main','habitaciones','subir-imagen',habitacion.id]" class="relative">
             <div class="top-0 rounded-xl bg-transparent flex flex-col items-center bg-opacity-0 left-0 transition-colors duration-300 absolute w-full h-full hover:bg-gray-700 hover:bg-opacity-50">
                 <span class="cursor-pointer opacity-0 hover:opacity-100 transition-opacity duration-300 z-50 w-full h-full text-3xl font-light text-center flex flex-col text-white justify-center items-center">
                     <span>
@@ -39,7 +40,7 @@
         <h2 class="col-span-4 text-center w-full font-light text-3xl">Detalles de los inquilos</h2>
         <div class="flex flex-col w-full space-y-4 justify-center" *ngIf="!alquiler; else conAlquiler">
             <span class="text-2xl font-light">Esta habitación no esta alquilada de momento</span>
-            <button [routerLink]="['/main','habitaciones','alquilar',habitacion._id]" class="btn-action-primary">Alquilar</button>
+            <button [routerLink]="['/main','habitaciones','alquilar',habitacion.id]" class="btn-action-primary">Alquilar</button>
         </div>
         <ng-template #conAlquiler>
             <div class="flex flex-col space-y-2 items-center w-full">

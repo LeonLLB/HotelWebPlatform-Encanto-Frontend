@@ -52,7 +52,7 @@ export interface InvitadosFormData{
 }
 
 export interface Alquiler extends AlquilerCore{
-    _id: string
+    id: string
     costoDolar: number
     habitacion:Habitacion
     cliente: Cliente

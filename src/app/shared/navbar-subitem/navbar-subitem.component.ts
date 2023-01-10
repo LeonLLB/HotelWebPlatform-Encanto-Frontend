@@ -2,7 +2,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { NavigationService } from 'src/app/services/navigation.service';
-import { Options } from '../interfaces/nav-options.interface';
+import { Options } from '../../interfaces/nav-options.interface';
 
 type DropdownStatus = 'opening' | 'open' | 'closing';
 

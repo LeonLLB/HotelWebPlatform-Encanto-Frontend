@@ -1,0 +1,45 @@
+<app-center-box>
+    <form 
+        autocomplete="off"
+        class="h-fit space-y-3 flex flex-col items-center bg-slate-200 shadow-lg py-6 px-8 rounded-lg"
+    >
+        <h1 class="text-xl text-center col-span-2 -mt-4">{{ (isEditableForm) ? 'Modificar proveedor' :  'Registrar a un proveedor'}}</h1>
+        <fieldset [formGroup]="empresaForm" class="p-2 border-[#121212] border-opacity-90 border-l-2 w-full">
+            <legend class="text-lg">Información de la empresa</legend> 
+            <div class="grid grid-cols-2 gap-2">
+                <div>
+                    <app-input [formGroup]="empresaForm" inputName="nombre" label="Nombre de la empresa"></app-input>
+                </div>
+                <div>
+                    <app-input [formGroup]="empresaForm" inputName="rif" label="RIF" placeholder="J-XXXXXXXXXX"></app-input>
+                </div>
+        
+                <div class="col-span-2 flex flex-col">
+                    <label class="ml-6 font-light" for="direccion">Dirección de la empresa</label>
+                    <textarea class="ml-4 form-textarea p-1 rounded-md outline-none border border-gray-300 resize-none" formControlName="direccion" name="direccion" id="direccion"></textarea>
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset [formGroup]="contactoForm" class="p-2 border-[#121212] border-opacity-90 border-l-2 w-full">
+            <legend class="text-lg">Información del contacto de la empresa</legend> 
+            <div class="grid grid-cols-2 gap-2">
+                <div>
+                    <app-input [formGroup]="contactoForm" inputName="nombre" label="Nombre"></app-input>
+                </div>
+                <div>
+                    <app-input [formGroup]="contactoForm" inputName="apellido" label="Apellido"></app-input>
+                </div>
+                <div>
+                    <app-input [formGroup]="contactoForm" type="tel" inputName="telefono" label="Número telefonico"></app-input>
+                </div>        
+            </div>
+        </fieldset>        
+
+        <div class="col-span-2 w-full flex flex-row justify-center">
+            <button (click)="registerSubmit()" type="button" class="btn-action-primary mt-2">{{(isEditableForm) ? 'Modificar proveedor' :'Registrar proveedor'}}</button>
+        </div>
+
+    </form>
+</app-center-box>
+

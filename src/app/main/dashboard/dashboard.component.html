@@ -1,4 +1,11 @@
-<app-navbar></app-navbar>
+<div class="w-screen">
+    <div class="w-full md:block hidden">
+        <app-navbar></app-navbar>
+    </div>
+    <div class="md:hidden block">
+        <hwp-mobile-navbar></hwp-mobile-navbar>
+    </div>
+</div>
 
 <router-outlet></router-outlet>
 

@@ -51,7 +51,7 @@ export class LoginComponent {
       gql`
         query LoginUser($loginInputData: LoginInput!){
           login(loginInput:$loginInputData){
-            _id
+            id
             nombre
             apellido
             cargo

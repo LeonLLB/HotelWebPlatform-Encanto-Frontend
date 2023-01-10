@@ -32,6 +32,17 @@ export class ConfirmService {
     })
   }
 
+  asyncWarning({title,message,okText,cancelText = 'Cancelar',}:ConfirmProps):Promise<boolean>{
+    return new Promise((res)=>{
+      Confirm.show(title,message,okText,cancelText,()=>res(true),()=>res(false),{      
+        ...this.defaultOptions,
+        titleColor:'#eebf31',
+        okButtonBackground:'#eebf31',      
+        backOverlayColor:'rgba(238,191,49,0.2)'
+      })
+    })
+  }
+
   danger({title,message,okText,cancelText = 'Cancelar',onOk,onCancel}:ConfirmProps){
     Confirm.show(title,message,okText,cancelText,onOk,onCancel,{
       ...this.defaultOptions,
@@ -48,6 +59,18 @@ export class ConfirmService {
       okButtonBackground:'#26c0d3',
       backOverlayColor:'rgba(38,192,211,0.2)'
     })
+  }
+
+  asyncPrompt({title,message,okText,cancelText = 'Cancelar',promptDefaultText = ''}:ConfirmProps):Promise<string | undefined>{
+    return new Promise((res)=>{
+      Confirm.prompt(title,message,promptDefaultText,okText,cancelText,(data)=>res(data),()=>res(undefined),{
+        ...this.defaultOptions,
+        titleColor:'#1e1e1e',                
+        okButtonBackground:'#26c0d3',
+        backOverlayColor:'rgba(38,192,211,0.2)'
+      })
+    })
+    
   }
 
   constructor() {}

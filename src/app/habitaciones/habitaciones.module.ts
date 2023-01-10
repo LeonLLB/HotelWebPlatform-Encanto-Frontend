@@ -22,6 +22,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { AlquileresVencidosComponent } from './alquileres-vencidos/alquileres-vencidos.component';
 import { ReporteEntradaSalidaComponent } from './reporte-entrada-salida/reporte-entrada-salida.component';
 import { ReporteFinancieroAlquileresComponent } from './reporte-financiero-alquileres/reporte-financiero-alquileres.component';
+import { MantenimientoComponent } from './mantenimiento/mantenimiento.component';
+import { StockService } from '../inventario/services/stock.service';
 
 
 @NgModule({
@@ -40,7 +42,8 @@ import { ReporteFinancieroAlquileresComponent } from './reporte-financiero-alqui
     ImagenHabitacionPipe,
     AlquileresVencidosComponent,
     ReporteEntradaSalidaComponent,
-    ReporteFinancieroAlquileresComponent
+    ReporteFinancieroAlquileresComponent,
+    MantenimientoComponent
   ],
   imports: [
     CommonModule,
@@ -52,7 +55,8 @@ import { ReporteFinancieroAlquileresComponent } from './reporte-financiero-alqui
   ],
   providers:[
     HabitacionService,
-    AlquilerService
+    AlquilerService,
+    StockService
   ]
 })
 export class HabitacionesModule { }

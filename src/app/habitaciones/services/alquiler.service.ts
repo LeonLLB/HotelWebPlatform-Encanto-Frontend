@@ -13,6 +13,7 @@ import { NotifyService } from 'src/app/services/notify.service';
 import { ACTUALIZAR_ALQUILER_MUTATION, ALQUILAR_HABITACION_MUTATION, ELIMINAR_ALQUILER_MUTATION, EXTENDER_O_CULMINAR_ALQUILER_MUTATION, IAlquilerInput, IAlquilerUpdateInput } from '../graphql/mutations';
 import { PaginateInput, QUERY_ALQUILER, QUERY_ALQUILERES, QUERY_ALQUILERES_VENCIDOS_ANTERIORES, QUERY_ALQUILERES_VENCIDOS_HOY, QUERY_FULL_ALQUILER } from '../graphql/queries';
 import { environment } from 'src/environments/environment';
+import { HttpErrorService } from 'src/app/services/http-error.service';
 
 @Injectable()
 export class AlquilerService {
@@ -21,6 +22,7 @@ export class AlquilerService {
     private graphql: GraphqlService,
     private notify: NotifyService,
     private loading: LoadingService,
+    private httpError: HttpErrorService,
     private http: HttpClient
   ) { }
 
@@ -50,41 +52,6 @@ export class AlquilerService {
     }
   }
 
-  private onPostPatchFailure({ errors }: MutationResult<any>) {
-    console.error(errors)
-
-    // if (.error.message[0]?.includes('3')) {
-    //   this.notifyService.failure('Tanto el nombre como el apellido deben tener más de 3 caracteres')
-    //   return;
-    // }
-    // if (typeof err.error.message === 'string' && err.error.statusCode < 500) {
-    //   this.notifyService.failure(err.error.message)
-    //   return
-    // }
-    this.notify.failure('Ocurrio un error, por favor contacte al administrador de sistemas')
-  }
-
-  private onCatchError(data: any) {
-    if (data.networkError !== null && data.networkError !== undefined) {
-      if ((data.networkError.error?.errors as { message: string }[])[0].message.includes('got invalid value')) {
-        this.notify.failure('Parece que ciertos valores no puedieron ser enviados correctamente, consulte con el administrador')
-      }
-      return
-    }
-    if (data.graphQLErrors.length > 0) {
-      const errorMsg = data.graphQLErrors[0].extensions?.response?.message
-      if (errorMsg.constructor.toString().includes('Array') && (errorMsg as string[])[0].includes('must')) {
-        this.notify.failure('Parece que ciertos valores pudieron no haber sido validos, consulte con el administrador')
-      }
-      else if (errorMsg.constructor.toString().includes('String')) {
-        this.notify.failure(errorMsg)
-      }
-      return
-    }
-    console.log({ ...data })
-    this.notify.failure('Hubo un error, consulte al administrador de sistemas')
-  }
-
   alquilar(data: AlquilerInputData): Observable<MutationResult<{ alquilar: Alquiler }>> {
     this.loading.displayLoading('Alquilando Habitación')
     return this.graphql.mutate<{ alquilar: any }, IAlquilerInput>(
@@ -94,13 +61,13 @@ export class AlquilerService {
       .pipe(
         catchError(data => {
           this.loading.hideLoading()
-          this.onCatchError(data)
+          this.httpError.onCatchError(data)
           return of({} as any)
         }),
         map(response => {
           this.loading.hideLoading()
           if (response.errors) {
-            this.onPostPatchFailure(response)
+            this.httpError.onPostPatchFailure(response)
           }
           return response
         })
@@ -130,13 +97,13 @@ export class AlquilerService {
       .pipe(
         catchError(data => {
           this.loading.hideLoading()
-          this.onCatchError(data)
+          this.httpError.onCatchError(data)
           return of({} as any)
         }),
         map(response => {
           this.loading.hideLoading()
           if (response.errors) {
-            this.onPostPatchFailure(response)
+            this.httpError.onPostPatchFailure(response)
           }
           return response
         })
@@ -152,13 +119,13 @@ export class AlquilerService {
       .pipe(
         catchError(data => {
           this.loading.hideLoading()
-          this.onCatchError(data)
+          this.httpError.onCatchError(data)
           return of({} as any)
         }),
         map(response => {
           this.loading.hideLoading()
           if (response.errors) {
-            this.onPostPatchFailure(response)
+            this.httpError.onPostPatchFailure(response)
           }
           return response
         })
