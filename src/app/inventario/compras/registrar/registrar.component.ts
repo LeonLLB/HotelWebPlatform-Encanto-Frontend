@@ -26,9 +26,6 @@ export class RegistrarComponent implements OnInit {
   compraForm = this.fb.group({
     fechaCompra: [new Date().toISOString().split('T')[0],[Validators.required]],
     proveedor: ['',Validators.required],
-    baseImponible:[0,[Validators.required]],
-    exento:[0,[Validators.required]],
-    porcentajeIVA:[16,[Validators.required]],
     articulos: this.fb.array<string>([],[Validators.required,Validators.minLength(1)]),
     cantidades: this.fb.array<string>([],[Validators.required,Validators.minLength(1)]),
   })
@@ -85,9 +82,6 @@ export class RegistrarComponent implements OnInit {
     this.compraForm.setValue({
       fechaCompra:new Date(compra.fechaCompra).toISOString().split('T')[0],
       proveedor:compra.proveedor.id,
-      exento:compra.exento,
-      baseImponible:compra.baseImponible,
-      porcentajeIVA:compra.porcentajeIVA,
       articulos:[],
       cantidades:[]
     })

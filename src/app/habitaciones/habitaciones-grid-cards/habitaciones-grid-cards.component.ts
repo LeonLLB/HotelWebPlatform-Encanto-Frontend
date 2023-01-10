@@ -6,7 +6,7 @@ import { HabitacionService } from '../services/habitacion.service';
   selector: 'hwp-habitaciones-grid-cards',
   template: `
     <div [Block]="isFetching">
-      <div *ngIf="habitaciones.length>0" class="grid grid-cols-5 gap-y-8 gap-x-2">
+      <div *ngIf="habitaciones.length>0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-y-8 gap-x-2">
         <hwp-habitacion-card
           *ngFor="let habitacion of habitaciones"
           [habitacion]="habitacion"

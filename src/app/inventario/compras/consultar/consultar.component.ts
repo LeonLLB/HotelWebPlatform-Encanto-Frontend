@@ -69,15 +69,6 @@ export class ConsultarComponent implements OnInit {
     return data as Compra
   }
 
-  calcTotalCompra(compra:Compra): number {
-    return (compra.exento) + compra.baseImponible + this.calcIVA(compra)
-  }
-
-  calcIVA(compra:Compra): number{
-    const porcentaje = compra.porcentajeIVA / 100
-    return (compra.baseImponible * porcentaje)
-  }
-
   fetchProveedores(){
     this.isFetchingProveedores = true
     this.proveedoresService.getAllCore()

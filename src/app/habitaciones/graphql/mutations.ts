@@ -47,7 +47,7 @@ export const DELETE_HABITACION_MUTATION = gql`
 export const MANTENIMIENTO_HABITACION_MUTATION = gql`
 
     mutation MantenimientoHabitacion($id:String!,$data:MantenimientoHabitiacionInput!){
-        mantenimientoHabitiacion(id: $id,mantenimientoHabitiacionInput: $data) {
+        mantenimientoHabitiacion(id: $id,mantenimientoHabitacionInput: $data) {
             id
         }
     }

@@ -7,7 +7,7 @@
         [Block]="isFetching"
     >
         <h1 class="text-xl text-center col-span-2 -mt-4">Mantenimiento de la habitacion N° {{1}}</h1>        
-        <div *ngIf="!isFetching" class="col-span-2 w-full grid grid-cols-2">
+        <div *ngIf="!isFetching" class="col-span-2 w-full grid grid-cols-2 gap-20">
             <div class="mb-2" *ngFor="let _ of additionalCantidades.controls; let i = index">                
                 <div class="grid-cols-1 grid w-full ml-7 space-y-2">
                     <!-- [min]="0"            

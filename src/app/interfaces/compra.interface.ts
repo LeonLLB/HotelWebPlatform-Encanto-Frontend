@@ -3,17 +3,11 @@ import { Proveedor } from "./proveedor.interface"
 
 interface CompraCore{
     fechaCompra: string 
-    baseImponible: number
-    exento: number
-    porcentajeIVA: number
 }
 
 export interface CompraFromForm extends Partial<{
     fechaCompra: string | null;
     proveedor: string | null;
-    baseImponible: number | null | string;
-    exento: number | null | string;
-    porcentajeIVA: number | null;
     articulos: (string | null)[];
     cantidades: (string | null)[];
 }>{}

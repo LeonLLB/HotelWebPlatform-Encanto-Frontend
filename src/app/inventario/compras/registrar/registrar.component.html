@@ -17,15 +17,6 @@
             label="Proveedor"
             ></app-simple-select>
         </div>
-        <div>
-            <app-input [formGroup]="compraForm" type="number" inputName="baseImponible" label="Base Imponible (B.I.G)"></app-input>
-        </div>
-        <div>
-            <app-input [formGroup]="compraForm" type="number" inputName="exento" label="Exento"></app-input>
-        </div>
-        <div>
-            <app-input [formGroup]="compraForm" min="1" type="number" inputName="porcentajeIVA" label="Porcentaje de IVA"></app-input>
-        </div>
         <div class="flex flex-row justify-end">
             <button [Block]="isFetchingArticulos" (click)="addArticuloToForm()" type="button" class="btn-action-primary mt-2">Añadir articulo a la compra</button>
         </div>

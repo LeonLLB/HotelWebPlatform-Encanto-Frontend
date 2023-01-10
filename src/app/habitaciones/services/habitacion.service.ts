@@ -95,14 +95,14 @@ export class HabitacionService {
     return {
       articulosUtilizados: articulos.map((articulo,i)=>({
         articuloId: articulo.id,
-        cantidad: cantidades[i]
+        cantidad: +cantidades[i]
       }))
     }
   }
 
-  mantenimiento(data: IArticulosUtilizadosInput,id:string): Observable<MutationResult<{ mantenimiento: Habitacion }>> {
+  mantenimiento(data: IArticulosUtilizadosInput,id:string): Observable<MutationResult<{ mantenimientoHabitacion: Habitacion }>> {
     this.loading.displayLoading('Terminando el mantenimiento de la habitación...')
-    return this.graphql.mutate<{ mantenimiento: Habitacion }, {data:IArticulosUtilizadosInput,id:string}>(
+    return this.graphql.mutate<{ mantenimientoHabitacion: Habitacion }, {data:IArticulosUtilizadosInput,id:string}>(
       MANTENIMIENTO_HABITACION_MUTATION,
       { data ,id}
     )

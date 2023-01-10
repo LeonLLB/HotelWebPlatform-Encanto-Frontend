@@ -7,9 +7,10 @@
             <span class="material-icons !text-5xl"> {{habitacion.tipo | tipoToIcon}} </span>
             <span class="font-light text-2xl italic">{{habitacion.tipo}}</span>
         </div>
-        <span *ngIf="isAdmin" class="animate-display_left flex flex-row space-x-2">
-            <button [routerLink]="['/main','habitaciones','actualizar',habitacion.id]" class="btn-action-primary">Modificar habitación</button>
-            <button (click)="eliminarHabitacion()" class="btn-action-danger">Eliminar habitación</button>
+        <span *ngIf="isAdmin || habitacion.estado === 'M'" class="animate-display_left grid grid-cols-2 gap-2">
+            <button *ngIf="isAdmin" [routerLink]="['/main','habitaciones','actualizar',habitacion.id]" class="btn-action-primary">Modificar habitación</button>
+            <button *ngIf="isAdmin" (click)="eliminarHabitacion()" class="btn-action-danger">Eliminar habitación</button>
+            <button *ngIf="habitacion.estado === 'M' " [routerLink]="['/main','habitaciones','mantenimiento',habitacion.id]" class="btn-action-primary">Mantenimiento</button>
         </span>
     </div>
     <div *ngIf="!isFetching" class="animate-display_right">

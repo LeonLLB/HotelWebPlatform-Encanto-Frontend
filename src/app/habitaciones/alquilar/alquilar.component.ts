@@ -189,7 +189,7 @@ export class AlquilarComponent implements OnInit {
   }
   
   private formatDateFromDate(date:Date):string{
-    return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
+    return `${date.getFullYear()}-${(date.getMonth() >= 9) ? date.getMonth() + 1: '0'+(date.getMonth() + 1)}-${date.getDate() >=10 ? date.getDate(): '0'+date.getDate()}`
   }
 
   private formatDateFromNumber(dateString:string):string{
@@ -203,7 +203,7 @@ export class AlquilarComponent implements OnInit {
   
   get tomorrowsDate(): string {
     const date = new Date()
-    return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate() + 1}`
+    return `${date.getFullYear()}-${(date.getMonth() >= 9) ? date.getMonth() + 1: '0'+(date.getMonth() + 1)}-${date.getDate() >=10 ? date.getDate() + 1 : '0'+(date.getDate()+1)}`
   }
   
   alquilerSubmit() {

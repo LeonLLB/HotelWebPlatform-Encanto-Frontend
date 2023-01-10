@@ -1,12 +1,12 @@
 <div class="flex flex-row mx-4 my-4 justify-center">
     <div class="flex flex-col items-center space-y-4">
         <div>
-            <button routerLink="registrar" class="btn-action-primary">Registrar una compra</button>
+            <button [routerLink]="['/main','inventario','reporte-stock']" class="btn-action-primary">Generar reporte de entrada y salida de inventario</button>
         </div>
         <div>
             <div class="flex flex-col items-center space-y-4">
                 <div class="flex flex-col items-center">
-                    <h1 class="text-3xl font-light">Compras del hotel</h1>
+                    <h1 class="text-3xl font-light">Stock de inventario del hotel</h1>
                 </div>
                               
                 
@@ -17,7 +17,8 @@
                         [row]="row"
                         [labels]="labels"
                         [items]="stocks"
-                        [showDefaultOptions]="{del:false,edit:true}"
+                        [showDefaultOptions]="{del:false,edit:false}"
+                        [extraOptions]="extraOptions"
                         >
                         <ng-template #labels>
                             <th>Articulo</th>
@@ -30,7 +31,14 @@
                             <td>{{ts(stock).articulo.tipo}}</td>
                             <td>{{ts(stock).stockActual }}</td>
                             <td>{{ts(stock).updatedAt | date}}</td>
-                        </ng-template>                        
+                        </ng-template>  
+                        <ng-template #extraOptions let-stock>
+                            <span
+                            (click)="updateStock(stock)"
+                            class="material-icons text-gray-500 cursor-pointer"
+                            >edit</span>
+                        </ng-template>
+                                              
                     </app-table-crud>
                 </div>                
                 <div class="w-full">
@@ -43,7 +51,7 @@
                 </div>
                 <div class="w-full">
                     <app-pagination-info
-                        message="compras"
+                        message="stock"
                         [limit]="limit"
                         [pagina]="pagina"
                         [items]="total"

@@ -18,9 +18,6 @@ export const QUERY_COMPRAS = gql`
                     nombre
                     rif
                 }
-                baseImponible
-                exento
-                porcentajeIVA
             }
             pages
             total
@@ -50,9 +47,6 @@ export const QUERY_COMPRA = gql`
             proveedor{
                 id
             }
-            baseImponible
-            exento
-            porcentajeIVA
         }
     }
 

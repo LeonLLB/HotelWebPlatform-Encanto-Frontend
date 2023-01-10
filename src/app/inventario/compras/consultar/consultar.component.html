@@ -55,21 +55,11 @@
                             <th>Proveedor</th>
                             <th>RIF</th>
                             <th>Fecha de la compra</th>
-                            <th>Total</th>
-                            <th>Exento</th>
-                            <th>Base Imponible</th>
-                            <th>IVA %</th>
-                            <th>IVA Total</th>
                         </ng-template>
                         <ng-template #row let-compra>
                             <td>{{tc(compra).proveedor.nombre}}</td>
                             <td>{{tc(compra).proveedor.rif}}</td>
                             <td>{{tc(compra).fechaCompra | date}}</td>
-                            <td>{{calcTotalCompra(compra) | number:'.2'}} Bs</td>
-                            <td>{{tc(compra).exento | number:'.2'}} Bs</td>
-                            <td>{{tc(compra).baseImponible | number:'.2'}} Bs</td>
-                            <td>{{tc(compra).porcentajeIVA}}%</td>
-                            <td>{{calcIVA(compra) | number:'.2'}} Bs</td>
                         </ng-template>
                         <ng-template #extraOptions let-compra>
                             <span

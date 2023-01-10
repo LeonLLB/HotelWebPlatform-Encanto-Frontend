@@ -72,7 +72,8 @@ export class MantenimientoComponent implements OnInit {
     const data = this.habitacionService.genMantenimientoData(this.stocks.map(stock=>stock.articulo),this.mantenimientoForm.value.cantidades as any)
 
     this.habitacionService.mantenimiento(data,this.habitacionId).subscribe(response=>{
-      if (response.data?.mantenimiento.id) {
+      console.log(response)
+      if (response.data?.mantenimientoHabitacion.id) {
         this.notify.success('Mantenimiento exitoso!, la habitación vuelve a estar disponible')
         this.router.navigate(['/main', 'habitaciones'])
       }

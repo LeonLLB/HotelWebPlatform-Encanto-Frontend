@@ -11,6 +11,7 @@ import { ArticuloService } from './services/articulo.service';
 import { StockComponent } from './stock/stock.component';
 import { ReporteStockComponent } from './reporte-stock/reporte-stock.component';
 import { HttpClientModule } from '@angular/common/http';
+import { StockService } from './services/stock.service';
 
 
 @NgModule({
@@ -29,6 +30,6 @@ import { HttpClientModule } from '@angular/common/http';
     InventarioRoutingModule,
     HttpClientModule
   ],
-  providers:[ArticuloService]
+  providers:[ArticuloService,StockService]
 })
 export class InventarioModule { }

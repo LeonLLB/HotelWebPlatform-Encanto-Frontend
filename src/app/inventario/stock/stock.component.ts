@@ -98,8 +98,8 @@ export class StockComponent implements OnInit {
 
   async updateStock({articulo:{id},stockActual}: Stock){
     const extractedValue = await this.confirm.asyncPrompt({
-      title:'Cambiar stock',
-      message:'Nuevo stock de archivo',
+      title:'Cambiar el stock',
+      message:'Debe de estar seguro de querer cambiar el stock, porque no hay compra que lo respalde solo afectará la existencia. Si esta seguro de lo que esta haciendo, ingrese el nuevo stock del articulo',
       promptDefaultText:`${stockActual}`,
       okText:'Actualizar'
     })
@@ -118,18 +118,13 @@ export class StockComponent implements OnInit {
       return
     }
 
-    if(await this.confirm.asyncWarning({
-      title:'Cambiar el stock',
-      message:'Estas seguro de queres cambiar el stock de esta manera?, sin compra que la respalde solo afectará la existencia',
-      okText:'Cambiar'
-    })){
-      this.stockService.changeStock(value,id).subscribe(response=>{
-        if (response.data?.updateStock.id) {
-          this.notify.success('Stock cambiado con exito!')          
-          this.paginate(this.pagina)
-        }
-      })
-    }
+    this.stockService.changeStock(value,id).subscribe(response=>{
+      if (response.data?.updateStock.id) {
+        this.notify.success('Stock cambiado con exito!')          
+        this.paginate(this.pagina)
+      }
+    })
+
   }
 
 }
